@@ -10,6 +10,7 @@
 
 \RequirePackage{fontspec}
 \setmainfont{Times New Roman}
+\newfontfamily\cyrillicfont{Times New Roman}
 
 \usepackage{polyglossia}
 \setdefaultlanguage{russian}
@@ -125,11 +126,11 @@
 			\vbox to 65pt {}
 			\noindent Отчёт защищен:\\
 			\@FEFUpostunderline{с оценкой }{\@FEFUleftcolumnwidth}\\
-			
+
 			\noindent Зав.кафедрой
 			\vskip 14pt
 			\noindent\@FEFUpreunderline{\@FEFUdepartmenthead}{\@FEFUleftcolumnwidth}\\
-			
+
 			\centerline{\@FEFUdate}
 			\vskip 28pt
 			{
@@ -154,7 +155,7 @@
 				{\indent\fontsize{8}{10}\selectfont\textit{(должность, уч.звание)}}
 			}{
 				\noindent\hbox to \@FEFUrightcolumnwidth {\@FEFUsupervisortitle}\\
-				{\indent\fontsize{8}{10}\selectfont\textit{(должность, уч.звание)}}				
+				{\indent\fontsize{8}{10}\selectfont\textit{(должность, уч.звание)}}
 			}\\
 			\ifthenelse{\equal{\@FEFUsupervisor}{}}{
 				\@FEFUpostunderline{\@FEFUunderline{15}\ }{\@FEFUrightcolumnwidth}\\
