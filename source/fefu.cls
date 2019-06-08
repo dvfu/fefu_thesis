@@ -29,6 +29,7 @@
 \RequirePackage[style]{abstract}
 \RequirePackage{fancyhdr}
 \RequirePackage{enumitem}
+\RequirePackage{subfiles}
 \ifthenelse{\equal{\@FEFUhassubfigure}{false}}{
 	\RequirePackage{tocloft}
 }{
