@@ -1,0 +1,392 @@
+% \iffalse meta-comment
+% !TEX program  = xeLaTeX
+%<*driver>
+\ProvidesFile{fefu.dtx}
+%</driver>
+%<class>\NeedsTeXFormat{LaTeX2e}
+%<class>\ProvidesClass{fefu}
+%<*class>
+    [2019/05/30 LaTeX document class for FEFU bachelor's thesis]
+%</class>
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian,english]{babel}
+\usepackage[a4paper,left=4cm]{geometry}
+%\OnlyDescription
+\begin{document}
+    \DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+%\fi
+%
+% \newenvironment{Options}%
+%    {\begin{list}{}{%
+%    \renewcommand{\makelabel}[1]{\llap{$^{\dagger\:}$}\texttt{##1}\hfil}%
+%    \setlength{\itemsep}{-.5\parsep}
+%    \settowidth{\labelwidth}{\texttt{xxxxxxxxxxx\space}}%
+%    \setlength{\leftmargin}{\labelwidth}%
+%    \addtolength{\leftmargin}{\labelsep}}%
+%    \raggedright}
+%    {\end{list}}
+%
+% \title{FEFU document class}
+% \author{}
+% \date{}
+% \maketitle
+% \begin{abstract}
+%    The class provides styles for FEFU student papers.
+% \end{abstract}
+% \section{Class options}
+% \begin{Options}
+%     \item[subfigure] Loads \texttt{tocloft} package with the option \texttt{subfigure}.
+% \end{Options}
+%
+%\CheckSum{0}
+%\StopEventually{}
+%
+% \section{Implementation}
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+% This class' base is \textsf{extarticle}.
+%    \begin{macrocode}
+\LoadClass[14pt]{extarticle}
+%    \end{macrocode}
+% Iternal switches are declared here.
+%    \begin{macrocode}
+\newif\if@FEFUhassubfigure
+\newif\if@FEFUfemale
+%    \end{macrocode}
+% The options are defined and processed here.
+%    \begin{macrocode}
+\DeclareOption{subfigure}{\@FEFUhassubfiguretrue}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{extarticle}}
+\ProcessOptions\relax
+%    \end{macrocode}
+% This class requires the following packages:
+%    \begin{macrocode}
+\RequirePackage{fontspec}
+\RequirePackage{polyglossia}
+\RequirePackage[a4paper,left=2.5cm,right=1cm,top=2cm,bottom=2cm]{geometry}
+\RequirePackage{ulem}
+\RequirePackage{graphicx}
+\RequirePackage{setspace}
+\RequirePackage{multicol}
+\RequirePackage{calc}
+\RequirePackage{xifthen}
+\RequirePackage[explicit]{titlesec}
+\RequirePackage[hidelinks]{hyperref}
+\RequirePackage[style]{abstract}
+\RequirePackage{fancyhdr}
+\RequirePackage{enumitem}
+\RequirePackage{subfiles}
+%    \end{macrocode}
+% The \textsf{tocloft} package is loaded with \textsf{subfigure} option if necessary.
+%    \begin{macrocode}
+\if@FEFUhassubfigure
+    \RequirePackage{subfig}
+    \RequirePackage[subfigure]{tocloft}
+\else
+    \RequirePackage{tocloft}
+\fi
+%    \end{macrocode}
+% The iternal variables are set up here.
+%    \begin{macrocode}
+\newcommand{\@FEFUschool}{THE SCHOOL}
+\newcommand{\@FEFUdepartment}{the department}
+\newcommand{\@FEFUdepartmenthead}{T.D.Head}
+\newcommand{\@FEFUgroup}{Б0000а}
+\newcommand{\@FEFUsupervisor}{}
+\newcommand{\@FEFUsupervisortitle}{}
+\newcommand{\@FEFUdaystart}{}
+\newcommand{\@FEFUmonthstart}{}
+\newcommand{\@FEFUyearstart}{}
+\newcommand{\@FEFUdayend}{}
+\newcommand{\@FEFUmonthend}{}
+\newcommand{\@FEFUyearend}{}
+\newcommand{\@FEFUweeks}{}
+\newcommand{\@FEFUplace}{}
+%    \end{macrocode}
+% Font and languages paramters are set up here.
+%    \begin{macrocode}
+\setmainfont{Times New Roman}
+\newfontfamily\cyrillicfont{Times New Roman}
+
+\setdefaultlanguage{russian}
+\setotherlanguage{english}
+\PolyglossiaSetup{russian}{indentfirst=true}
+
+\setstretch{1.5}
+\setlength\parindent{1.25cm}
+%    \end{macrocode}
+% The iternal lengths are defined here.
+%    \begin{macrocode}
+\newlength{\@FEFUunderlinelength}
+\setlength{\@FEFUunderlinelength}{\widthof{\_}}
+
+\newlength{\@FEFUleftcolumnwidth}
+\setlength{\@FEFUleftcolumnwidth}{230pt}
+
+\newlength{\@FEFUrightcolumnwidth}
+\setlength{\@FEFUrightcolumnwidth}{230pt}
+
+\newlength{\@FEFUlength}
+%    \end{macrocode}
+% \begin{macro}{\setschool}
+% \begin{macro}{\setgroup}
+% \begin{macro}{\setweeks}
+% \begin{macro}{\setplace}
+% Sets respective internal variable
+%    \begin{macrocode}
+\newcommand{\setschool}[1]{\renewcommand{\@FEFUschool}{#1}}
+\newcommand{\setgroup}[1]{\renewcommand{\@FEFUgroup}{#1}}
+\newcommand{\setweeks}[1]{\renewcommand{\@FEFUweeks}{#1}}
+\newcommand{\setplace}[1]{\renewcommand{\@FEFUplace}{#1}}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \begin{macro}{\setdepartment}
+% Sets department and department head iternal variables.
+%    \begin{macrocode}
+\newcommand{\setdepartment}[2]{
+    \renewcommand{\@FEFUdepartment}{#1}
+    \renewcommand{\@FEFUdepartmenthead}{#2}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setsupervisor}
+% Sets supervisor and supervisor title iternal variables.
+%    \begin{macrocode}
+\newcommand{\setsupervisor}[2]{
+    \renewcommand{\@FEFUsupervisor}{#1}
+    \renewcommand{\@FEFUsupervisortitle}{#2}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setdates}
+% Sets dates range.
+%    \begin{macrocode}
+\newcommand{\setdates}[6]{
+    \renewcommand{\@FEFUdaystart}{#1}
+    \renewcommand{\@FEFUmonthstart}{#2}
+    \renewcommand{\@FEFUyearstart}{#3}
+    \renewcommand{\@FEFUdayend}{#4}
+    \renewcommand{\@FEFUmonthend}{#5}
+    \renewcommand{\@FEFUyearend}{#6}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setfemale}
+% \begin{macro}{\setmale}
+% Changes endings of some words.
+%    \begin{macrocode}
+\newcommand{\setfemale}{\@FEFUfemaletrue}
+\newcommand{\setmale}{\@FEFUfemalefalse}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \begin{macro}{\@FEFUunderline}
+% Makes underlined space equal to \marg{arg1} * \textsf{\textbackslash @FEFUunderlinelength}.
+%    \begin{macrocode}
+\newcommand{\@FEFUunderline}[1]{\underline{\hspace*{#1\@FEFUunderlinelength}}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUpreunderline}
+% Inserts underline before \marg{arg1} to fill space of width \marg{arg2}.
+%    \begin{macrocode}
+\newcommand{\@FEFUpreunderline}[2]{
+    \setlength{\@FEFUlength}{#2-\widthof{#1}}%
+    \underline{\hspace{\@FEFUlength}}#1
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUpreunderline}
+% Inserts underline after \marg{arg1} to fill space of width \marg{arg2}.
+%    \begin{macrocode}
+\newcommand{\@FEFUpostunderline}[2]{
+    \setlength{\@FEFUlength}{#2-\widthof{#1}}%
+    #1\underline{\hspace{\@FEFUlength}}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUdate}
+% Inserts date field.
+%    \begin{macrocode}
+\newcommand{\@FEFUdate}{\guillemotleft\@FEFUunderline{4}\guillemotright\@FEFUunderline{15} \the\year\ г.}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\makereporttitle}
+% Makes practice report title.
+%    \begin{macrocode}
+\newcommand{\makereporttitle}{
+    \begin{titlepage}
+        \setstretch{1}
+        \begin{center}
+            \includegraphics[scale=0.5]{fefu}\\
+            {\fontsize{10}{12}\selectfont МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО
+            ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ}\\
+            {\fontsize{11}{12}\selectfont Федеральное государственное автономное
+            образовательное учреждение высшего образования\\}
+            {\bf {«Дальневосточный федеральный университет»}\\(ДВФУ)}\\
+            \vskip 14pt
+            \leaders\vrule width \textwidth\vskip2pt
+            \vskip 1pt
+            \leaders\vrule width \textwidth\vskip0.5pt
+            \vskip 18pt
+            {\bf \@FEFUschool}\\
+            \vskip 12pt
+            {\bf \@FEFUdepartment}
+            \vskip 20pt
+            {\bf О\ Т\ Ч\ Ё\ Т}
+            \vbox to 70pt {\vfil\@title\vfil}
+        \end{center}
+        \setlength{\columnsep}{1.5cm}
+        \begin{multicols}{2}
+            \vbox to 65pt {}
+            \noindent Отчёт защищен:\\
+            \@FEFUpostunderline{с оценкой }{\@FEFUleftcolumnwidth}\\
+            
+            \noindent Зав.кафедрой
+            \vskip 14pt
+            \noindent\@FEFUpreunderline{\@FEFUdepartmenthead}
+            {\@FEFUleftcolumnwidth}\\
+            
+            \centerline{\@FEFUdate}
+            \vskip 28pt
+            {
+                \fontsize{12}{14}\selectfont%
+                \noindent Регистрационный № \@FEFUunderline{6}
+                \vskip 24pt
+                \noindent\@FEFUdate
+            }
+            \vfill\null
+            \columnbreak
+            \noindent \if@FEFUfemale Выполнила студентка
+            \else Выполнил студент\fi гр. \@FEFUgroup\\
+            \ifthenelse{\equal{\@author}{}}{
+                \@FEFUpostunderline{\@FEFUunderline{15}\ }{\@FEFUrightcolumnwidth}\\
+                {\indent\fontsize{8}{10}\selectfont\textit{(Ф.И.О.)}
+                \hspace{0.27\@FEFUleftcolumnwidth}\textit{(подпись)}}
+            }{
+                \noindent\@FEFUpostunderline{\@author\ }{\@FEFUrightcolumnwidth}\\
+                {\indent\fontsize{8}{10}\selectfont
+                \hspace{0.4\@FEFUleftcolumnwidth}\textit{(подпись)}}
+            }\\
+            Руководитель практики\\
+            \ifthenelse{\equal{\@FEFUsupervisortitle}{}}{
+                \underline{\hspace{\@FEFUrightcolumnwidth}}\\
+                {\indent\fontsize{8}{10}\selectfont\textit{(должность, уч.звание)}}
+            }{
+                \noindent\hbox to \@FEFUrightcolumnwidth {\@FEFUsupervisortitle}\\
+                {\indent\fontsize{8}{10}\selectfont\textit{(должность, уч.звание)}}                
+            }\\
+            \ifthenelse{\equal{\@FEFUsupervisor}{}}{
+                \@FEFUpostunderline{\@FEFUunderline{15}\ }{\@FEFUrightcolumnwidth}\\
+                {\indent\fontsize{8}{10}\selectfont\textit{(Ф.И.О.)}
+                \hspace{0.27\@FEFUleftcolumnwidth}\textit{(подпись)}}
+            }{
+                \noindent\@FEFUpostunderline{\@FEFUsupervisor\ }{\@FEFUrightcolumnwidth}\\
+                {\indent\fontsize{8}{10}\selectfont
+                \hspace{0.4\@FEFUleftcolumnwidth}\textit{(подпись)}}
+            }\\
+            \@FEFUdate\\
+            \vskip 28pt
+            {
+                \fontsize{12}{14}\selectfont%
+                \noindent Практика пройдена в срок\\
+                \begin{tabular}{@{}lccc}
+                    с & \guillemotleft\@FEFUdaystart\guillemotright & \@FEFUmonthstart & \@FEFUyearstart г.\\
+                    по & \guillemotleft\@FEFUdayend\guillemotright & \@FEFUmonthend & \@FEFUyearend г.
+                \end{tabular}\\
+                (\@FEFUweeks\ недель)
+                \vskip 12pt
+                \noindent\textit{\uline{на \@FEFUplace}}
+            }
+        \end{multicols}
+        {\setstretch{1.25}\centering{г. Владивосток\\\the\year}\par}
+    \end{titlepage}
+    \setcounter{page}{2}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\maketableofcontents}
+% Makes table of contents.
+%    \begin{macrocode}
+\newcommand{\maketableofcontents}{
+    \thispagestyle{empty}
+    \hypertarget{sec:contents}{}
+    \tableofcontents
+    \newpage
+}
+%    \end{macrocode}
+% \end{macro}
+% No title and author by default.
+%    \begin{macrocode}
+\title{}
+\author{}
+%    \end{macrocode}
+% Sets page style: page number at the bottom right corner and no head rule.
+%    \begin{macrocode}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[R]{\thepage}}
+\renewcommand{\headrulewidth}{0pt}
+\pagestyle{plain}
+%    \end{macrocode}
+% Adds dots between section title and page number in toc.
+%    \begin{macrocode}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+%    \end{macrocode}
+% Sets toc font.
+%    \begin{macrocode}
+\renewcommand{\cfttoctitlefont}{\normalfont\bfseries}
+%    \end{macrocode}
+% The sections title styles are set up here.
+%    \begin{macrocode}
+\titlespacing{\section}{\parindent}{0pt}{0pt}
+\titleformat{\section}[block]
+    {\bfseries\normalsize}{\thesection.~}{0pt}{\hyperlink{sec:contents}{#1}}
+\titlespacing{name=\section,numberless}{\parindent}{0pt}{0pt}
+\titleformat{name=\section,numberless}[block]
+    {\bfseries\normalsize}{}{0pt}{
+        \phantomsection
+        \addcontentsline{toc}{section}{#1}\hyperlink{sec:contents}{#1}
+    }
+\titlespacing{\subsection}{\parindent}{0pt}{0pt}
+\titleformat{\subsection}[block]
+    {\bfseries\normalsize}{\thesubsection.~}{0pt}{\hyperlink{sec:contents}{#1}}
+\titlespacing{name=\subsection,numberless}{\parindent}{0pt}{0pt}
+\titleformat{name=\subsection,numberless}[block]
+    {\bfseries\normalsize}{}{0pt}{
+        \phantomsection
+        \addcontentsline{toc}{subsection}{#1}\hyperlink{sec:contents}{#1}
+    }
+\titlespacing{\subsubsection}{\parindent}{0pt}{0pt}
+\titleformat{\subsubsection}[block]
+    {\bfseries\normalsize}{\thesubsubsection.~}{0pt}{\hyperlink{sec:contents}{#1}}
+\titlespacing{name=\subsubsection,numberless}{\parindent}{0pt}{0pt}
+\titleformat{name=\subsubsection,numberless}[block]
+    {\bfseries\normalsize}{}{0pt}{
+        \phantomsection
+        \addcontentsline{toc}{subsubsection}{#1}\hyperlink{sec:contents}{#1}
+    }
+%    \end{macrocode}
+% The abstract style is set up here.
+%    \begin{macrocode}
+\renewcommand{\abstracttextfont}{\normalfont\normalsize}
+\setlength{\absleftindent}{0pt}
+\setlength{\absrightindent}{0pt}
+\setlength{\abstitleskip}{\lineskip}
+\renewcommand{\abstitlestyle}[1]{\section*{#1}}
+%    \end{macrocode}
+% Lists style is set up here.
+%    \begin{macrocode}
+\setlist[itemize]{leftmargin=1.5\parindent,itemsep=-1ex}
+\setlist[enumerate]{leftmargin=1.5\parindent,itemsep=-1ex}
+%    \end{macrocode}
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+% \Finale
