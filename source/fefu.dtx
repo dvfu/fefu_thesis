@@ -343,11 +343,15 @@
 %    \begin{macrocode}
 \renewcommand{\cfttoctitlefont}{\normalfont\bfseries}
 %    \end{macrocode}
+% Add paragraphs to toc.
+%    \begin{macrocode}
+\setcounter{tocdepth}{4}
+%    \end{macrocode}
 % The sections title styles are set up here.
 %    \begin{macrocode}
 \titlespacing{\section}{\parindent}{0pt}{0pt}
 \titleformat{\section}[block]
-    {\bfseries\normalsize}{\thesection.~}{0pt}{\hyperlink{sec:contents}{#1}}
+    {\bfseries\normalsize}{\thesection~}{0pt}{\hyperlink{sec:contents}{#1}}
 \titlespacing{name=\section,numberless}{\parindent}{0pt}{0pt}
 \titleformat{name=\section,numberless}[block]
     {\bfseries\normalsize}{}{0pt}{
@@ -356,7 +360,7 @@
     }
 \titlespacing{\subsection}{\parindent}{0pt}{0pt}
 \titleformat{\subsection}[block]
-    {\bfseries\normalsize}{\thesubsection.~}{0pt}{\hyperlink{sec:contents}{#1}}
+    {\bfseries\normalsize}{\thesubsection~}{0pt}{\hyperlink{sec:contents}{#1}}
 \titlespacing{name=\subsection,numberless}{\parindent}{0pt}{0pt}
 \titleformat{name=\subsection,numberless}[block]
     {\bfseries\normalsize}{}{0pt}{
@@ -365,13 +369,20 @@
     }
 \titlespacing{\subsubsection}{\parindent}{0pt}{0pt}
 \titleformat{\subsubsection}[block]
-    {\bfseries\normalsize}{\thesubsubsection.~}{0pt}{\hyperlink{sec:contents}{#1}}
+    {\bfseries\normalsize}{\thesubsubsection~}{0pt}{\hyperlink{sec:contents}{#1}}
 \titlespacing{name=\subsubsection,numberless}{\parindent}{0pt}{0pt}
 \titleformat{name=\subsubsection,numberless}[block]
     {\bfseries\normalsize}{}{0pt}{
         \phantomsection
         \addcontentsline{toc}{subsubsection}{#1}\hyperlink{sec:contents}{#1}
     }
+\renewcommand{\paragraph}[1]{
+    \stepcounter{paragraph}
+    \par{\bfseries\normalsize\theparagraph~\hyperlink{sec:contents}{#1}}
+    \phantomsection
+    \addcontentsline{toc}{paragraph}{\hbox to \cftparanumwidth{\theparagraph}#1}
+    \par
+}
 %    \end{macrocode}
 % The abstract style is set up here.
 %    \begin{macrocode}
