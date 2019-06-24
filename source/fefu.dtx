@@ -394,9 +394,48 @@
 %    \end{macrocode}
 % Lists style is set up here.
 %    \begin{macrocode}
-\setlist[itemize]{leftmargin=1.5\parindent,itemsep=-1ex}
-\setlist[enumerate]{leftmargin=1.5\parindent,itemsep=-1ex}
+\setlist[itemize]{leftmargin=1.5\parindent,itemsep=-1ex,topsep=0pt,wide}
+\setlist[enumerate]{leftmargin=1.5\parindent,itemsep=-1ex,topsep=0pt,wide}
 %    \end{macrocode}
+% \begin{macro}{\@FEFUcountcols}
+% Count's symbols \& in given macro.
+%    \begin{macrocode}
+\def\@FEFUcountcolshelper#1#2&#3{%
+    \ifx\@FEFUcountcolshelper#3#1%
+    \expandafter\@gobble%
+    \else%
+    \expandafter\@firstofone%
+    \fi%
+    {\@FEFUcountcolshelper{\the\numexpr#1+1\relax}#3}%
+}
+\def\@FEFUcountcols{\noalign{%
+        \xdef\@FEFUncols{\expandafter\@FEFUcountcolshelper\expandafter1\@preamble&\@FEFUcountcolshelper}%
+}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{fefutable}
+% Inserts table with tabular environment inside.
+% \begin{Options}
+%     \item[\oarg{arg1}] Specifies table placement;
+%     \item[\marg{arg2}] Columns specification for tabular environment;
+%     \item[\marg{arg3}] Table caption.
+% \end{Options}
+%    \begin{macrocode}
+\newcounter{@FEFUtable}
+\newenvironment{fefutable}[3][h]{%
+    \begin{table}[#1]
+        \centering
+        \refstepcounter{@FEFUtable}
+        \begin{tabular}{#2}
+            \@FEFUcountcols%
+            \multicolumn{\@FEFUncols}{r@{}}{Т\kern 0.2em а\kern 0.2em б\kern 0.2em л
+                \kern 0.2em и\kern 0.2em ц\kern 0.2em а \the@FEFUtable\ --- #3}\\
+        }{%
+        \end{tabular}
+    \end{table}
+}
+%    \end{macrocode}
+% \end{macro}
 %    \begin{macrocode}
 %</class>
 %    \end{macrocode}
