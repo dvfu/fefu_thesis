@@ -22,4 +22,5 @@ uninstall: clean
 	@rm -rf $(DOC_DIR)
 
 clean:
-	@rm -rf $(CACHE_DIR)	
+	@rm -rf $(CACHE_DIR)
+	
