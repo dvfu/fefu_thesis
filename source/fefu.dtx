@@ -110,6 +110,7 @@
 \newcommand{\@FEFUenddate}{}
 \newcommand{\@FEFUstartyear}{\the\year}
 \newcommand{\@FEFUendyear}{\the\year}
+\newcommand{\@FEFUpracticetask}{}
 %    \end{macrocode}
 % The iternal counters are set up here.
 %    \begin{macrocode}
@@ -118,6 +119,9 @@
 
 \newcounter{@FEFUtable}
 \setcounter{@FEFUtable}{0}
+
+\newcounter{@FEFUdiarycounter}
+\setcounter{@FEFUdiarycounter}{0}
 %    \end{macrocode}
 % Font and languages paramters are set up here.
 %    \begin{macrocode}
@@ -147,6 +151,7 @@
 \newcommand{\setschool}[1]{\renewcommand{\@FEFUschool}{#1}}
 \newcommand{\setgroup}[1]{\renewcommand{\@FEFUgroup}{#1}}
 \newcommand{\setplace}[1]{\renewcommand{\@FEFUplace}{#1}}
+\newcommand{\setpracticetask}[1]{\renewcommand{\@FEFUpracticetask}{#1}}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -413,6 +418,39 @@
 }
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\makepracticetask}
+% Makes practice task page.
+%    \begin{macrocode}
+\newcommand{\makepracticetask}[1][10]{
+    \thispagestyle{empty}
+    {\setlength\parindent{0pt}\setstretch{1.15}
+        \centerline{\bf Индивидуальное задание по практике}
+        \vskip 14pt
+        \@FEFUpostfield[ФИО]{\@FEFUgendered{Студентке}{Студенту} группы \@FEFUfield[группа]{\@FEFUgroup}{4.5cm} }{\@author}{\textwidth}
+        \vskip 14pt
+        \ifthenelse{\equal{\@FEFUplace}{}}{%
+            \@FEFUpostunderline{Место прохождения практики }{\textwidth}\\
+            \underline{\hspace{\textwidth}}%
+        }{%
+            Место прохождения практики \@FEFUplace
+        }
+        \vskip 14pt
+        Сроки прохождения практики \@FEFUdaterange{false}{false}{2.75cm} \@FEFUstartyear\ года
+        \vskip 28pt
+        \ifthenelse{\equal{\@FEFUpracticetask}{}}{%
+            \@FEFUpostunderline{Виды работ и требования по их выполнению}{\textwidth}\\
+            \foreach \n in {1,...,#1}{\underline{\hspace{\textwidth}}\\}
+        }{Виды работ и требования по их выполнению \@FEFUpracticetask}
+        \vskip 28pt
+        Руководитель практики от ДВФУ\\
+        \@FEFUpostfield[ФИО]{\@FEFUfield[должность]{\@FEFUsupervisortitle}{5cm} \@FEFUfield[подпись]{}{5cm} }{\@FEFUsupervisor}{\textwidth}
+        \vskip 28pt
+        \@FEFUdate{\@FEFUcolumnwidth}
+        \newpage
+    }
+}
+%    \end{macrocode}
+% \end{macro}
 % No title and author by default.
 %    \begin{macrocode}
 \title{}
@@ -478,6 +516,10 @@
     \par
 }
 %    \end{macrocode}
+% The bibliography style is set up here.
+%    \begin{macrocode}
+\renewcommand\@biblabel[1]{\indent#1.}
+%    \end{macrocode}
 % The abstract style is set up here.
 %    \begin{macrocode}
 \renewcommand{\abstracttextfont}{\normalfont\normalsize}
@@ -492,7 +534,7 @@
 \setlist[enumerate]{leftmargin=1.5\parindent,itemsep=-1ex,topsep=0pt,wide}
 %    \end{macrocode}
 % \begin{macro}{\@FEFUcountcols}
-% Count's symbols \& in given macro.
+% Counts symbols \& in given macro.
 %    \begin{macrocode}
 \def\@FEFUcountcolshelper#1#2&#3{%
     \ifx\@FEFUcountcolshelper#3#1%
@@ -526,6 +568,47 @@
         }{%
         \end{tabular}
     \end{table}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\makediary}
+% Inserts diary table.
+%    \begin{macrocode}
+\newcommand{\makediary}{%
+    \maketitle[]{diary}%
+    \thispagestyle{empty}%
+    \begin{center}
+        \setstretch{1}\fontsize{12}{12}\selectfont%
+        \renewcommand{\arraystretch}{1.75}%
+        \setcounter{@FEFUcounter}{0}%
+        \addtocounter{@FEFUdiarycounter}{-1}
+        \begin{longtable}{|C{2.5cm}|C{3cm}|p{7.5cm}|C{2.5cm}|}
+            \hline
+            \bfseries{Дата выполнения работ} & \bfseries{Место} & \multicolumn{1}{C{7.5cm}|}{\bfseries{Краткое содержание выполняемых работ}} & \bfseries{Отметка о выполнеии работы}\\
+            \hline
+            \ifnum-1<\the@FEFUdiarycounter\relax
+                \whiledo{\the@FEFUcounter<\the@FEFUdiarycounter}{%
+                    \csname @FEFUdiaryentry@\the@FEFUcounter\endcsname%
+                    \stepcounter{@FEFUcounter}%
+                }%
+                \csname @FEFUdiaryentry@\the@FEFUdiarycounter\endcsname%
+            \fi%
+        \end{longtable}
+        \stepcounter{@FEFUdiarycounter}%
+        \renewcommand{\arraystretch}{1}%
+    \end{center}%
+    \if@FEFUoffsite\noindent\@FEFUpostfield[ФИО, должность, подпись]{Руководитель практики от предприятия }{}{\textwidth}\vskip 14pt\fi
+    \noindent\@FEFUpostfield[ФИО, должность, подпись]{Руководитель практики от университета }{}{\textwidth}
+    \newpage
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{diaryentry}
+% Inserts diary entry.
+%    \begin{macrocode}
+\newcommand{\diaryentry}[4][]{%
+    \expandafter\def\csname @FEFUdiaryentry@\the@FEFUdiarycounter\endcsname{#2 & #3 & #4 & #1\\\hline}%
+    \stepcounter{@FEFUdiarycounter}%
 }
 %    \end{macrocode}
 % \end{macro}
