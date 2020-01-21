@@ -1,0 +1,36 @@
+\documentclass{fefu}
+\usepackage{subfiles}
+
+% All necessary packages must be defined here
+\usepackage{float}
+\usepackage{minted}
+\usepackage{dirtree}
+\usepackage{multirow}
+
+\setmonofont{Courier New}
+
+\renewcommand{\listingscaption}{Код программы}
+
+\author{Тыщенко Андрей Геннадьевич}
+\setgroup{М9119-09.04.01иибд}
+\setsupervisor{Ринчино Андрей Львович}{}
+%\setplace{Дальневосточный Федеральный Университет}
+
+\begin{document}
+    \maketitle[2]{practice}
+    \maketableofcontents
+    \section*{Введение}
+    \subfile{subfiles/introduction.tex}
+    \newpage
+    \section{Основная часть}
+    \subfile{subfiles/main.tex}
+    \newpage
+    \section*{Заключение}
+    \subfile{subfiles/conclusion.tex}
+    \newpage
+    \bibliographystyle{ugost2008ls}
+    \bibliography{references.bib}
+    \subfile{subfiles/diary.tex}
+    \subfile{subfiles/practice-task.tex}
+\end{document}
+

@@ -1,0 +1,92 @@
+\documentclass[../document.tex]{subfiles}
+
+\newcommand{\macro}[2]{\texttt{\textbackslash#1\{#2\}}}
+
+\begin{document}
+    \subsection{Индивидуальное задание практики}
+    \par В качестве индивидуального задания практики была получена разработка шаблона оформления отчёта по практике с использованием набора макрорасширений \LaTeX\cite{latex} системы компьютерной вёрстки \TeX\cite{tex}, облегчающей набор сложных документов. Разработанный шаблон должен соответствовать следующим требованиям:
+    \begin{enumerate}
+        \item полное соответствие правилам оформления документов ДВФУ;
+        \item обобщение как можно большего количества документов, являющихся частью отчёта;
+        \item возможность разбиения отчёта на несколько файлов, с целью повторного использования;
+        \item автоматизация установки класса документа для различных операционных систем Linux/Windows/macOS;
+        \item наличие примера готового отчёта.
+    \end{enumerate}
+    \subsection{Выполнение индивидуального задания}
+    \par Результатом работы является git репозиторий\cite{git_repo}, структура которого изображена на Рис. \ref{repo_dir}. Файл \texttt{fefu.dtx} является документированным файлом LaTeX, содержащим описание стиля оформления и различные вспомогательные макросы для упрощения написания отчёта. При составлении шаблона были использованы следующие параметры оформления:
+    \begin{itemize}
+        \item шрифт \texttt{Times New Roman}, 14 кегль, полуторный межстрочный интервал;
+        \item поля страницы: верхнее, нижнее \textemdash\ 2 см, правое \textemdash\ 1 см, левое \textemdash\ 2.5 см;
+        \item отступ красной строки 1.25 см;
+        \item шрифт заголовков 14 кегль полужирный.
+    \end{itemize}
+    \begin{figure}[H]
+        \dirtree{%
+            .0 .
+            .1 source // \textnormal{исходный код класса шаблона}.
+            .2 fefu.dtx // \textnormal{реализация класса}.
+            .2 fefu.ins // \textnormal{файл установки класса}.
+            .2 fefu.png // \textnormal{файл эмблемы ДВФУ}.
+            .1 example // \textnormal{пример отчёта}.
+            .2 subfiles // \textnormal{файлы отдельных частей отчёта}.
+            .3 conclusion.tex // \textnormal{заключение}.
+            .3 diary.tex // \textnormal{дневник практики}.
+            .3 introduction.tex // \textnormal{введение}.
+            .3 main.tex // \textnormal{основная часть}.
+            .3 practice-task.tex // \textnormal{задание на практику}.
+            .2 main.tex // \textnormal{файл отчёта по практике}.
+            .2 references.tex // \textnormal{описание списка литературы}.
+            .1 Makefile // \textnormal{файл установки для Linux/macOS}.
+            .1 README.md.
+        }
+        \caption{\label{repo_dir}Структура git репозитория}
+    \end{figure}
+    \par Класс документа \texttt{fefu} предоставляет следующие макросы:
+    \begin{enumerate}
+        \item[\macro{setschool}{school}:] устанавливает название школы;
+        \item[\macro{setgroup}{group}:] устанавливает название группы;
+        \item[\macro{setplace}{place}:] устанавливает место прохождения практики;
+        \item[\macro{setpracticetask}{task}:] устанавливает описание задания на практику;
+        \item[\macro{setsupervisor\{name\}}{title}:] устанавливает ФИО и должность руководителя практики от университета;
+        \item[\macro{setoffsitesupervisor\{name\}}{title}:] устанавливает ФИО и должность руководителя практики от предприятия;
+        \item[\macro{setenddate[YYYY]}{DD.MM}:] устанавливает дату окончания практики;
+        \item[\texttt{\textbackslash setfemale}:] устанавливает окончания в женском роде;
+        \item[\texttt{\textbackslash setmale}:] устанавливает окончания в мужском роде;
+        \item[\texttt{\textbackslash setoffsite}:] устанавливает прохождение практики на предприятии;
+        \item[\texttt{\textbackslash setonsite}:] устанавливает прохождение практики в университете;
+        \item[\macro{maketitle}{practice|diary}:] печатает титульный лист отчёта по практике и дневника практики соотвественно;
+        \item[\texttt{\textbackslash maketableofcontents}:] печатает содержание;
+        \item[\texttt{\textbackslash makepracticetask[n]}:] печатает лист задания на практику;
+        \item[\texttt{\textbackslash diaryentry[mark]\{date\}\{place\}\{desc\}}:] добавляет строку в дневник практики;
+        \item[\texttt{\textbackslash makediary}:] печатает дневник практики;
+    \end{enumerate}
+    \par Также класс определяет новый тип таблицы\\
+    \texttt{\textbackslash begin\{fefutable\}[placement]\{column specification\}\{title\}}\\
+    где аргументы задают следующие параметры:
+    \begin{enumerate}
+        \item[\texttt{placement}:] задаёт позицию для блока \texttt{table} \cite{table};
+        \item[\texttt{column\_specification}:] задаёт описание колонок таблицы, аналогично \texttt{tabular} \cite{tabular};
+        \item[\texttt{title}:] задаёт название таблицы.
+    \end{enumerate}
+    Таблица \ref{table_sample} демонстрирует результат компиляции Кода программы \ref{sample}, отражающего пример использования \texttt{fefutable}.
+    \begin{fefutable}[h]{|l|c|r|}{\label{table_sample}Пример таблицы}
+        \hline
+        \textbf{Колонка 1} & \textbf{Колонка 2} & \textbf{Колонка 3}\\
+        \hline
+        По левому краю & По середине & По правому краю\\
+        \hline
+    \end{fefutable}
+    \begin{listing}[h]
+        \begin{minted}{latex}
+\begin{fefutable}{|l|c|r|}{Пример таблицы}
+    \hline
+    \textbf{Колонка 1} & \textbf{Колонка 2} 
+        & \textbf{Колонка 3}\\
+    \hline
+    По левому краю & По середине & По правому краю\\
+    \hline
+\end{fefutable}
+        \end{minted}
+        \caption{\label{sample}Пример использования \texttt{fefutable}}
+    \end{listing}
+\end{document}
