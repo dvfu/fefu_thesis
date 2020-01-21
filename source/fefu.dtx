@@ -58,6 +58,7 @@
 %    \begin{macrocode}
 \newif\if@FEFUhassubfigure
 \newif\if@FEFUfemale
+\newif\if@FEFUoffsite
 %    \end{macrocode}
 % The options are defined and processed here.
 %    \begin{macrocode}
@@ -81,7 +82,11 @@
 \RequirePackage[style]{abstract}
 \RequirePackage{fancyhdr}
 \RequirePackage{enumitem}
-\RequirePackage{subfiles}
+\RequirePackage{stackengine}
+\RequirePackage{pgffor}
+\RequirePackage{longtable}
+\RequirePackage{array}
+\RequirePackage{xstring}
 %    \end{macrocode}
 % The \textsf{tocloft} package is loaded with \textsf{subfigure} option if necessary.
 %    \begin{macrocode}
@@ -94,20 +99,25 @@
 %    \end{macrocode}
 % The iternal variables are set up here.
 %    \begin{macrocode}
-\newcommand{\@FEFUschool}{THE SCHOOL}
-\newcommand{\@FEFUdepartment}{the department}
-\newcommand{\@FEFUdepartmenthead}{T.D.Head}
-\newcommand{\@FEFUgroup}{Б0000а}
+\newcommand{\@FEFUschool}{ШКОЛА ЦИФРОВОЙ ЭКОНОМИКИ}
+\newcommand{\@FEFUgroup}{}
 \newcommand{\@FEFUsupervisor}{}
 \newcommand{\@FEFUsupervisortitle}{}
-\newcommand{\@FEFUdaystart}{}
-\newcommand{\@FEFUmonthstart}{}
-\newcommand{\@FEFUyearstart}{}
-\newcommand{\@FEFUdayend}{}
-\newcommand{\@FEFUmonthend}{}
-\newcommand{\@FEFUyearend}{}
-\newcommand{\@FEFUweeks}{}
+\newcommand{\@FEFUoffsitesupervisor}{}
+\newcommand{\@FEFUoffsitesupervisortitle}{}
 \newcommand{\@FEFUplace}{}
+\newcommand{\@FEFUstartdate}{}
+\newcommand{\@FEFUenddate}{}
+\newcommand{\@FEFUstartyear}{\the\year}
+\newcommand{\@FEFUendyear}{\the\year}
+%    \end{macrocode}
+% The iternal counters are set up here.
+%    \begin{macrocode}
+\newcounter{@FEFUcounter}
+\setcounter{@FEFUcounter}{0}
+
+\newcounter{@FEFUtable}
+\setcounter{@FEFUtable}{0}
 %    \end{macrocode}
 % Font and languages paramters are set up here.
 %    \begin{macrocode}
@@ -123,14 +133,8 @@
 %    \end{macrocode}
 % The iternal lengths are defined here.
 %    \begin{macrocode}
-\newlength{\@FEFUunderlinelength}
-\setlength{\@FEFUunderlinelength}{\widthof{\_}}
-
-\newlength{\@FEFUleftcolumnwidth}
-\setlength{\@FEFUleftcolumnwidth}{230pt}
-
-\newlength{\@FEFUrightcolumnwidth}
-\setlength{\@FEFUrightcolumnwidth}{230pt}
+\newlength{\@FEFUcolumnwidth}
+\setlength{\@FEFUcolumnwidth}{.4\textwidth}
 
 \newlength{\@FEFUlength}
 %    \end{macrocode}
@@ -142,24 +146,14 @@
 %    \begin{macrocode}
 \newcommand{\setschool}[1]{\renewcommand{\@FEFUschool}{#1}}
 \newcommand{\setgroup}[1]{\renewcommand{\@FEFUgroup}{#1}}
-\newcommand{\setweeks}[1]{\renewcommand{\@FEFUweeks}{#1}}
 \newcommand{\setplace}[1]{\renewcommand{\@FEFUplace}{#1}}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
-% \begin{macro}{\setdepartment}
-% Sets department and department head iternal variables.
-%    \begin{macrocode}
-\newcommand{\setdepartment}[2]{
-    \renewcommand{\@FEFUdepartment}{#1}
-    \renewcommand{\@FEFUdepartmenthead}{#2}
-}
-%    \end{macrocode}
-% \end{macro}
 % \begin{macro}{\setsupervisor}
-% Sets supervisor and supervisor title iternal variables.
+% Sets supervisor and supervisor's title iternal variables.
 %    \begin{macrocode}
 \newcommand{\setsupervisor}[2]{
     \renewcommand{\@FEFUsupervisor}{#1}
@@ -167,16 +161,30 @@
 }
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\setdates}
-% Sets dates range.
+% \begin{macro}{\setoffsitesupervisor}
+% Sets offsite supervisor and offsite supervisor's title iternal variables.
 %    \begin{macrocode}
-\newcommand{\setdates}[6]{
-    \renewcommand{\@FEFUdaystart}{#1}
-    \renewcommand{\@FEFUmonthstart}{#2}
-    \renewcommand{\@FEFUyearstart}{#3}
-    \renewcommand{\@FEFUdayend}{#4}
-    \renewcommand{\@FEFUmonthend}{#5}
-    \renewcommand{\@FEFUyearend}{#6}
+\newcommand{\setoffsitesupervisor}[2]{
+    \renewcommand{\@FEFUoffsitesupervisor}{#1}
+    \renewcommand{\@FEFUoffsitesupervisortitle}{#2}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setstartdate}
+% Sets start date internal variable.
+%    \begin{macrocode}
+\newcommand{\setstartdate}[2][]{
+    \renewcommand{\@FEFUstartdate}{#2}
+    \ifthenelse{\equal{#1}{}}{}{\renewcommand{\@FEFUstartyear}{#1}}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setenddate}
+% Sets end date internal variable.
+%    \begin{macrocode}
+\newcommand{\setenddate}[2][]{
+    \renewcommand{\@FEFUenddate}{#2}
+    \ifthenelse{\equal{#1}{}}{}{\renewcommand{\@FEFUendyear}{#1}}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -189,11 +197,14 @@
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
-% \begin{macro}{\@FEFUunderline}
-% Makes underlined space equal to \marg{arg1} * \textsf{\textbackslash @FEFUunderlinelength}.
+% \begin{macro}{\setoffsite}
+% \begin{macro}{\setonsite}
+% Adds or removes offsite fields.
 %    \begin{macrocode}
-\newcommand{\@FEFUunderline}[1]{\underline{\hspace*{#1\@FEFUunderlinelength}}}
+\newcommand{\setoffsite}{\@FEFUoffsitetrue}
+\newcommand{\setonsite}{\@FEFUoffsitefalse}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \begin{macro}{\@FEFUpreunderline}
 % Inserts underline before \marg{arg1} to fill space of width \marg{arg2}.
@@ -213,106 +224,184 @@
 }
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\@FEFUshortyear}
+% Prints short year.
+%    \begin{macrocode}
+\newcommand*\@FEFUshortyear[1]{\expandafter\@gobbletwo\number\numexpr#1\relax}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUshortname}
+% Prints short name.
+%    \begin{macrocode}
+\def\@FEFUshortnamehelper#1 #2 #3 {%
+    \StrLeft{#2}{1}[\@FEFU@name]\StrLeft{#3}{1}[\@FEFU@middlename]%
+    #1 \@FEFU@name. \@FEFU@middlename.%
+}
+\def\@FEFUshortname#1{\expandafter\@FEFUshortnamehelper#1}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@FEFUdate}
 % Inserts date field.
 %    \begin{macrocode}
-\newcommand{\@FEFUdate}{\guillemotleft\@FEFUunderline{4}\guillemotright\@FEFUunderline{15} \the\year\ г.}
+\newcommand{\@FEFUdate}[1]{%
+    \setlength{\@FEFUlength}{#1-\widthof{\guillemotleft\underline{\hspace{.75cm}}\guillemotright\ \ \the\year\ года}}%
+    \guillemotleft\underline{\hspace{.75cm}}\guillemotright \underline{\hspace{\@FEFUlength}} \the\year\ года%
+}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\makereporttitle}
-% Makes practice report title.
+% \begin{macro}{\@FEFUfield}
+% Inserts \marg{arg1} or underlined space if command is empty.
 %    \begin{macrocode}
-\newcommand{\makereporttitle}{
+\newcommand{\@FEFUfield}[3][]{%
+    \ifthenelse{\equal{#2}{}}{%
+        \ifthenelse{\equal{#1}{}}{%
+            \underline{\hspace{#3}}%
+        }{%
+            \stackunder{\underline{\hspace{#3}}}{{\fontsize{8}{10}\selectfont(#1)}}%
+        }%
+    }{%
+        #2%
+    }%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUpostfield}
+% Inserts \marg{arg1} and fills avaliable space with another field.
+%    \begin{macrocode}
+\newcommand{\@FEFUpostfield}[4][]{%
+    \setlength{\@FEFUlength}{#4-\widthof{#2}}%
+    #2\@FEFUfield[#1]{#3}{\@FEFUlength}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUmakedate}
+% Adds year to a date if date is set.
+%    \begin{macrocode}
+\newcommand{\@FEFUmakedate}[3][true]{%
+    #2.\ifthenelse{\equal{#1}{true}}{\@FEFUshortyear{#3}}{#3}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUdaterange}
+% Prints date range.
+%    \begin{macrocode}
+\newcommand{\@FEFUdaterange}[3]{%
+    с \ifthenelse{\equal{\@FEFUstartdate}{}}{\underline{\hspace{#3}}}{%
+        \ifthenelse{\equal{#1}{true}}{\@FEFUmakedate[#2]{\@FEFUstartdate}{\@FEFUstartyear}}{\@FEFUstartdate}%
+    } по \ifthenelse{\equal{\@FEFUenddate}{}}{\underline{\hspace{#3}}}{%
+        \ifthenelse{\equal{#1}{true}}{\@FEFUmakedate[#2]{\@FEFUenddate}{\@FEFUendyear}}{\@FEFUenddate}%
+    }%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUgendered}
+% Select argument depending on gender setting. \marg{arg1} for female, and \marg{arg2} for male.
+%    \begin{macrocode}
+\newcommand{\@FEFUgendered}[2]{\if@FEFUfemale#1\else#2\fi}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUsigname}
+% Insert space for a sign and a name afterwards
+%    \begin{macrocode}
+\newcommand{\@FEFUsigname}[3]{%
+    \ifthenelse{\equal{#2}{}}{%
+        \@FEFUpostfield[ФИО]{\@FEFUfield[подпись]{}{#1} }{}{#3}%
+    }{%
+        \@FEFUfield[подпись]{}{#1} \@FEFUshortname{#2}%
+    }%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\addtitle}
+% Inserts titlepage.
+%    \begin{macrocode}
+\newcommand{\addtitle}[2]{%
+    \expandafter\def\csname @FEFU@#1@titlepage\endcsname{#2}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\maketitle}
+% Inserts titlepage.
+%    \begin{macrocode}
+\renewcommand{\maketitle}[2][2]{%
+    \newgeometry{left=2.5cm,right=1cm,top=1.2cm,bottom=2cm}
     \begin{titlepage}
         \setstretch{1}
         \begin{center}
             \includegraphics[scale=0.5]{fefu}\\
-            {\fontsize{10}{12}\selectfont МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО
-            ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ}\\
+            {\fontsize{11}{12}\selectfont МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО
+                ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ}\\
             {\fontsize{11}{12}\selectfont Федеральное государственное автономное
-            образовательное учреждение высшего образования\\}
-            {\bf {«Дальневосточный федеральный университет»}\\(ДВФУ)}\\
+                образовательное учреждение высшего образования\\}
+            {\bf {«Дальневосточный федеральный университет»}}\\
             \vskip 14pt
-            \leaders\vrule width \textwidth\vskip2pt
-            \vskip 1pt
-            \leaders\vrule width \textwidth\vskip0.5pt
-            \vskip 18pt
-            {\bf \@FEFUschool}\\
-            \vskip 12pt
-            {\bf \@FEFUdepartment}
-            \vskip 20pt
-            {\bf О\ Т\ Ч\ Ё\ Т}
-            \vbox to 70pt {\vfil\@title\vfil}
+            {\setstretch{1.15}\@FEFUschool\\\vskip 35pt}
+            \csname @FEFU@#2@titlepage\endcsname
         \end{center}
-        \setlength{\columnsep}{1.5cm}
-        \begin{multicols}{2}
-            \vbox to 65pt {}
-            \noindent Отчёт защищен:\\
-            \@FEFUpostunderline{с оценкой }{\@FEFUleftcolumnwidth}\\
-            
-            \noindent Зав.кафедрой
-            \vskip 14pt
-            \noindent\@FEFUpreunderline{\@FEFUdepartmenthead}
-            {\@FEFUleftcolumnwidth}\\
-            
-            \centerline{\@FEFUdate}
-            \vskip 28pt
-            {
-                \fontsize{12}{14}\selectfont%
-                \noindent Регистрационный № \@FEFUunderline{6}
-                \vskip 24pt
-                \noindent\@FEFUdate
-            }
-            \vfill\null
-            \columnbreak
-            \noindent \if@FEFUfemale Выполнила студентка
-            \else Выполнил студент\fi гр. \@FEFUgroup\\
-            \ifthenelse{\equal{\@author}{}}{
-                \@FEFUpostunderline{\@FEFUunderline{15}\ }{\@FEFUrightcolumnwidth}\\
-                {\indent\fontsize{8}{10}\selectfont\textit{(Ф.И.О.)}
-                \hspace{0.27\@FEFUleftcolumnwidth}\textit{(подпись)}}
-            }{
-                \noindent\@FEFUpostunderline{\@author\ }{\@FEFUrightcolumnwidth}\\
-                {\indent\fontsize{8}{10}\selectfont
-                \hspace{0.4\@FEFUleftcolumnwidth}\textit{(подпись)}}
-            }\\
-            Руководитель практики\\
-            \ifthenelse{\equal{\@FEFUsupervisortitle}{}}{
-                \underline{\hspace{\@FEFUrightcolumnwidth}}\\
-                {\indent\fontsize{8}{10}\selectfont\textit{(должность, уч.звание)}}
-            }{
-                \noindent\hbox to \@FEFUrightcolumnwidth {\@FEFUsupervisortitle}\\
-                {\indent\fontsize{8}{10}\selectfont\textit{(должность, уч.звание)}}                
-            }\\
-            \ifthenelse{\equal{\@FEFUsupervisor}{}}{
-                \@FEFUpostunderline{\@FEFUunderline{15}\ }{\@FEFUrightcolumnwidth}\\
-                {\indent\fontsize{8}{10}\selectfont\textit{(Ф.И.О.)}
-                \hspace{0.27\@FEFUleftcolumnwidth}\textit{(подпись)}}
-            }{
-                \noindent\@FEFUpostunderline{\@FEFUsupervisor\ }{\@FEFUrightcolumnwidth}\\
-                {\indent\fontsize{8}{10}\selectfont
-                \hspace{0.4\@FEFUleftcolumnwidth}\textit{(подпись)}}
-            }\\
-            \@FEFUdate\\
-            \vskip 28pt
-            {
-                \fontsize{12}{14}\selectfont%
-                \noindent Практика пройдена в срок\\
-                \begin{tabular}{@{}lccc}
-                    с & \guillemotleft\@FEFUdaystart\guillemotright & \@FEFUmonthstart & \@FEFUyearstart г.\\
-                    по & \guillemotleft\@FEFUdayend\guillemotright & \@FEFUmonthend & \@FEFUyearend г.
-                \end{tabular}\\
-                (\@FEFUweeks\ недель)
-                \vskip 12pt
-                \noindent\textit{\uline{на \@FEFUplace}}
-            }
-        \end{multicols}
-        {\setstretch{1.25}\centering{г. Владивосток\\\the\year}\par}
+        \vfill
+        {\setstretch{1.15}\centering{г. Владивосток\\\the\year}\par}
     \end{titlepage}
-    \setcounter{page}{2}
+    \restoregeometry
+    \ifthenelse{\equal{#1}{}}{}{\setcounter{page}{#1}}
 }
 %    \end{macrocode}
 % \end{macro}
+% Add practice report title.
+%    \begin{macrocode}
+\addtitle{practice}{
+    {\setstretch{1.15}\fontsize{12}{12}\selectfont
+        {\bf
+            ОТЧЁТ ПО ПРАКТИКЕ\\
+            Учебная ознакомительная практика\\
+        }
+        в пероид \@FEFUdaterange{true}{true}{2.75cm}\\
+        в \@FEFUfield[наименование базы практики]{\@FEFUplace}{10cm}
+        \vskip 42pt
+        \begin{flushright}
+            \parbox[l]{.5\textwidth}{\raggedright
+                \@FEFUpostfield[группа]{\@FEFUgendered{Выполнила студентка}{Выполнил студент} }{\@FEFUgroup}{\@FEFUcolumnwidth}\\
+                \vskip 9pt
+                \@FEFUsigname{3cm}{\@author}{\@FEFUcolumnwidth}
+                \vskip 9pt
+                \@FEFUdate{\@FEFUcolumnwidth}\\
+                \vskip 9pt
+                Оценка \underline{\hspace{3cm}}\\
+                \vskip 20pt
+                Руководитель практики\\ от университета\\
+                \@FEFUsigname{3cm}{\@FEFUsupervisor}{\@FEFUcolumnwidth}
+                \vskip 9pt
+                \@FEFUdate{\@FEFUcolumnwidth}\\
+                \vskip 9pt
+                Оценка \underline{\hspace{3cm}}\\
+                \if@FEFUoffsite%
+                    \vskip 20pt
+                    Руководитель практики\\ от базы практики\\
+                    \@FEFUsigname{3cm}{\@FEFUoffsitesupervisor}{\@FEFUcolumnwidth}
+                    \vskip 9pt
+                    \@FEFUdate{\@FEFUcolumnwidth}
+                \fi%
+            }
+        \end{flushright}
+    }%
+}
+%    \end{macrocode}
+% Add diary title.
+%    \begin{macrocode}
+\addtitle{diary}{
+    {\setstretch{1.15}\fontsize{12}{12}\selectfont
+        {\bf
+            ДНЕВНИК\\
+            Прохождения практики\\
+            Учебная ознакомительная практика\\
+        }
+        \vskip 60pt
+        \begin{flushleft}
+            \@FEFUpostfield{Студент }{\@author}{.75\textwidth}\\
+            \@FEFUpostfield{Группа }{\@FEFUgroup}{.75\textwidth}\\
+        \end{flushleft}
+    }%
+}
+%    \end{macrocode}
 % \begin{macro}{\maketableofcontents}
 % Makes table of contents.
 %    \begin{macrocode}
@@ -328,6 +417,11 @@
 %    \begin{macrocode}
 \title{}
 \author{}
+%    \end{macrocode}
+% Declare centered column type.
+%    \begin{macrocode}
+\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
+\newcolumntype{C}[1]{>{\PreserveBackslash\centering}m{#1}}
 %    \end{macrocode}
 % Sets page style: page number at the bottom right corner and no head rule.
 %    \begin{macrocode}
@@ -421,7 +515,6 @@
 %     \item[\marg{arg3}] Table caption.
 % \end{Options}
 %    \begin{macrocode}
-\newcounter{@FEFUtable}
 \newenvironment{fefutable}[3][h]{%
     \begin{table}[#1]
         \centering
