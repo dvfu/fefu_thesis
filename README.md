@@ -1,8 +1,39 @@
-LaTeX document class for FEFU bachelor's thesis
+Класс документа LaTeX для студенческих работ ДВФУ
 
-## Installation
-For Linux run `make install`.
-
-For Windown run `install.ps1` and copy `fefu/fefu.cls` and `fefu/fefu.png` to you local TeX installation or project directory.
-
-For manual installation run `latex source/fefu.dtx` and copy `source/fefu.png` and generated `fefu.csl`  to you local TeX installation or project directory.
+## Установка
+### Linux
+```
+make install
+```
+### Windows
+```
+install.ps1
+```
+### Ручная установка
+```
+latex source/fefu.ins
+mkdir scr
+cp source/fefu.png cls
+cp fefu.cls cls
+```
+## Использование
+### В качестве git submodule
+Добавить репозиторий как submodule в папку отчёта
+```
+git submodule add https://github.com/dvfu/fefu_thesis.git
+```
+или
+```
+git submodule add git@github.com:dvfu/fefu_thesis.git
+```
+Установить класс документа в основном файле `.tex`
+```
+\documentclass{fefu_thesis/cls/fefu}
+...
+```
+### В качестве локального класса
+Скопировать файлы `cls/fefu.tex` и `cls/fefu.png` в локальную директорию классов LaTeX. Установить класс документа в основном `.tex` файле отчёта
+```
+\documentclass{fefu}
+...
+```
