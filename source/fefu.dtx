@@ -50,10 +50,6 @@
 %    \begin{macrocode}
 %<*class>
 %    \end{macrocode}
-% This class' base is \textsf{extarticle}.
-%    \begin{macrocode}
-\LoadClass[14pt]{extarticle}
-%    \end{macrocode}
 % Iternal switches are declared here.
 %    \begin{macrocode}
 \newif\if@FEFUhassubfigure
@@ -62,9 +58,21 @@
 %    \end{macrocode}
 % The options are defined and processed here.
 %    \begin{macrocode}
+\DeclareOption{8pt}{\PassOptionsToClass{8pt}{extarticle}}
+\DeclareOption{9pt}{\PassOptionsToClass{9pt}{extarticle}}
+\DeclareOption{10pt}{\PassOptionsToClass{10pt}{extarticle}}
+\DeclareOption{11pt}{\PassOptionsToClass{11pt}{extarticle}}
+\DeclareOption{12pt}{\PassOptionsToClass{12pt}{extarticle}}
+\DeclareOption{14pt}{\PassOptionsToClass{14pt}{extarticle}}
+\DeclareOption{17pt}{\PassOptionsToClass{17pt}{extarticle}}
+\DeclareOption{20pt}{\PassOptionsToClass{20pt}{extarticle}}
 \DeclareOption{subfigure}{\@FEFUhassubfiguretrue}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{extarticle}}
 \ProcessOptions\relax
+%    \end{macrocode}
+% This class' base is \textsf{extarticle}.
+%    \begin{macrocode}
+\LoadClass{extarticle}
 %    \end{macrocode}
 % This class requires the following packages:
 %    \begin{macrocode}
