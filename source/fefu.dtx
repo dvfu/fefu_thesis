@@ -55,20 +55,22 @@
 \newif\if@FEFUhassubfigure
 \newif\if@FEFUfemale
 \newif\if@FEFUoffsite
+\newif\if@FEFUseenfontsize
 %    \end{macrocode}
 % The options are defined and processed here.
 %    \begin{macrocode}
-\DeclareOption{8pt}{\PassOptionsToClass{8pt}{extarticle}}
-\DeclareOption{9pt}{\PassOptionsToClass{9pt}{extarticle}}
-\DeclareOption{10pt}{\PassOptionsToClass{10pt}{extarticle}}
-\DeclareOption{11pt}{\PassOptionsToClass{11pt}{extarticle}}
-\DeclareOption{12pt}{\PassOptionsToClass{12pt}{extarticle}}
-\DeclareOption{14pt}{\PassOptionsToClass{14pt}{extarticle}}
-\DeclareOption{17pt}{\PassOptionsToClass{17pt}{extarticle}}
-\DeclareOption{20pt}{\PassOptionsToClass{20pt}{extarticle}}
+\DeclareOption{8pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{8pt}{extarticle}}
+\DeclareOption{9pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{9pt}{extarticle}}
+\DeclareOption{10pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{10pt}{extarticle}}
+\DeclareOption{11pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{11pt}{extarticle}}
+\DeclareOption{12pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{12pt}{extarticle}}
+\DeclareOption{14pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{14pt}{extarticle}}
+\DeclareOption{17pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{17pt}{extarticle}}
+\DeclareOption{20pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{20pt}{extarticle}}
 \DeclareOption{subfigure}{\@FEFUhassubfiguretrue}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{extarticle}}
 \ProcessOptions\relax
+\if@FEFUseenfontsize\else\PassOptionsToClass{14pt}{extarticle}\fi
 %    \end{macrocode}
 % This class' base is \textsf{extarticle}.
 %    \begin{macrocode}
