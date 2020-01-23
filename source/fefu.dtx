@@ -150,7 +150,13 @@
 \newlength{\@FEFUcolumnwidth}
 \setlength{\@FEFUcolumnwidth}{.4\textwidth}
 
+\newlength{\@FEFUsignwidth}
+\setlength{\@FEFUsignwidth}{.4\@FEFUcolumnwidth}
+
 \newlength{\@FEFUlength}
+\newlength{\@FEFUfieldlength}
+\newlength{\@FEFUpostfieldlength}
+\newlength{\@FEFUcredentialslength}
 %    \end{macrocode}
 % \begin{macro}{\setschool}
 % \begin{macro}{\setgroup}
@@ -248,11 +254,19 @@
 % \begin{macro}{\@FEFUshortname}
 % Prints short name.
 %    \begin{macrocode}
-\def\@FEFUshortnamehelper#1 #2 #3 {%
+\def\@FEFUshortnamehelper#1 #2 #3\relax{%
     \StrLeft{#2}{1}[\@FEFU@name]\StrLeft{#3}{1}[\@FEFU@middlename]%
     #1 \@FEFU@name. \@FEFU@middlename.%
 }
-\def\@FEFUshortname#1{\expandafter\@FEFUshortnamehelper#1}
+\def\@FEFUshortname#1{\expandafter\@FEFUshortnamehelper#1\relax}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUifempty}
+% Selects \marg{arg2} or \marg{arg3} depending on whether \marg{arg1} is empty or not.
+%    \begin{macrocode}
+\newcommand{\@FEFUifempty}[3]{%
+    \ifthenelse{\equal{#1}{}}{#2}{#3}%
+}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@FEFUdate}
@@ -264,28 +278,33 @@
 }
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\@FEFUfield}
-% Inserts \marg{arg1} or underlined space if command is empty.
+% \begin{macro}{\@FEFUlabeled}
+% Labels \marg{arg1} with a label \marg{arg2} if it's not empty
 %    \begin{macrocode}
-\newcommand{\@FEFUfield}[3][]{%
-    \ifthenelse{\equal{#2}{}}{%
-        \ifthenelse{\equal{#1}{}}{%
-            \underline{\hspace{#3}}%
-        }{%
-            \stackunder{\underline{\hspace{#3}}}{{\fontsize{8}{10}\selectfont(#1)}}%
-        }%
+\newcommand{\@FEFUlabeled}[2]{%
+    \@FEFUifempty{#2}{%
+        #1%
     }{%
-        #2%
+        \stackunder{#1}{{\scriptsize(#2)}}%
     }%
 }
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\@FEFUfield}
+% Inserts a labeled field.
+%    \begin{macrocode}
+\newcommand{\@FEFUfield}[3][]{%
+    \settowidth{\@FEFUfieldlength}{#2}%
+    \@FEFUlabeled{\uline{\ifthenelse{\lengthtest{\@FEFUfieldlength<#3}}{\hbox to #3{\hfill#2\hfill}}{#2}}}{#1}%
+}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@FEFUpostfield}
-% Inserts \marg{arg1} and fills avaliable space with another field.
+% Inserts \marg{arg1} and fills avaliable space with a field.
 %    \begin{macrocode}
 \newcommand{\@FEFUpostfield}[4][]{%
-    \setlength{\@FEFUlength}{#4-\widthof{#2}}%
-    #2\@FEFUfield[#1]{#3}{\@FEFUlength}%
+    \setlength{\@FEFUpostfieldlength}{#4-\widthof{#2}}%
+    #2\@FEFUfield[#1]{#3}{\@FEFUpostfieldlength}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -293,7 +312,7 @@
 % Adds year to a date if date is set.
 %    \begin{macrocode}
 \newcommand{\@FEFUmakedate}[3][true]{%
-    #2.\ifthenelse{\equal{#1}{true}}{\@FEFUshortyear{#3}}{#3}%
+    \@FEFUifempty{#2}{}{#2.\ifthenelse{\equal{#1}{true}}{\@FEFUshortyear{#3}}{#3}}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -301,10 +320,12 @@
 % Prints date range.
 %    \begin{macrocode}
 \newcommand{\@FEFUdaterange}[3]{%
-    с \ifthenelse{\equal{\@FEFUstartdate}{}}{\underline{\hspace{#3}}}{%
-        \ifthenelse{\equal{#1}{true}}{\@FEFUmakedate[#2]{\@FEFUstartdate}{\@FEFUstartyear}}{\@FEFUstartdate}%
-    } по \ifthenelse{\equal{\@FEFUenddate}{}}{\underline{\hspace{#3}}}{%
-        \ifthenelse{\equal{#1}{true}}{\@FEFUmakedate[#2]{\@FEFUenddate}{\@FEFUendyear}}{\@FEFUenddate}%
+    \ifthenelse{\equal{#1}{true}}{%
+        с \@FEFUfield{\@FEFUmakedate[#2]{\@FEFUstartdate}{\@FEFUstartyear}}{#3}
+        по \@FEFUfield{\@FEFUmakedate[#2]{\@FEFUenddate}{\@FEFUendyear}}{#3}%
+    }{%
+        с \@FEFUfield{\@FEFUstartdate}{#3}
+        по \@FEFUfield{\@FEFUenddate}{#3}%
     }%
 }
 %    \end{macrocode}
@@ -319,8 +340,10 @@
 % Insert space for a sign and a name afterwards
 %    \begin{macrocode}
 \newcommand{\@FEFUsigname}[3]{%
-    \ifthenelse{\equal{#2}{}}{%
-        \@FEFUpostfield[ФИО]{\@FEFUfield[подпись]{}{#1} }{}{#3}%
+    \@FEFUpostfield[ФИО]{\@FEFUlabeled{\uline{\hspace{#1}}}{подпись} }{\@FEFUshortname{#2}}{#3}%
+}
+%    \end{macrocode}
+% \end{macro}
     }{%
         \@FEFUfield[подпись]{}{#1} \@FEFUshortname{#2}%
     }%
@@ -376,20 +399,20 @@
             \parbox[l]{.5\textwidth}{\raggedright
                 \@FEFUpostfield[группа]{\@FEFUgendered{Выполнила студентка}{Выполнил студент} }{\@FEFUgroup}{\@FEFUcolumnwidth}\\
                 \vskip 9pt
-                \@FEFUsigname{3cm}{\@author}{\@FEFUcolumnwidth}
+                \@FEFUsigname{\@FEFUsignwidth}{\@author}{\@FEFUcolumnwidth}
                 \vskip 9pt
                 \@FEFUdate{\@FEFUcolumnwidth}\\
                 \vskip 20pt
                 Руководитель практики\\ от университета\\
-                \@FEFUsigname{3cm}{\@FEFUsupervisor}{\@FEFUcolumnwidth}
+                \@FEFUsigname{\@FEFUsignwidth}{\@FEFUsupervisor}{\@FEFUcolumnwidth}
                 \vskip 9pt
                 \@FEFUdate{\@FEFUcolumnwidth}\\
                 \vskip 9pt
-                Оценка \underline{\hspace{3cm}}\\
+                Оценка \underline{\hspace{\@FEFUsignwidth}}\\
                 \if@FEFUoffsite%
                     \vskip 20pt
                     Руководитель практики\\ от базы практики\\
-                    \@FEFUsigname{3cm}{\@FEFUoffsitesupervisor}{\@FEFUcolumnwidth}
+                    \@FEFUsigname{\@FEFUsignwidth}{\@FEFUoffsitesupervisor}{\@FEFUcolumnwidth}
                     \vskip 9pt
                     \@FEFUdate{\@FEFUcolumnwidth}
                 \fi%
