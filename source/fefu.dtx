@@ -97,6 +97,7 @@
 \RequirePackage{longtable}
 \RequirePackage{array}
 \RequirePackage{xstring}
+\RequirePackage{xparse}
 %    \end{macrocode}
 % The \textsf{tocloft} package is loaded with \textsf{subfigure} option if necessary.
 %    \begin{macrocode}
@@ -196,7 +197,7 @@
 %    \begin{macrocode}
 \newcommand{\setstartdate}[2][]{
     \renewcommand{\@FEFUstartdate}{#2}
-    \ifthenelse{\equal{#1}{}}{}{\renewcommand{\@FEFUstartyear}{#1}}
+    \@FEFUifempty{#1}{}{\renewcommand{\@FEFUstartyear}{#1}}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -205,7 +206,7 @@
 %    \begin{macrocode}
 \newcommand{\setenddate}[2][]{
     \renewcommand{\@FEFUenddate}{#2}
-    \ifthenelse{\equal{#1}{}}{}{\renewcommand{\@FEFUendyear}{#1}}
+    \@FEFUifempty{#1}{}{\renewcommand{\@FEFUendyear}{#1}}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -266,6 +267,14 @@
 %    \begin{macrocode}
 \newcommand{\@FEFUifempty}[3]{%
     \ifthenelse{\equal{#1}{}}{#2}{#3}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUcoalesque}
+% Returns first \marg{arg1} if it's not empty otherwise returns \marg{arg2}.
+%    \begin{macrocode}
+\newcommand{\@FEFUcoalesque}[2]{%
+    \@FEFUifempty{#1}{\@FEFUifempty{#2}{}{#2}}{#1}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -461,29 +470,29 @@
 % \begin{macro}{\makepracticetask}
 % Makes practice task page.
 %    \begin{macrocode}
-\newcommand{\makepracticetask}[1][10]{
+\NewDocumentCommand{\makepracticetask}{O{}O{10}}{
     \thispagestyle{empty}
     {\setlength\parindent{0pt}\setstretch{1.15}
         \centerline{\bf Индивидуальное задание по практике}
         \vskip 14pt
         \@FEFUpostfield[ФИО]{\@FEFUgendered{Студентке}{Студенту} группы \@FEFUfield[группа]{\@FEFUgroup}{4.5cm} }{\@author}{\textwidth}
         \vskip 14pt
-        \ifthenelse{\equal{\@FEFUplace}{}}{%
+        \ifthenelse{\equal{\protect\@FEFUcoalesque{#1}{\@FEFUplace}}{\protect\@FEFUcoalesque{}{}}}{%
             \@FEFUpostunderline{Место прохождения практики }{\textwidth}\\
             \underline{\hspace{\textwidth}}%
         }{%
-            Место прохождения практики \@FEFUplace
+            Место прохождения практики \@FEFUcoalesque{#1}{\@FEFUplace}%
         }
         \vskip 14pt
-        Сроки прохождения практики \@FEFUdaterange{false}{false}{2.75cm} \@FEFUstartyear\ года
+        Сроки прохождения практики \@FEFUdaterange{false}{false}{2.75cm} \@FEFUendyear\ года
         \vskip 28pt
-        \ifthenelse{\equal{\@FEFUpracticetask}{}}{%
+        \@FEFUifempty{\@FEFUpracticetask}{%
             \@FEFUpostunderline{Виды работ и требования по их выполнению}{\textwidth}\\
-            \foreach \n in {1,...,#1}{\underline{\hspace{\textwidth}}\\}
+            \foreach \n in {1,...,#2}{\underline{\hspace{\textwidth}}\\}
         }{Виды работ и требования по их выполнению \@FEFUpracticetask}
         \vskip 28pt
         Руководитель практики от ДВФУ\\
-        \@FEFUpostfield[ФИО]{\@FEFUfield[должность]{\@FEFUsupervisortitle}{5cm} \@FEFUfield[подпись]{}{5cm} }{\@FEFUsupervisor}{\textwidth}
+        \@FEFUpostfield[ФИО]{\@FEFUfield[должность]{\@FEFUsupervisortitle}{5cm} \@FEFUfield[подпись]{}{5cm} }{\@FEFUshortname{\@FEFUsupervisor}}{\textwidth}
         \vskip 28pt
         \@FEFUdate{\@FEFUcolumnwidth}
         \newpage
