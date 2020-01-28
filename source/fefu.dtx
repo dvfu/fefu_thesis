@@ -116,6 +116,12 @@
 \newcommand{\@FEFUsupervisortitle}{}
 \newcommand{\@FEFUoffsitesupervisor}{}
 \newcommand{\@FEFUoffsitesupervisortitle}{}
+\newcommand{\@FEFUreviewer}{}
+\newcommand{\@FEFUreviewertitle}{}
+\newcommand{\@FEFUdirector}{}
+\newcommand{\@FEFUdirectortitle}{}
+\newcommand{\@FEFUsecretary}{}
+\newcommand{\@FEFUsecretarytitle}{}
 \newcommand{\@FEFUplace}{}
 \newcommand{\@FEFUstartdate}{}
 \newcommand{\@FEFUenddate}{}
@@ -199,6 +205,33 @@
 }
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\setreviewer}
+% Sets reviewer and reviewer's title iternal variables.
+%    \begin{macrocode}
+\newcommand{\setreviewer}[2]{
+    \renewcommand{\@FEFUreviewer}{#1}
+    \renewcommand{\@FEFUreviewertitle}{#2}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setdirector}
+% Sets director and director's title iternal variables.
+%    \begin{macrocode}
+\newcommand{\setdirector}[2]{
+    \renewcommand{\@FEFUdirector}{#1}
+    \renewcommand{\@FEFUdirectortitle}{#2}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setsecretary}
+% Sets secretary and secretary's title iternal variables.
+%    \begin{macrocode}
+\newcommand{\setsecretary}[2]{
+    \renewcommand{\@FEFUsecretary}{#1}
+    \renewcommand{\@FEFUsecretarytitle}{#2}
+}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\setstartdate}
 % Sets start date internal variable.
 %    \begin{macrocode}
@@ -238,18 +271,18 @@
 % \begin{macro}{\@FEFUpreunderline}
 % Inserts underline before \marg{arg1} to fill space of width \marg{arg2}.
 %    \begin{macrocode}
-\newcommand{\@FEFUpreunderline}[2]{
+\newcommand{\@FEFUpreunderline}[2]{%
     \setlength{\@FEFUlength}{#2-\widthof{#1}}%
-    \underline{\hspace{\@FEFUlength}}#1
+    \underline{\hspace{\@FEFUlength}}#1%
 }
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@FEFUpreunderline}
 % Inserts underline after \marg{arg1} to fill space of width \marg{arg2}.
 %    \begin{macrocode}
-\newcommand{\@FEFUpostunderline}[2]{
+\newcommand{\@FEFUpostunderline}[2]{%
     \setlength{\@FEFUlength}{#2-\widthof{#1}}%
-    #1\underline{\hspace{\@FEFUlength}}
+    #1\underline{\hspace{\@FEFUlength}}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -266,7 +299,7 @@
     \StrLeft{#2}{1}[\@FEFU@name]\StrLeft{#3}{1}[\@FEFU@middlename]%
     #1 \@FEFU@name. \@FEFU@middlename.%
 }
-\def\@FEFUshortname#1{\expandafter\@FEFUshortnamehelper#1\relax}
+\def\@FEFUshortname#1{\@FEFUifempty{#1}{}{\expandafter\@FEFUshortnamehelper#1\relax}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@FEFUifempty}
@@ -471,7 +504,7 @@
     {\setstretch{1.15}\normalsize
         \vskip 2\bigskipamount
         \par\vbox to 8\bigskipamount {%
-            \@author\\
+            \@FEFUifempty{\@author}{~}{\@author}\\
             \@title
         }
         {\bf
@@ -529,6 +562,42 @@
         \@FEFUdate{\@FEFUcolumnwidth}
         \newpage
     }
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\makethesistitlebackside}
+% Make thesis title back side.
+%    \begin{macrocode}
+\newcommand{\makethesistitlebackside}{%
+    \thispagestyle{empty}
+    \begin{flushright}
+        Оборотная сторона титульного листа
+    \end{flushright}
+    Автор работы\hfill\@FEFUsigname{1.5\@FEFUsignwidth}{\@author}{1.5\@FEFUcolumnwidth}
+    \vskip 1.5\bigskipamount
+    \noindent\hfill\makebox[1.5\@FEFUcolumnwidth][l]{\@FEFUdate{1.2\@FEFUcolumnwidth}}\\
+    Руководитель ВКР\\
+    \@FEFUpostfield[ФИО]{\@FEFUfield[должность, учёное звание]{\@FEFUsupervisortitle}{0.35\textwidth} \@FEFUfield[подпись]{}{0.3\textwidth} }{\@FEFUshortname{\@FEFUsupervisor}}{\textwidth}
+    \vskip 1.5\bigskipamount
+    \noindent\hfill\makebox[1.5\@FEFUcolumnwidth][l]{\@FEFUdate{1.2\@FEFUcolumnwidth}}\\
+    Назначен рецензент\\
+    \@FEFUpostfield[ФИО]{\@FEFUfield[должность, учёное звание]{\@FEFUreviewertitle}{0.35\textwidth} \@FEFUfield[подпись]{}{0.3\textwidth} }{\@FEFUshortname{\@FEFUreviewer}}{\textwidth}
+    \vskip 1.5\bigskipamount
+    \noindent\hfill\makebox[1.5\@FEFUcolumnwidth][l]{\@FEFUdate{1.2\@FEFUcolumnwidth}}\\
+    \guillemotleft Допустить к защите\guillemotright\\
+    Директор ШЦЭ\\
+    \@FEFUpostfield[ФИО]{\@FEFUfield[учёное звание]{\@FEFUdirectortitle}{0.35\textwidth} \@FEFUfield[подпись]{}{0.3\textwidth} }{\@FEFUshortname{\@FEFUdirector}}{\textwidth}
+    \vskip 1.5\bigskipamount
+    \noindent\hfill\makebox[1.5\@FEFUcolumnwidth][l]{\@FEFUdate{1.2\@FEFUcolumnwidth}}
+    \vskip 1.5\bigskipamount
+    \noindent\@FEFUpostunderline{Защищена в ГЭК с оценкой }{0.75\textwidth}
+    \vskip 1.5\bigskipamount
+    \noindent Секретарь ГЭК\\
+    \@FEFUpostfield[ФИО]{\@FEFUfield[должность, учёное звание]{\@FEFUsecretarytitle}{0.35\textwidth} \@FEFUfield[подпись]{}{0.3\textwidth} }{\@FEFUshortname{\@FEFUsecretary}}{\textwidth}
+    \vskip 1.5\bigskipamount
+    \noindent\hfill\makebox[1.5\@FEFUcolumnwidth][l]{\@FEFUdate{1.2\@FEFUcolumnwidth}}
+    \addtocounter{page}{-1}
+    \newpage
 }
 %    \end{macrocode}
 % \end{macro}

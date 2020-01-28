@@ -15,9 +15,11 @@
 \setprogram{Искусственный интеллект и большие данные}
 \setgroup{М9119-09.04.01иибд}
 \setsupervisor{Ринчино Андрей Львович}{доцент}
+\setdirector{Мирин Илья Геннадьевич}{}
+\setsecretary{Сапрыкина Елена Валерьевна}{}
 
 \newif\ifpractice
-\practicefalse
+\practicetrue
 
 \begin{document}
     \ifpractice
@@ -38,6 +40,7 @@
         \subfile{subfiles/practice-task.tex}
     \else
         \maketitle[2]{thesis}
+        \makethesistitlebackside
     \fi
 \end{document}
 
