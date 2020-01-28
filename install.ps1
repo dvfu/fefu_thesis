@@ -8,7 +8,6 @@ latex fefu.ins
 pdflatex fefu.dtx
 cd ../
 mkdir -Force cls
-cp source/fefu.png cls
 cp $CACHE_DIR/fefu.cls cls
 mkdir -Force doc
 cp $CACHE_DIR/fefu.pdf doc
