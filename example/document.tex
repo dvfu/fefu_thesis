@@ -10,24 +10,34 @@
 \renewcommand{\listingscaption}{Код программы}
 
 \author{Тыщенко Андрей Геннадьевич}
+\title{Комплекс программ для моделирования трёхмерных звуковых полей в сложных неоднородных океанических волноводах}
+\setfaculty{09.04.01 Информатика и вычислительная техника}
+\setprogram{Искусственный интеллект и большие данные}
 \setgroup{М9119-09.04.01иибд}
 \setsupervisor{Ринчино Андрей Львович}{доцент}
 
+\newif\ifpractice
+\practicefalse
+
 \begin{document}
-    \maketitle[2]{practice}
-    \maketableofcontents
-    \section*{Введение}
-    \subfile{subfiles/introduction.tex}
-    \newpage
-    \section{Основная часть}
-    \subfile{subfiles/main.tex}
-    \newpage
-    \section*{Заключение}
-    \subfile{subfiles/conclusion.tex}
-    \newpage
-    \bibliographystyle{ugost2008ls}
-    \bibliography{references.bib}
-    \subfile{subfiles/diary.tex}
-    \subfile{subfiles/practice-task.tex}
+    \ifpractice
+        \maketitle[2]{practice}
+        \maketableofcontents
+        \section*{Введение}
+        \subfile{subfiles/introduction.tex}
+        \newpage
+        \section{Основная часть}
+        \subfile{subfiles/main.tex}
+        \newpage
+        \section*{Заключение}
+        \subfile{subfiles/conclusion.tex}
+        \newpage
+        \bibliographystyle{ugost2008ls}
+        \bibliography{references.bib}
+        \subfile{subfiles/diary.tex}
+        \subfile{subfiles/practice-task.tex}
+    \else
+        \maketitle[2]{thesis}
+    \fi
 \end{document}
 

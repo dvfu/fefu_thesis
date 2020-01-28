@@ -122,6 +122,8 @@
 \newcommand{\@FEFUstartyear}{\the\year}
 \newcommand{\@FEFUendyear}{\the\year}
 \newcommand{\@FEFUpracticetask}{}
+\newcommand{\@FEFUfaculty}{}
+\newcommand{\@FEFUprogram}{}
 %    \end{macrocode}
 % The iternal counters are set up here.
 %    \begin{macrocode}
@@ -160,15 +162,21 @@
 %    \end{macrocode}
 % \begin{macro}{\setschool}
 % \begin{macro}{\setgroup}
-% \begin{macro}{\setweeks}
 % \begin{macro}{\setplace}
+% \begin{macro}{\setpracticetask}
+% \begin{macro}{\setfaculty}
+% \begin{macro}{\setprogram}
 % Sets respective internal variable
 %    \begin{macrocode}
 \newcommand{\setschool}[1]{\renewcommand{\@FEFUschool}{#1}}
 \newcommand{\setgroup}[1]{\renewcommand{\@FEFUgroup}{#1}}
 \newcommand{\setplace}[1]{\renewcommand{\@FEFUplace}{#1}}
 \newcommand{\setpracticetask}[1]{\renewcommand{\@FEFUpracticetask}{#1}}
+\newcommand{\setfaculty}[1]{\renewcommand{\@FEFUfaculty}{#1}}
+\newcommand{\setprogram}[1]{\renewcommand{\@FEFUprogram}{#1}}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -384,13 +392,15 @@
         \setstretch{1}
         \begin{center}
             \includegraphics[scale=0.5]{fefu}\\
-            {\fontsize{11}{12}\selectfont МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО
-                ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ}\\
-            {\fontsize{11}{12}\selectfont Федеральное государственное автономное
-                образовательное учреждение высшего образования\\}
+            {\small
+                МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО
+                ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ\\
+                Федеральное государственное автономное
+                образовательное учреждение высшего образования\\
+            }
             {\bf {«Дальневосточный федеральный университет»}}\\
-            \vskip 14pt
-            {\setstretch{1.15}\@FEFUschool\\\vskip 35pt}
+            \bigskip
+            {\setstretch{1.15}\@FEFUschool\\\vskip 3\bigskipamount}
             \csname @FEFU@#2@titlepage\endcsname
         \end{center}
         \vfill
@@ -404,33 +414,33 @@
 % Add practice report title.
 %    \begin{macrocode}
 \addtitle{practice}{
-    {\setstretch{1.15}\fontsize{12}{12}\selectfont
+    {\setstretch{1.15}\small
         {\bf
             ОТЧЁТ ПО ПРАКТИКЕ\\
             Учебная ознакомительная практика\\
         }
         в период \@FEFUdaterange{true}{true}{2.75cm}\\
         в \@FEFUfield[наименование базы практики]{\@FEFUplace}{10cm}
-        \vskip 42pt
+        \vskip 3.5\bigskipamount
         \begin{flushright}
             \parbox[l]{.5\textwidth}{\raggedright
                 \@FEFUpostfield[группа]{\@FEFUgendered{Выполнила студентка}{Выполнил студент} }{\@FEFUgroup}{\@FEFUcolumnwidth}\\
-                \vskip 9pt
+                \vskip 0.75\bigskipamount
                 \@FEFUsigname{\@FEFUsignwidth}{\@author}{\@FEFUcolumnwidth}
-                \vskip 9pt
+                \vskip 0.75\bigskipamount
                 \@FEFUdate{\@FEFUcolumnwidth}\\
-                \vskip 20pt
+                \vskip 1.7\bigskipamount
                 Руководитель практики\\ от университета\\
                 \@FEFUsigname{\@FEFUsignwidth}{\@FEFUsupervisor}{\@FEFUcolumnwidth}
-                \vskip 9pt
+                \vskip 0.75\bigskipamount
                 \@FEFUdate{\@FEFUcolumnwidth}\\
-                \vskip 9pt
+                \vskip 0.75\bigskipamount
                 Оценка \underline{\hspace{\@FEFUsignwidth}}\\
                 \if@FEFUoffsite%
-                    \vskip 20pt
+                    \vskip 1.7\bigskipamount
                     Руководитель практики\\ от базы практики\\
                     \@FEFUsigname{\@FEFUsignwidth}{\@FEFUoffsitesupervisor}{\@FEFUcolumnwidth}
-                    \vskip 9pt
+                    \vskip 0.75\bigskipamount
                     \@FEFUdate{\@FEFUcolumnwidth}
                 \fi%
             }
@@ -452,6 +462,29 @@
             \@FEFUpostfield{Студент }{\@author}{.75\textwidth}\\
             \@FEFUpostfield{Группа }{\@FEFUgroup}{.75\textwidth}\\
         \end{flushleft}
+    }%
+}
+%    \end{macrocode}
+% Add thesis title.
+%    \begin{macrocode}
+\addtitle{thesis}{
+    {\setstretch{1.15}\normalsize
+        \vskip 2\bigskipamount
+        \par\vbox to 8\bigskipamount {%
+            \@author\\
+            \@title
+        }
+        {\bf
+            Направление подготовки\\
+            \@FEFUfaculty\\
+        }
+        \bigskip
+        \@FEFUifempty{\@FEFUprogram}{}{%
+            Магистерская программа\\
+            \guillemotleft\@FEFUprogram\guillemotright\\
+            \bigskip
+        }
+        {\bf Магистерская диссертация}
     }%
 }
 %    \end{macrocode}
