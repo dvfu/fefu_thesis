@@ -269,6 +269,12 @@
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
+% \begin{macro}{\@FEFUunderline}
+% Used to underline multiline macro.
+%    \begin{macrocode}
+\useunder{\uline}{\@FEFUunderline}{}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@FEFUpreunderline}
 % Inserts underline before \marg{arg1} to fill space of width \marg{arg2}.
 %    \begin{macrocode}
@@ -544,18 +550,18 @@
         \@FEFUpostfield[ФИО]{\@FEFUgendered{Студентке}{Студенту} группы \@FEFUfield[группа]{\@FEFUgroup}{4.5cm} }{\@author}{\textwidth}
         \vskip 14pt
         \ifthenelse{\equal{\protect\@FEFUcoalesque{#1}{\@FEFUplace}}{\protect\@FEFUcoalesque{}{}}}{%
-            \@FEFUpostunderline{Место прохождения практики }{\textwidth}\\
+            \@FEFUpostunderline{Место прохождения практики: }{\textwidth}\\
             \underline{\hspace{\textwidth}}%
         }{%
-            Место прохождения практики \@FEFUcoalesque{#1}{\@FEFUplace}%
+            Место прохождения практики: \@FEFUifempty{#1}{{\expandafter\@FEFUunderline\@FEFUplace}}{{\expandafter\@FEFUunderline#1}}%
         }
         \vskip 14pt
         Сроки прохождения практики \@FEFUdaterange{false}{false}{2.75cm} \@FEFUendyear\ года
         \vskip 28pt
         \@FEFUifempty{\@FEFUpracticetask}{%
-            \@FEFUpostunderline{Виды работ и требования по их выполнению}{\textwidth}\\
+            \@FEFUpostunderline{Виды работ и требования по их выполнению: }{\textwidth}\\
             \foreach \n in {1,...,#2}{\underline{\hspace{\textwidth}}\\}
-        }{Виды работ и требования по их выполнению \@FEFUpracticetask}
+        }{Виды работ и требования по их выполнению: {\expandafter\@FEFUunderline\@FEFUpracticetask}}
         \vskip 28pt
         Руководитель практики от ДВФУ\\
         \@FEFUpostfield[ФИО]{\@FEFUfield[должность]{\@FEFUsupervisortitle}{5cm} \@FEFUfield[подпись]{}{5cm} }{\@FEFUshortname{\@FEFUsupervisor}}{\textwidth}
