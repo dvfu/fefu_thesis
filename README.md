@@ -1,5 +1,12 @@
 Класс документа LaTeX для студенческих работ ДВФУ
 
+## Требования
+* XeLaTeX или LuaLaTeX
+* Шрифт Times New Roman
+* При сборке должна быть передана опция `-shell-escape`
+* Рекомендуется использовать [TeXstudio](https://www.texstudio.org/)
+* Для оформления списка литературы необходим пакет [gost](https://www.ctan.org/pkg/gost)
+
 ## Установка
 ### Linux
 ```
@@ -11,10 +18,11 @@ install.ps1
 ```
 ### Ручная установка
 ```
-latex source/fefu.ins
+cd source
+latex fefu.ins
+cd ..
 mkdir scr
-cp source/fefu.png cls
-cp fefu.cls cls
+cp source/fefu.cls cls
 ```
 ## Использование
 ### В качестве git submodule
@@ -32,7 +40,7 @@ git submodule add git@github.com:dvfu/fefu_thesis.git
 ...
 ```
 ### В качестве локального класса
-Скопировать файлы `cls/fefu.tex` и `cls/fefu.png` в локальную директорию классов LaTeX. Установить класс документа в основном `.tex` файле отчёта
+Скопировать файл `cls/fefu.tex` в локальную директорию классов LaTeX. Установить класс документа в основном `.tex` файле отчёта
 ```
 \documentclass{fefu}
 ...
