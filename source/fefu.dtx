@@ -131,6 +131,7 @@
 \newcommand{\@FEFUpracticetask}{}
 \newcommand{\@FEFUfaculty}{}
 \newcommand{\@FEFUprogram}{}
+\newcommand{\@FEFUpracticetitle}{Учебная ознакомительная практика}
 %    \end{macrocode}
 % The iternal counters are set up here.
 %    \begin{macrocode}
@@ -171,6 +172,7 @@
 % \begin{macro}{\setgroup}
 % \begin{macro}{\setplace}
 % \begin{macro}{\setpracticetask}
+% \begin{macro}{\setpracticetitle}
 % \begin{macro}{\setfaculty}
 % \begin{macro}{\setprogram}
 % Sets respective internal variable
@@ -179,9 +181,11 @@
 \newcommand{\setgroup}[1]{\renewcommand{\@FEFUgroup}{#1}}
 \newcommand{\setplace}[1]{\renewcommand{\@FEFUplace}{#1}}
 \newcommand{\setpracticetask}[1]{\renewcommand{\@FEFUpracticetask}{#1}}
+\newcommand{\setpracticetitle}[1]{\renewcommand{\@FEFUpracticetitle}{#1}}
 \newcommand{\setfaculty}[1]{\renewcommand{\@FEFUfaculty}{#1}}
 \newcommand{\setprogram}[1]{\renewcommand{\@FEFUprogram}{#1}}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -457,7 +461,7 @@
     {\setstretch{1.15}\small
         {\bf
             ОТЧЁТ ПО ПРАКТИКЕ\\
-            Учебная ознакомительная практика\\
+            \@FEFUpracticetitle\\
         }
         в период \@FEFUdaterange{true}{true}{2.75cm}\\
         в \@FEFUfield[наименование базы практики]{\@FEFUplace}{10cm}
@@ -495,7 +499,7 @@
         {\bf
             ДНЕВНИК\\
             Прохождения практики\\
-            Учебная ознакомительная практика\\
+            \@FEFUpracticetitle\\
         }
         \vskip 60pt
         \begin{flushleft}
