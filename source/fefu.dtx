@@ -255,6 +255,24 @@
 }
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\setmonthname}
+% Sets a name to be displayed for a month
+%    \begin{macrocode}
+\newcommand{\setmonthname}[2]{\expandafter\def\csname @FEFUmonthname#1\endcsname{#2}}
+\setmonthname{01}{января}
+\setmonthname{02}{февраля}
+\setmonthname{03}{марта}
+\setmonthname{04}{апреля}
+\setmonthname{05}{мая}
+\setmonthname{06}{июня}
+\setmonthname{07}{июля}
+\setmonthname{08}{августа}
+\setmonthname{09}{сентября}
+\setmonthname{10}{октября}
+\setmonthname{11}{ноября}
+\setmonthname{12}{декабря}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\setfemale}
 % \begin{macro}{\setmale}
 % Changes endings of some words.
@@ -313,6 +331,20 @@
 \def\@FEFUshortname#1{\@FEFUifempty{#1}{}{\expandafter\@FEFUshortnamehelper#1\relax}}
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\@FEFUgetmonth}
+% Gets month from dd.mm
+%    \begin{macrocode}
+\def\@FEFUgetmonthhelper#1.#2\relax{#2}
+\def\@FEFUgetmonth#1{\expandafter\@FEFUgetmonthhelper#1\relax}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUgetday}
+% Gets dat from dd.mm
+%    \begin{macrocode}
+\def\@FEFUgetdayhelper#1.#2\relax{#1}
+\def\@FEFUgetday#1{\expandafter\@FEFUgetdayhelper#1\relax}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@FEFUifempty}
 % Selects \marg{arg2} or \marg{arg3} depending on whether \marg{arg1} is empty or not.
 %    \begin{macrocode}
@@ -336,6 +368,12 @@
     \setlength{\@FEFUlength}{#1-\widthof{\guillemotleft\underline{\hspace{.75cm}}\guillemotright\ \ \the\year\ года}}%
     \guillemotleft\underline{\hspace{.75cm}}\guillemotright \underline{\hspace{\@FEFUlength}} \the\year\ года%
 }
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUprettydate}
+% Prints day with month name
+%    \begin{macrocode}
+\newcommand{\@FEFUprettydate}[1]{\@FEFUgetday{#1} \csname @FEFUmonthname\@FEFUgetmonth{#1}\endcsname}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@FEFUlabeled}
@@ -379,13 +417,18 @@
 % \begin{macro}{\@FEFUdaterange}
 % Prints date range.
 %    \begin{macrocode}
-\newcommand{\@FEFUdaterange}[3]{%
+\newcommand{\@FEFUdaterange}[4]{%
     \ifthenelse{\equal{#1}{true}}{%
-        с \@FEFUfield{\@FEFUmakedate[#2]{\@FEFUstartdate}{\@FEFUstartyear}}{#3}
-        по \@FEFUfield{\@FEFUmakedate[#2]{\@FEFUenddate}{\@FEFUendyear}}{#3}%
+        с \@FEFUfield{\@FEFUmakedate[#2]{\@FEFUstartdate}{\@FEFUstartyear}}{#4}
+        по \@FEFUfield{\@FEFUmakedate[#2]{\@FEFUenddate}{\@FEFUendyear}}{#4}%
     }{%
-        с \@FEFUfield{\@FEFUstartdate}{#3}
-        по \@FEFUfield{\@FEFUenddate}{#3}%
+        \ifthenelse{\equal{#3}{true}}{%
+            с \@FEFUfield{\@FEFUprettydate{\@FEFUstartdate}}{#4}
+            по \@FEFUfield{\@FEFUprettydate{\@FEFUenddate}}{#4}%   
+        }{%
+            с \@FEFUfield{\@FEFUstartdate}{#4}
+            по \@FEFUfield{\@FEFUenddate}{#4}%
+        }%
     }%
 }
 %    \end{macrocode}
@@ -463,7 +506,7 @@
             ОТЧЁТ ПО ПРАКТИКЕ\\
             \@FEFUpracticetitle\\
         }
-        в период \@FEFUdaterange{true}{true}{2.75cm}\\
+        в период \@FEFUdaterange{true}{true}{false}{2.75cm}\\
         в \@FEFUfield[наименование базы практики]{\@FEFUplace}{10cm}
         \vskip 3.5\bigskipamount
         \begin{flushright}
@@ -560,7 +603,7 @@
             Место прохождения практики: \@FEFUifempty{#1}{{\expandafter\@FEFUunderline\@FEFUplace}}{{\expandafter\@FEFUunderline#1}}%
         }
         \vskip 14pt
-        Сроки прохождения практики \@FEFUdaterange{false}{false}{2.75cm} \@FEFUendyear\ года
+        Сроки прохождения практики \@FEFUdaterange{false}{false}{true}{2.75cm} \@FEFUendyear\ года
         \vskip 28pt
         \@FEFUifempty{\@FEFUpracticetask}{%
             \@FEFUpostunderline{Виды работ и требования по их выполнению: }{\textwidth}\\
