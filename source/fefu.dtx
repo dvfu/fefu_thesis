@@ -623,8 +623,8 @@
 %    \end{macrocode}
 % Declare centered column type.
 %    \begin{macrocode}
-\newcommand{\PreserveBackslash}[1]{\let\temp=\\#1\let\\=\temp}
-\newcolumntype{C}[1]{>{\PreserveBackslash\centering}m{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}m{#1}}
 %    \end{macrocode}
 % Sets page style: page number at the bottom right corner and no head rule.
 %    \begin{macrocode}
@@ -747,9 +747,9 @@
         \renewcommand{\arraystretch}{1.75}%
         \setcounter{@FEFUcounter}{0}%
         \addtocounter{@FEFUdiarycounter}{-1}
-        \begin{longtable}{|C{2.5cm}|C{3cm}|p{7.5cm}|C{2.5cm}|}
+        \begin{longtable}{|C{2.5cm}|C{3cm}|P{7.5cm}|C{2.5cm}|}
             \hline
-            \bfseries{Дата выполнения работ} & \bfseries{Место} & \multicolumn{1}{C{7.5cm}|}{\bfseries{Краткое содержание выполняемых работ}} & \bfseries{Отметка о выполнеии работы}\\
+            \bfseries{Дата выполнения работ} & \bfseries{Место} & \multicolumn{1}{C{7.5cm}|}{\bfseries{Краткое содержание выполняемых работ}} & \bfseries{Отметка о выполнении работы}\\
             \hline
             \ifnum-1<\the@FEFUdiarycounter\relax
                 \whiledo{\the@FEFUcounter<\the@FEFUdiarycounter}{%
