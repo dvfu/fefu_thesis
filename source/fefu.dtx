@@ -321,10 +321,10 @@
 }
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\@FEFUcoalesque}
+% \begin{macro}{\@FEFUcoalesce}
 % Returns first \marg{arg1} if it's not empty otherwise returns \marg{arg2}.
 %    \begin{macrocode}
-\newcommand{\@FEFUcoalesque}[2]{%
+\newcommand{\@FEFUcoalesce}[2]{%
     \@FEFUifempty{#1}{\@FEFUifempty{#2}{}{#2}}{#1}%
 }
 %    \end{macrocode}
@@ -553,7 +553,7 @@
         \vskip 14pt
         \@FEFUpostfield[ФИО]{\@FEFUgendered{Студентке}{Студенту} группы \@FEFUfield[группа]{\@FEFUgroup}{4.5cm} }{\@author}{\textwidth}
         \vskip 14pt
-        \ifthenelse{\equal{\protect\@FEFUcoalesque{#1}{\@FEFUplace}}{\protect\@FEFUcoalesque{}{}}}{%
+        \ifthenelse{\equal{\protect\@FEFUcoalesce{#1}{\@FEFUplace}}{\protect\@FEFUcoalesce{}{}}}{%
             \@FEFUpostunderline{Место прохождения практики: }{\textwidth}\\
             \underline{\hspace{\textwidth}}%
         }{%
