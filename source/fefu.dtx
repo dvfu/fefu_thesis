@@ -377,7 +377,7 @@
 % \begin{macro}{\@FEFUprettydate}
 % Prints day with month name
 %    \begin{macrocode}
-\newcommand{\@FEFUprettydate}[1]{\@FEFUgetday{#1} \csname @FEFUmonthname\@FEFUgetmonth{#1}\endcsname}
+\newcommand{\@FEFUprettydate}[1]{\@FEFUifempty{#1}{}{\@FEFUgetday{#1} \csname @FEFUmonthname\@FEFUgetmonth{#1}\endcsname}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@FEFUlabeled}
