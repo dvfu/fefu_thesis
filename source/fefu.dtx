@@ -132,6 +132,7 @@
 \newcommand{\@FEFUfaculty}{}
 \newcommand{\@FEFUprogram}{}
 \newcommand{\@FEFUpracticetitle}{Учебная ознакомительная практика}
+\newcommand{\@FEFUfeedback}{}
 %    \end{macrocode}
 % The iternal counters are set up here.
 %    \begin{macrocode}
@@ -175,6 +176,7 @@
 % \begin{macro}{\setpracticetitle}
 % \begin{macro}{\setfaculty}
 % \begin{macro}{\setprogram}
+% \begin{macro}{\setfeedback}
 % Sets respective internal variable
 %    \begin{macrocode}
 \newcommand{\setschool}[1]{\renewcommand{\@FEFUschool}{#1}}
@@ -184,7 +186,9 @@
 \newcommand{\setpracticetitle}[1]{\renewcommand{\@FEFUpracticetitle}{#1}}
 \newcommand{\setfaculty}[1]{\renewcommand{\@FEFUfaculty}{#1}}
 \newcommand{\setprogram}[1]{\renewcommand{\@FEFUprogram}{#1}}
+\newcommand{\setfeedback}[1]{\renewcommand{\@FEFUfeedback}{#1}}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -820,6 +824,22 @@
 \newcommand{\diaryentry}[4][]{%
     \expandafter\def\csname @FEFUdiaryentry@\the@FEFUdiarycounter\endcsname{#2 & #3 & #4 & #1\\\hline}%
     \stepcounter{@FEFUdiarycounter}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\makefeedback}
+% Insert supervisor feedback page
+%    \begin{macrocode}
+\newcommand{\makefeedback}{%
+    \thispagestyle{empty}\begingroup\setstretch{1}
+    \centerline{ЗАКЛЮЧЕНИЕ РУКОВОДИТЕЛЯ ПРАКТИКИ ОТ ПРЕДПРИЯТИЯ}
+    \vskip 28pt
+    \@FEFUfeedback
+    \vfill\null
+    Дата {\expandafter\@FEFUunderline\hspace{2cm}}
+    \hspace{2cm}Подпись {\expandafter\@FEFUunderline\hspace{2cm}}
+    /\@FEFUshortname{\@FEFUoffsitesupervisor}/
+    \vfill\endgroup\newpage
 }
 %    \end{macrocode}
 % \end{macro}
