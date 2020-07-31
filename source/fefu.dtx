@@ -139,6 +139,9 @@
 \newcounter{@FEFUcounter}
 \setcounter{@FEFUcounter}{0}
 
+\newcounter{@FEFUpage}
+\setcounter{@FEFUpage}{0}
+
 \newcounter{@FEFUtable}
 \setcounter{@FEFUtable}{0}
 
@@ -477,8 +480,9 @@
 % \begin{macro}{\maketitle}
 % Inserts titlepage.
 %    \begin{macrocode}
-\renewcommand{\maketitle}[2][2]{%
+\renewcommand{\maketitle}[2][1]{%
     \newgeometry{left=2.5cm,right=1cm,top=1.2cm,bottom=2cm}
+    \@FEFUifempty{#1}{\setcounter{@FEFUpage}{\thepage}}{\setcounter{@FEFUpage}{#1}}
     \begin{titlepage}
         \setstretch{1}
         \begin{center}
@@ -496,9 +500,11 @@
         \end{center}
         \vfill
         {\setstretch{1.15}\centering{г. Владивосток\\\the\year}\par}
+        \setcounter{page}{\the@FEFUpage}
+        \stepcounter{@FEFUpage}
     \end{titlepage}
     \restoregeometry
-    \ifthenelse{\equal{#1}{}}{}{\setcounter{page}{#1}}
+    \setcounter{page}{\the@FEFUpage}
 }
 %    \end{macrocode}
 % \end{macro}
