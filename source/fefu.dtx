@@ -450,7 +450,7 @@
 % Insert space for a sign and a name afterwards
 %    \begin{macrocode}
 \newcommand{\@FEFUsigname}[3]{%
-    \@FEFUpostfield[ФИО]{\@FEFUlabeled{\uline{\hspace{#1}}}{подпись} }{\@FEFUshortname{#2}}{#3}%
+    \@FEFUpostfield[Ф.И.О.]{\@FEFUlabeled{\uline{\hspace{#1}}}{подпись} }{\@FEFUshortname{#2}}{#3}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -462,9 +462,9 @@
     \settowidth{\@FEFUcredentialslength}{#3, #4 \hspace{\@FEFUsignwidth}}%
     \ifthenelse{\lengthtest{\@FEFUlength<\@FEFUcredentialslength}}{%
         #2\\
-        \@FEFUlabeled{\uline{\hbox to #1{#3, #4\hfill}}}{ФИО, должность, подпись}%
+        \@FEFUlabeled{\uline{\hbox to #1{#3, #4\hfill}}}{Ф.И.О., должность, подпись}%
     }{%
-        #2 \@FEFUlabeled{\uline{\hbox to \@FEFUlength{#3, #4\hfill}}}{ФИО, должность, подпись}%
+        #2 \@FEFUlabeled{\uline{\hbox to \@FEFUlength{#3, #4\hfill}}}{Ф.И.О., должность, подпись}%
     }%
 }
 %    \end{macrocode}
@@ -604,7 +604,7 @@
     {\setlength\parindent{0pt}\setstretch{1.15}
         \centerline{\bf Индивидуальное задание по практике}
         \vskip 14pt
-        \@FEFUpostfield[ФИО]{\@FEFUgendered{Студентке}{Студенту} группы \@FEFUfield[группа]{\@FEFUgroup}{4.5cm} }{\@author}{\textwidth}
+        \@FEFUpostfield[Ф.И.О.]{\@FEFUgendered{Студентке}{Студенту} группы \@FEFUfield[группа]{\@FEFUgroup}{4.5cm} }{\@author}{\textwidth}
         \vskip 14pt
         \ifthenelse{\equal{\protect\@FEFUcoalesce{#1}{\@FEFUplace}}{\protect\@FEFUcoalesce{}{}}}{%
             \@FEFUpostunderline{Место прохождения практики: }{\textwidth}\\
@@ -621,7 +621,7 @@
         }{Виды работ и требования по их выполнению: {\expandafter\@FEFUunderline\@FEFUpracticetask}}
         \vskip 28pt
         Руководитель практики от ДВФУ\\
-        \@FEFUpostfield[ФИО]{\@FEFUfield[должность]{\@FEFUsupervisortitle}{5cm} \@FEFUfield[подпись]{}{5cm} }{\@FEFUshortname{\@FEFUsupervisor}}{\textwidth}
+        \@FEFUpostfield[Ф.И.О.]{\@FEFUfield[должность]{\@FEFUsupervisortitle}{5cm} \@FEFUfield[подпись]{}{5cm} }{\@FEFUshortname{\@FEFUsupervisor}}{\textwidth}
         \vskip 28pt
         \@FEFUdate{\@FEFUcolumnwidth}
         \newpage
@@ -641,23 +641,23 @@
     \vskip 1.5\bigskipamount
     \noindent\hfill\makebox[1.5\@FEFUcolumnwidth][l]{\@FEFUdate{1.2\@FEFUcolumnwidth}}\\
     Руководитель ВКР\\
-    \@FEFUpostfield[ФИО]{\@FEFUfield[должность, учёное звание]{\@FEFUsupervisortitle}{0.35\textwidth} \@FEFUfield[подпись]{}{0.3\textwidth} }{\@FEFUshortname{\@FEFUsupervisor}}{\textwidth}
+    \@FEFUpostfield[Ф.И.О.]{\@FEFUfield[должность, учёное звание]{\@FEFUsupervisortitle}{0.35\textwidth} \@FEFUfield[подпись]{}{0.3\textwidth} }{\@FEFUshortname{\@FEFUsupervisor}}{\textwidth}
     \vskip 1.5\bigskipamount
     \noindent\hfill\makebox[1.5\@FEFUcolumnwidth][l]{\@FEFUdate{1.2\@FEFUcolumnwidth}}\\
     Назначен рецензент\\
-    \@FEFUpostfield[ФИО]{\@FEFUfield[должность, учёное звание]{\@FEFUreviewertitle}{0.35\textwidth} \@FEFUfield[подпись]{}{0.3\textwidth} }{\@FEFUshortname{\@FEFUreviewer}}{\textwidth}
+    \@FEFUpostfield[Ф.И.О.]{\@FEFUfield[должность, учёное звание]{\@FEFUreviewertitle}{0.35\textwidth} \@FEFUfield[подпись]{}{0.3\textwidth} }{\@FEFUshortname{\@FEFUreviewer}}{\textwidth}
     \vskip 1.5\bigskipamount
     \noindent\hfill\makebox[1.5\@FEFUcolumnwidth][l]{\@FEFUdate{1.2\@FEFUcolumnwidth}}\\
     \guillemotleft Допустить к защите\guillemotright\\
     Директор ШЦЭ\\
-    \@FEFUpostfield[ФИО]{\@FEFUfield[учёное звание]{\@FEFUdirectortitle}{0.35\textwidth} \@FEFUfield[подпись]{}{0.3\textwidth} }{\@FEFUshortname{\@FEFUdirector}}{\textwidth}
+    \@FEFUpostfield[Ф.И.О.]{\@FEFUfield[учёное звание]{\@FEFUdirectortitle}{0.35\textwidth} \@FEFUfield[подпись]{}{0.3\textwidth} }{\@FEFUshortname{\@FEFUdirector}}{\textwidth}
     \vskip 1.5\bigskipamount
     \noindent\hfill\makebox[1.5\@FEFUcolumnwidth][l]{\@FEFUdate{1.2\@FEFUcolumnwidth}}
     \vskip 1.5\bigskipamount
     \noindent\@FEFUpostunderline{Защищена в ГЭК с оценкой }{0.75\textwidth}
     \vskip 1.5\bigskipamount
     \noindent Секретарь ГЭК\\
-    \@FEFUpostfield[ФИО]{\@FEFUfield[должность, учёное звание]{\@FEFUsecretarytitle}{0.35\textwidth} \@FEFUfield[подпись]{}{0.3\textwidth} }{\@FEFUshortname{\@FEFUsecretary}}{\textwidth}
+    \@FEFUpostfield[Ф.И.О.]{\@FEFUfield[должность, учёное звание]{\@FEFUsecretarytitle}{0.35\textwidth} \@FEFUfield[подпись]{}{0.3\textwidth} }{\@FEFUshortname{\@FEFUsecretary}}{\textwidth}
     \vskip 1.5\bigskipamount
     \noindent\hfill\makebox[1.5\@FEFUcolumnwidth][l]{\@FEFUdate{1.2\@FEFUcolumnwidth}}
     \addtocounter{page}{-1}
