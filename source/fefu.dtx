@@ -56,6 +56,7 @@
 \newif\if@FEFUfemale
 \newif\if@FEFUoffsite
 \newif\if@FEFUseenfontsize
+\newif\if@FEFUnotoc
 %    \end{macrocode}
 % The options are defined and processed here.
 %    \begin{macrocode}
@@ -99,6 +100,7 @@
 \RequirePackage{xstring}
 \RequirePackage{xparse}
 \RequirePackage{ifplatform}
+\RequirePackage{etoolbox}
 %    \end{macrocode}
 % The \textsf{tocloft} package is loaded with \textsf{subfigure} option if necessary.
 %    \begin{macrocode}
@@ -346,7 +348,7 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@FEFUgetday}
-% Gets dat from dd.mm
+% Gets day from dd.mm
 %    \begin{macrocode}
 \def\@FEFUgetdayhelper#1.#2\relax{#1}
 \def\@FEFUgetday#1{\expandafter\@FEFUgetdayhelper#1\relax}
@@ -681,7 +683,7 @@
 %    \end{macrocode}
 % Sets page style: page number at the bottom right corner and no head rule.
 %    \begin{macrocode}
-\fancypagestyle{plain}{\fancyhf{}\fancyfoot[R]{\thepage}}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\thepage}}
 \renewcommand{\headrulewidth}{0pt}
 \pagestyle{plain}
 %    \end{macrocode}
@@ -697,6 +699,30 @@
 %    \begin{macrocode}
 \setcounter{tocdepth}{4}
 %    \end{macrocode}
+% Changes toc title
+%    \begin{macrocode}
+\addto\captionsrussian{\renewcommand{\contentsname}{Оглавление}}
+%    \end{macrocode}
+% Centers toc title
+%    \begin{macrocode}
+\renewcommand{\cfttoctitlefont}{\hfill\bfseries}
+\renewcommand{\cftaftertoctitle}{\hfill\hfill}
+%    \end{macrocode}
+% Prevents abstract from being included in toc
+%    \begin{macrocode}
+\AtBeginEnvironment{abstract}{\@FEFUnotoctrue}
+%    \end{macrocode}
+% Starts new page after abstract
+%    \begin{macrocode}
+\AtEndEnvironment{abstract}{\newpage}
+%    \end{macrocode}
+% Remove page number in toc and abstract
+%    \begin{macrocode}
+\AtBeginEnvironment{abstract}{\pagestyle{empty}}
+\tocloftpagestyle{empty}
+\pretocmd{\maketableofcontents}{\pagestyle{empty}\setstretch{1}}{}{}
+\apptocmd{\maketableofcontents}{\pagestyle{plain}\setstretch{1.5}}{}{}
+%    \end{macrocode}
 % The sections title styles are set up here.
 %    \begin{macrocode}
 \titlespacing{\section}{\parindent}{0pt}{0pt}
@@ -704,29 +730,44 @@
     {\bfseries\normalsize}{\thesection~}{0pt}{\hyperlink{sec:contents}{#1}}
 \titlespacing{name=\section,numberless}{\parindent}{0pt}{0pt}
 \titleformat{name=\section,numberless}[block]
-    {\bfseries\normalsize}{}{0pt}{
-        \phantomsection
-        \addcontentsline{toc}{section}{#1}\hyperlink{sec:contents}{#1}
+    {\bfseries\normalsize}{}{0pt}{%
+    	\hfill%
+    	\if@FEFUnotoc#1%
+    	\else%
+	        \phantomsection%
+    	    \addcontentsline{toc}{section}{#1}\hyperlink{sec:contents}{#1}%
+        \fi%
+        \hfill%
     }
 \titlespacing{\subsection}{\parindent}{0pt}{0pt}
 \titleformat{\subsection}[block]
     {\bfseries\normalsize}{\thesubsection~}{0pt}{\hyperlink{sec:contents}{#1}}
 \titlespacing{name=\subsection,numberless}{\parindent}{0pt}{0pt}
 \titleformat{name=\subsection,numberless}[block]
-    {\bfseries\normalsize}{}{0pt}{
-        \phantomsection
-        \addcontentsline{toc}{subsection}{#1}\hyperlink{sec:contents}{#1}
+    {\bfseries\normalsize}{}{0pt}{%
+    	\hfill%
+    	\if@FEFUnotoc#1%
+    	\else%
+	       \phantomsection%
+    	   \addcontentsline{toc}{subsection}{#1}\hyperlink{sec:contents}{#1}%
+        \fi%
+        \hfill%
     }
 \titlespacing{\subsubsection}{\parindent}{0pt}{0pt}
 \titleformat{\subsubsection}[block]
     {\bfseries\normalsize}{\thesubsubsection~}{0pt}{\hyperlink{sec:contents}{#1}}
 \titlespacing{name=\subsubsection,numberless}{\parindent}{0pt}{0pt}
 \titleformat{name=\subsubsection,numberless}[block]
-    {\bfseries\normalsize}{}{0pt}{
-        \phantomsection
-        \addcontentsline{toc}{subsubsection}{#1}\hyperlink{sec:contents}{#1}
+    {\bfseries\normalsize}{}{0pt}{%
+    	\hfill%
+    	\if@FEFUnotoc#1%
+    	\else%
+	        \phantomsection%
+    	    \addcontentsline{toc}{subsubsection}{#1}\hyperlink{sec:contents}{#1}%
+        \fi%
+		\hfill%
     }
-\renewcommand{\paragraph}[1]{
+\renewcommand{\paragraph}[1]{%
     \stepcounter{paragraph}
     \par{\bfseries\normalsize\theparagraph~\hyperlink{sec:contents}{#1}}
     \phantomsection
