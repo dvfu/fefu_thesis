@@ -402,7 +402,7 @@
 %    \begin{macrocode}
 \newcommand{\@FEFUfield}[3][]{%
     \settowidth{\@FEFUfieldlength}{#2}%
-    \@FEFUlabeled{\uline{\ifthenelse{\lengthtest{\@FEFUfieldlength<#3}}{\hbox to #3{\hfill#2\hfill}}{#2}}}{#1}%
+    \@FEFUlabeled{\uline{\mbox{\ifthenelse{\lengthtest{\@FEFUfieldlength<#3}}{\hbox to #3{\hfill#2\hfill}}{#2}}}}{#1}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -464,9 +464,9 @@
     \settowidth{\@FEFUcredentialslength}{#3, #4 \hspace{\@FEFUsignwidth}}%
     \ifthenelse{\lengthtest{\@FEFUlength<\@FEFUcredentialslength}}{%
         #2\\
-        \@FEFUlabeled{\uline{\hbox to #1{#3, #4\hfill}}}{Ф.И.О., должность, подпись}%
+        \@FEFUlabeled{\uline{\mbox{\hbox to #1{#3, #4\hfill}}}}{Ф.И.О., должность, подпись}%
     }{%
-        #2 \@FEFUlabeled{\uline{\hbox to \@FEFUlength{#3, #4\hfill}}}{Ф.И.О., должность, подпись}%
+        #2 \@FEFUlabeled{\uline{\mbox{\hbox to \@FEFUlength{#3, #4\hfill}}}}{Ф.И.О., должность, подпись}%
     }%
 }
 %    \end{macrocode}
