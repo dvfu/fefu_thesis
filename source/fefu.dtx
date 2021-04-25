@@ -777,7 +777,7 @@
 % Centers toc title
 %    \begin{macrocode}
 \renewcommand{\cfttoctitlefont}{\hfill\bfseries}
-\renewcommand{\cftaftertoctitle}{\hfill\hfill}
+\renewcommand{\cftaftertoctitle}{\hfill\hspace{0pt}}
 %    \end{macrocode}
 % Prevents abstract from being included in toc
 %    \begin{macrocode}
@@ -799,7 +799,7 @@
 \titlespacing{\section}{\parindent}{0pt}{0pt}
 \titleformat{\section}[block]
     {\bfseries\normalsize}{\thesection~}{0pt}{\hyperlink{sec:contents}{#1}}
-\titlespacing{name=\section,numberless}{\parindent}{0pt}{0pt}
+\titlespacing{name=\section,numberless}{0pt}{0pt}{0pt}
 \titleformat{name=\section,numberless}[block]
     {\bfseries\normalsize}{}{0pt}{%
         \hfill%
@@ -813,7 +813,7 @@
 \titlespacing{\subsection}{\parindent}{0pt}{0pt}
 \titleformat{\subsection}[block]
     {\bfseries\normalsize}{\thesubsection~}{0pt}{\hyperlink{sec:contents}{#1}}
-\titlespacing{name=\subsection,numberless}{\parindent}{0pt}{0pt}
+\titlespacing{name=\subsection,numberless}{0pt}{0pt}{0pt}
 \titleformat{name=\subsection,numberless}[block]
     {\bfseries\normalsize}{}{0pt}{%
         \hfill%
@@ -827,7 +827,7 @@
 \titlespacing{\subsubsection}{\parindent}{0pt}{0pt}
 \titleformat{\subsubsection}[block]
     {\bfseries\normalsize}{\thesubsubsection~}{0pt}{\hyperlink{sec:contents}{#1}}
-\titlespacing{name=\subsubsection,numberless}{\parindent}{0pt}{0pt}
+\titlespacing{name=\subsubsection,numberless}{0pt}{0pt}{0pt}
 \titleformat{name=\subsubsection,numberless}[block]
     {\bfseries\normalsize}{}{0pt}{%
         \hfill%
