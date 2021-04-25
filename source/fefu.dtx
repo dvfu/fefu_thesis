@@ -260,8 +260,8 @@
 % Sets deputy and deputy's title iternal variables.
 %    \begin{macrocode}
 \newcommand{\setdeputy}[2]{
-	\renewcommand{\@FEFUdeputy}{#1}
-	\renewcommand{\@FEFUdeputytitle}{#2}
+    \renewcommand{\@FEFUdeputy}{#1}
+    \renewcommand{\@FEFUdeputytitle}{#2}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -269,8 +269,8 @@
 % Sets export supervisor and their title iternal variables.
 %    \begin{macrocode}
 \newcommand{\setexportsupervisor}[2]{
-	\renewcommand{\@FEFUexportsupervisor}{#1}
-	\renewcommand{\@FEFUexportsupervisortitle}{#2}
+    \renewcommand{\@FEFUexportsupervisor}{#1}
+    \renewcommand{\@FEFUexportsupervisortitle}{#2}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -372,8 +372,8 @@
 % Prints short name, surname last
 %    \begin{macrocode}
 \def\@FEFUshortnamereversedhelper#1 #2 #3\relax{%
-	\StrLeft{#2}{1}[\@FEFU@name]\StrLeft{#3}{1}[\@FEFU@middlename]%
-	\@FEFU@name. \@FEFU@middlename. #1%
+    \StrLeft{#2}{1}[\@FEFU@name]\StrLeft{#3}{1}[\@FEFU@middlename]%
+    \@FEFU@name. \@FEFU@middlename. #1%
 }
 \def\@FEFUshortnamereversed#1{\@FEFUifempty{#1}{}{\expandafter\@FEFUshortnamereversedhelper#1\relax}}
 %    \end{macrocode}
@@ -498,7 +498,7 @@
 % Insert space for a sign and a name afterwards, surname last
 %    \begin{macrocode}
 \newcommand{\@FEFUsignamereversed}[4][И.О.Ф]{%
-	\@FEFUpostfield[#1]{\@FEFUlabeled{\uline{\mbox{\hspace{#2}}}}{подпись} }{\@FEFUshortnamereversed{#3}}{#4}%
+    \@FEFUpostfield[#1]{\@FEFUlabeled{\uline{\mbox{\hspace{#2}}}}{подпись} }{\@FEFUshortnamereversed{#3}}{#4}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -506,8 +506,8 @@
 % Insert name and space for a sign afterwards
 %    \begin{macrocode}
 \newcommand{\@FEFUnamesign}[4][Ф.И.О.]{%
-	\setlength{\@FEFUlength}{#4-#3}%
-	\@FEFUfield[#1]{\@FEFUshortname{#2}}{\@FEFUlength}/\@FEFUfield[подпись]{}{#3}/%
+    \setlength{\@FEFUlength}{#4-#3}%
+    \@FEFUfield[#1]{\@FEFUshortname{#2}}{\@FEFUlength}/\@FEFUfield[подпись]{}{#3}/%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -515,10 +515,10 @@
 % Splits on space (default) and applies macro to either split
 %    \begin{macrocode}
 \newcommand{\@FEFUsplitandapply}[4][ ]{%
-	{%
-		\def\@FEFUsplitandapplyhelper##1#1##2\relax{#3{##1}#1#4{##2}}%
-		\expandafter\@FEFUsplitandapplyhelper#2\relax%
-	}%
+    {%
+        \def\@FEFUsplitandapplyhelper##1#1##2\relax{#3{##1}#1#4{##2}}%
+        \expandafter\@FEFUsplitandapplyhelper#2\relax%
+    }%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -562,11 +562,11 @@
         \begin{center}
             \fefuimage\\
             {\relscale{0.786}
-				МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО
+                МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО
                 ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ\\
             }
-	        Федеральное государственное автономное
-    	    образовательное учреждение высшего образования\\
+            Федеральное государственное автономное
+            образовательное учреждение высшего образования\\
             {\bf {«Дальневосточный федеральный университет»}}\\
             (ДВФУ)\\
             \bigskip
@@ -646,11 +646,11 @@
             \@FEFUifempty{\@author}{~}{\@author}\\\vskip 2\bigskipamount
             \MakeUppercase{\@title}
         }
-    	\vskip\bigskipamount
-    	{\bfseries ВЫПУСКНАЯ КВАЛИФИКАЦИОННАЯ РАБОТА\\}
-    	по направлению подготовки\\
-    	\@FEFUifempty{\@FEFUfaculty}{}{\@FEFUsplitandapply{\@FEFUfaculty}{}{\@FEFUaddguillemots}},\\
-    	магистерская программа \@FEFUaddguillemots{\@FEFUprogram}
+        \vskip\bigskipamount
+        {\bfseries ВЫПУСКНАЯ КВАЛИФИКАЦИОННАЯ РАБОТА\\}
+        по направлению подготовки\\
+        \@FEFUifempty{\@FEFUfaculty}{}{\@FEFUsplitandapply{\@FEFUfaculty}{}{\@FEFUaddguillemots}},\\
+        магистерская программа \@FEFUaddguillemots{\@FEFUprogram}
     }%
 }
 %    \end{macrocode}
@@ -702,37 +702,37 @@
 % Make thesis title back side.
 %    \begin{macrocode}
 \newcommand{\makethesistitlebackside}{%
-	\thispagestyle{empty}
-	{\setstretch{1.25}%
-		\noindent\begin{tabular}{p{\@FEFUcolumnwidth}p{\@FEFUcolumnwidth}}
-			& \@FEFUpostfield[подпись]{Автор работы }{}{0.9\@FEFUcolumnwidth}\\
-			& \@FEFUdate{\@FEFUcolumnwidth}\\ &\\
-			& Консультант\\
-			& \@FEFUsigname{\@FEFUsignwidth}{\@FEFUconsultant}{\@FEFUcolumnwidth}\\
-			& \@FEFUdate{\@FEFUcolumnwidth}\\ &\\
-			& \@FEFUpostfield[{\tiny должность, уч. степень, уч. звание}]{Руководитель ВКР }{\@FEFUsupervisortitle}{\@FEFUcolumnwidth}\\
-			& \@FEFUsigname{\@FEFUsignwidth}{\@FEFUsupervisor}{\@FEFUcolumnwidth}\\ & \\
-			& \@FEFUpostfield[уч. степень, уч. звание]{Назначен рецензент }{\@FEFUreviewertitle}{\@FEFUcolumnwidth}\\
-			& \@FEFUfield[фамилия, имя, отчество]{\@FEFUreviewer}{\@FEFUcolumnwidth}\\ &\\
-			Защищена в ГЭК с оценкой & \@FEFUaddguillemots{Допустить к защите}\\
-			\@FEFUfield{}{0.75\@FEFUcolumnwidth} & \multirow{2}{*}{\parbox{\@FEFUcolumnwidth}{Заместитель директора ШЦЭ по УВР, \@FEFUdeputytitle}}\\
-			Секретарь ГЭК &\\
-			\@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUsecretary}{\@FEFUcolumnwidth} & \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUdeputy}{\@FEFUcolumnwidth}\\
-			\@FEFUdate{\@FEFUcolumnwidth} & \@FEFUdate{\@FEFUcolumnwidth}\\& \\
-			& УТВЕРЖДАЮ\\
-			& Директор Школы \@FEFUschool\\
-			& \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUdirector}{\@FEFUcolumnwidth}\\
-			& \@FEFUdate{\@FEFUcolumnwidth}\\ &
-		\end{tabular}\\
-		{\setstretch{1}%
-			В материалах данной выпускной квалификационной работы не содержатся сведения, составляющие государственную тайну, и сведения, подлежащие экспортному контролю.\\\par
-		}%
-		\noindent\begin{tabular}{p{\@FEFUcolumnwidth}p{\@FEFUcolumnwidth}}
-			& \@FEFUnamesign{\@FEFUexportsupervisor}{\@FEFUsignwidth}{\@FEFUcolumnwidth}\\
-			& \@FEFUfield[уполномоченный по экспортному контролю]{\@FEFUexportsupervisortitle}{\@FEFUcolumnwidth}\\
-			& \@FEFUdate{\@FEFUcolumnwidth}
-		\end{tabular}		
-	}
+    \thispagestyle{empty}
+    {\setstretch{1.25}%
+        \noindent\begin{tabular}{p{\@FEFUcolumnwidth}p{\@FEFUcolumnwidth}}
+            & \@FEFUpostfield[подпись]{Автор работы }{}{0.9\@FEFUcolumnwidth}\\
+            & \@FEFUdate{\@FEFUcolumnwidth}\\ &\\
+            & Консультант\\
+            & \@FEFUsigname{\@FEFUsignwidth}{\@FEFUconsultant}{\@FEFUcolumnwidth}\\
+            & \@FEFUdate{\@FEFUcolumnwidth}\\ &\\
+            & \@FEFUpostfield[{\tiny должность, уч. степень, уч. звание}]{Руководитель ВКР }{\@FEFUsupervisortitle}{\@FEFUcolumnwidth}\\
+            & \@FEFUsigname{\@FEFUsignwidth}{\@FEFUsupervisor}{\@FEFUcolumnwidth}\\ & \\
+            & \@FEFUpostfield[уч. степень, уч. звание]{Назначен рецензент }{\@FEFUreviewertitle}{\@FEFUcolumnwidth}\\
+            & \@FEFUfield[фамилия, имя, отчество]{\@FEFUreviewer}{\@FEFUcolumnwidth}\\ &\\
+            Защищена в ГЭК с оценкой & \@FEFUaddguillemots{Допустить к защите}\\
+            \@FEFUfield{}{0.75\@FEFUcolumnwidth} & \multirow{2}{*}{\parbox{\@FEFUcolumnwidth}{Заместитель директора ШЦЭ по УВР, \@FEFUdeputytitle}}\\
+            Секретарь ГЭК &\\
+            \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUsecretary}{\@FEFUcolumnwidth} & \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUdeputy}{\@FEFUcolumnwidth}\\
+            \@FEFUdate{\@FEFUcolumnwidth} & \@FEFUdate{\@FEFUcolumnwidth}\\& \\
+            & УТВЕРЖДАЮ\\
+            & Директор Школы \@FEFUschool\\
+            & \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUdirector}{\@FEFUcolumnwidth}\\
+            & \@FEFUdate{\@FEFUcolumnwidth}\\ &
+        \end{tabular}\\
+        {\setstretch{1}%
+            В материалах данной выпускной квалификационной работы не содержатся сведения, составляющие государственную тайну, и сведения, подлежащие экспортному контролю.\\\par
+        }%
+        \noindent\begin{tabular}{p{\@FEFUcolumnwidth}p{\@FEFUcolumnwidth}}
+            & \@FEFUnamesign{\@FEFUexportsupervisor}{\@FEFUsignwidth}{\@FEFUcolumnwidth}\\
+            & \@FEFUfield[уполномоченный по экспортному контролю]{\@FEFUexportsupervisortitle}{\@FEFUcolumnwidth}\\
+            & \@FEFUdate{\@FEFUcolumnwidth}
+        \end{tabular}       
+    }
     \addtocounter{page}{-1}
     \newpage
 }
@@ -802,11 +802,11 @@
 \titlespacing{name=\section,numberless}{\parindent}{0pt}{0pt}
 \titleformat{name=\section,numberless}[block]
     {\bfseries\normalsize}{}{0pt}{%
-    	\hfill%
-    	\if@FEFUnotoc#1%
-    	\else%
-	        \phantomsection%
-    	    \addcontentsline{toc}{section}{#1}\hyperlink{sec:contents}{#1}%
+        \hfill%
+        \if@FEFUnotoc#1%
+        \else%
+            \phantomsection%
+            \addcontentsline{toc}{section}{#1}\hyperlink{sec:contents}{#1}%
         \fi%
         \hfill%
     }
@@ -816,11 +816,11 @@
 \titlespacing{name=\subsection,numberless}{\parindent}{0pt}{0pt}
 \titleformat{name=\subsection,numberless}[block]
     {\bfseries\normalsize}{}{0pt}{%
-    	\hfill%
-    	\if@FEFUnotoc#1%
-    	\else%
-	       \phantomsection%
-    	   \addcontentsline{toc}{subsection}{#1}\hyperlink{sec:contents}{#1}%
+        \hfill%
+        \if@FEFUnotoc#1%
+        \else%
+           \phantomsection%
+           \addcontentsline{toc}{subsection}{#1}\hyperlink{sec:contents}{#1}%
         \fi%
         \hfill%
     }
@@ -830,13 +830,13 @@
 \titlespacing{name=\subsubsection,numberless}{\parindent}{0pt}{0pt}
 \titleformat{name=\subsubsection,numberless}[block]
     {\bfseries\normalsize}{}{0pt}{%
-    	\hfill%
-    	\if@FEFUnotoc#1%
-    	\else%
-	        \phantomsection%
-    	    \addcontentsline{toc}{subsubsection}{#1}\hyperlink{sec:contents}{#1}%
+        \hfill%
+        \if@FEFUnotoc#1%
+        \else%
+            \phantomsection%
+            \addcontentsline{toc}{subsubsection}{#1}\hyperlink{sec:contents}{#1}%
         \fi%
-		\hfill%
+        \hfill%
     }
 \renewcommand{\paragraph}[1]{%
     \stepcounter{paragraph}
