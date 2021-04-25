@@ -101,6 +101,8 @@
 \RequirePackage{xparse}
 \RequirePackage{ifplatform}
 \RequirePackage{etoolbox}
+\RequirePackage{relsize}
+\RequirePackage{multirow}
 %    \end{macrocode}
 % The \textsf{tocloft} package is loaded with \textsf{subfigure} option if necessary.
 %    \begin{macrocode}
@@ -113,10 +115,11 @@
 %    \end{macrocode}
 % The iternal variables are set up here.
 %    \begin{macrocode}
-\newcommand{\@FEFUschool}{ШКОЛА ЦИФРОВОЙ ЭКОНОМИКИ}
+\newcommand{\@FEFUschool}{цифровой экономики}
 \newcommand{\@FEFUgroup}{}
 \newcommand{\@FEFUsupervisor}{}
 \newcommand{\@FEFUsupervisortitle}{}
+\newcommand{\@FEFUconsultant}{}
 \newcommand{\@FEFUoffsitesupervisor}{}
 \newcommand{\@FEFUoffsitesupervisortitle}{}
 \newcommand{\@FEFUreviewer}{}
@@ -125,6 +128,10 @@
 \newcommand{\@FEFUdirectortitle}{}
 \newcommand{\@FEFUsecretary}{}
 \newcommand{\@FEFUsecretarytitle}{}
+\newcommand{\@FEFUdeputy}{}
+\newcommand{\@FEFUdeputytitle}{}
+\newcommand{\@FEFUexportsupervisor}{}
+\newcommand{\@FEFUexportsupervisortitle}{}
 \newcommand{\@FEFUplace}{}
 \newcommand{\@FEFUstartdate}{}
 \newcommand{\@FEFUenddate}{}
@@ -164,7 +171,7 @@
 % The iternal lengths are defined here.
 %    \begin{macrocode}
 \newlength{\@FEFUcolumnwidth}
-\setlength{\@FEFUcolumnwidth}{.4\textwidth}
+\setlength{\@FEFUcolumnwidth}{.48\textwidth}
 
 \newlength{\@FEFUsignwidth}
 \setlength{\@FEFUsignwidth}{.4\@FEFUcolumnwidth}
@@ -182,6 +189,7 @@
 % \begin{macro}{\setfaculty}
 % \begin{macro}{\setprogram}
 % \begin{macro}{\setfeedback}
+% \begin{macro}{\setconsultant}
 % Sets respective internal variable
 %    \begin{macrocode}
 \newcommand{\setschool}[1]{\renewcommand{\@FEFUschool}{#1}}
@@ -192,7 +200,9 @@
 \newcommand{\setfaculty}[1]{\renewcommand{\@FEFUfaculty}{#1}}
 \newcommand{\setprogram}[1]{\renewcommand{\@FEFUprogram}{#1}}
 \newcommand{\setfeedback}[1]{\renewcommand{\@FEFUfeedback}{#1}}
+\newcommand{\setconsultant}[1]{\renewcommand{\@FEFUconsultant}{#1}}
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -243,6 +253,24 @@
 \newcommand{\setsecretary}[2]{
     \renewcommand{\@FEFUsecretary}{#1}
     \renewcommand{\@FEFUsecretarytitle}{#2}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setdeputy}
+% Sets deputy and deputy's title iternal variables.
+%    \begin{macrocode}
+\newcommand{\setdeputy}[2]{
+	\renewcommand{\@FEFUdeputy}{#1}
+	\renewcommand{\@FEFUdeputytitle}{#2}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setexportsupervisor}
+% Sets export supervisor and their title iternal variables.
+%    \begin{macrocode}
+\newcommand{\setexportsupervisor}[2]{
+	\renewcommand{\@FEFUexportsupervisor}{#1}
+	\renewcommand{\@FEFUexportsupervisortitle}{#2}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -340,6 +368,16 @@
 \def\@FEFUshortname#1{\@FEFUifempty{#1}{}{\expandafter\@FEFUshortnamehelper#1\relax}}
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\@FEFUshortnamereversed}
+% Prints short name, surname last
+%    \begin{macrocode}
+\def\@FEFUshortnamereversedhelper#1 #2 #3\relax{%
+	\StrLeft{#2}{1}[\@FEFU@name]\StrLeft{#3}{1}[\@FEFU@middlename]%
+	\@FEFU@name. \@FEFU@middlename. #1%
+}
+\def\@FEFUshortnamereversed#1{\@FEFUifempty{#1}{}{\expandafter\@FEFUshortnamereversedhelper#1\relax}}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@FEFUgetmonth}
 % Gets month from dd.mm
 %    \begin{macrocode}
@@ -374,8 +412,8 @@
 % Inserts date field.
 %    \begin{macrocode}
 \newcommand{\@FEFUdate}[1]{%
-    \setlength{\@FEFUlength}{#1-\widthof{\guillemotleft\underline{\hspace{.75cm}}\guillemotright\ \ \the\year\ года}}%
-    \guillemotleft\underline{\hspace{.75cm}}\guillemotright \underline{\hspace{\@FEFUlength}} \the\year\ года%
+    \setlength{\@FEFUlength}{#1-\widthof{\guillemotleft\underline{\hspace{1cm}}\guillemotright\ \ \the\year\ г.}}%
+    \guillemotleft\underline{\hspace{1cm}}\guillemotright \underline{\hspace{\@FEFUlength}} \the\year\ г.%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -451,9 +489,43 @@
 % \begin{macro}{\@FEFUsigname}
 % Insert space for a sign and a name afterwards
 %    \begin{macrocode}
-\newcommand{\@FEFUsigname}[3]{%
-    \@FEFUpostfield[Ф.И.О.]{\@FEFUlabeled{\uline{\hspace{#1}}}{подпись} }{\@FEFUshortname{#2}}{#3}%
+\newcommand{\@FEFUsigname}[4][Ф.И.О.]{%
+    \@FEFUpostfield[#1]{\@FEFUlabeled{\uline{\mbox{\hspace{#2}}}}{подпись} }{\@FEFUshortname{#3}}{#4}%
 }
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUsignamereversed}
+% Insert space for a sign and a name afterwards, surname last
+%    \begin{macrocode}
+\newcommand{\@FEFUsignamereversed}[4][И.О.Ф]{%
+	\@FEFUpostfield[#1]{\@FEFUlabeled{\uline{\mbox{\hspace{#2}}}}{подпись} }{\@FEFUshortnamereversed{#3}}{#4}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUnamesign}
+% Insert name and space for a sign afterwards
+%    \begin{macrocode}
+\newcommand{\@FEFUnamesign}[4][Ф.И.О.]{%
+	\setlength{\@FEFUlength}{#4-#3}%
+	\@FEFUfield[#1]{\@FEFUshortname{#2}}{\@FEFUlength}/\@FEFUfield[подпись]{}{#3}/%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUsplitandapply}
+% Splits on space (default) and applies macro to either split
+%    \begin{macrocode}
+\newcommand{\@FEFUsplitandapply}[4][ ]{%
+	{%
+		\def\@FEFUsplitandapplyhelper##1#1##2\relax{#3{##1}#1#4{##2}}%
+		\expandafter\@FEFUsplitandapplyhelper#2\relax%
+	}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUaddguillemots}
+% Adds guillemots around argument
+%    \begin{macrocode}
+\newcommand{\@FEFUaddguillemots}[1]{\guillemotleft#1\guillemotright}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@FEFUcredentials}
@@ -489,19 +561,20 @@
         \setstretch{1}
         \begin{center}
             \fefuimage\\
-            {\small
-                МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО
+            {\relscale{0.786}
+				МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО
                 ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ\\
-                Федеральное государственное автономное
-                образовательное учреждение высшего образования\\
             }
+	        Федеральное государственное автономное
+    	    образовательное учреждение высшего образования\\
             {\bf {«Дальневосточный федеральный университет»}}\\
+            (ДВФУ)\\
             \bigskip
-            {\setstretch{1.15}\@FEFUschool\\\vskip 3\bigskipamount}
+            {\bfseries\setstretch{1.15}\MakeUppercase{Школа \@FEFUschool}\\\vskip 2.5\bigskipamount}
             \csname @FEFU@#2@titlepage\endcsname
         \end{center}
         \vfill
-        {\setstretch{1.15}\centering{г. Владивосток\\\the\year}\par}
+        {\setstretch{1.15}\centering{Владивосток\\\the\year}\par}
         \setcounter{page}{\the@FEFUpage}
         \stepcounter{@FEFUpage}
     \end{titlepage}
@@ -570,20 +643,14 @@
     {\setstretch{1.15}\normalsize
         \vskip 2\bigskipamount
         \par\vbox to 8\bigskipamount {%
-            \@FEFUifempty{\@author}{~}{\@author}\\
-            \@title
+            \@FEFUifempty{\@author}{~}{\@author}\\\vskip 2\bigskipamount
+            \MakeUppercase{\@title}
         }
-        {\bf
-            Направление подготовки\\
-            \@FEFUfaculty\\
-        }
-        \bigskip
-        \@FEFUifempty{\@FEFUprogram}{}{%
-            Магистерская программа\\
-            \guillemotleft\@FEFUprogram\guillemotright\\
-            \bigskip
-        }
-        {\bf Магистерская диссертация}
+    	\vskip\bigskipamount
+    	{\bfseries ВЫПУСКНАЯ КВАЛИФИКАЦИОННАЯ РАБОТА\\}
+    	по направлению подготовки\\
+    	\@FEFUifempty{\@FEFUfaculty}{}{\@FEFUsplitandapply{\@FEFUfaculty}{}{\@FEFUaddguillemots}},\\
+    	магистерская программа \@FEFUaddguillemots{\@FEFUprogram}
     }%
 }
 %    \end{macrocode}
@@ -635,33 +702,37 @@
 % Make thesis title back side.
 %    \begin{macrocode}
 \newcommand{\makethesistitlebackside}{%
-    \thispagestyle{empty}
-    \begin{flushright}
-        Оборотная сторона титульного листа
-    \end{flushright}
-    Автор работы\hfill\@FEFUsigname{1.5\@FEFUsignwidth}{\@author}{1.5\@FEFUcolumnwidth}
-    \vskip 1.5\bigskipamount
-    \noindent\hfill\makebox[1.5\@FEFUcolumnwidth][l]{\@FEFUdate{1.2\@FEFUcolumnwidth}}\\
-    Руководитель ВКР\\
-    \@FEFUpostfield[Ф.И.О.]{\@FEFUfield[должность, учёное звание]{\@FEFUsupervisortitle}{0.35\textwidth} \@FEFUfield[подпись]{}{0.3\textwidth} }{\@FEFUshortname{\@FEFUsupervisor}}{\textwidth}
-    \vskip 1.5\bigskipamount
-    \noindent\hfill\makebox[1.5\@FEFUcolumnwidth][l]{\@FEFUdate{1.2\@FEFUcolumnwidth}}\\
-    Назначен рецензент\\
-    \@FEFUpostfield[Ф.И.О.]{\@FEFUfield[должность, учёное звание]{\@FEFUreviewertitle}{0.35\textwidth} \@FEFUfield[подпись]{}{0.3\textwidth} }{\@FEFUshortname{\@FEFUreviewer}}{\textwidth}
-    \vskip 1.5\bigskipamount
-    \noindent\hfill\makebox[1.5\@FEFUcolumnwidth][l]{\@FEFUdate{1.2\@FEFUcolumnwidth}}\\
-    \guillemotleft Допустить к защите\guillemotright\\
-    Директор ШЦЭ\\
-    \@FEFUpostfield[Ф.И.О.]{\@FEFUfield[учёное звание]{\@FEFUdirectortitle}{0.35\textwidth} \@FEFUfield[подпись]{}{0.3\textwidth} }{\@FEFUshortname{\@FEFUdirector}}{\textwidth}
-    \vskip 1.5\bigskipamount
-    \noindent\hfill\makebox[1.5\@FEFUcolumnwidth][l]{\@FEFUdate{1.2\@FEFUcolumnwidth}}
-    \vskip 1.5\bigskipamount
-    \noindent\@FEFUpostunderline{Защищена в ГЭК с оценкой }{0.75\textwidth}
-    \vskip 1.5\bigskipamount
-    \noindent Секретарь ГЭК\\
-    \@FEFUpostfield[Ф.И.О.]{\@FEFUfield[должность, учёное звание]{\@FEFUsecretarytitle}{0.35\textwidth} \@FEFUfield[подпись]{}{0.3\textwidth} }{\@FEFUshortname{\@FEFUsecretary}}{\textwidth}
-    \vskip 1.5\bigskipamount
-    \noindent\hfill\makebox[1.5\@FEFUcolumnwidth][l]{\@FEFUdate{1.2\@FEFUcolumnwidth}}
+	\thispagestyle{empty}
+	{\setstretch{1.25}%
+		\noindent\begin{tabular}{p{\@FEFUcolumnwidth}p{\@FEFUcolumnwidth}}
+			& \@FEFUpostfield[подпись]{Автор работы }{}{0.9\@FEFUcolumnwidth}\\
+			& \@FEFUdate{\@FEFUcolumnwidth}\\ &\\
+			& Консультант\\
+			& \@FEFUsigname{\@FEFUsignwidth}{\@FEFUconsultant}{\@FEFUcolumnwidth}\\
+			& \@FEFUdate{\@FEFUcolumnwidth}\\ &\\
+			& \@FEFUpostfield[{\tiny должность, уч. степень, уч. звание}]{Руководитель ВКР }{\@FEFUsupervisortitle}{\@FEFUcolumnwidth}\\
+			& \@FEFUsigname{\@FEFUsignwidth}{\@FEFUsupervisor}{\@FEFUcolumnwidth}\\ & \\
+			& \@FEFUpostfield[уч. степень, уч. звание]{Назначен рецензент }{\@FEFUreviewertitle}{\@FEFUcolumnwidth}\\
+			& \@FEFUfield[фамилия, имя, отчество]{\@FEFUreviewer}{\@FEFUcolumnwidth}\\ &\\
+			Защищена в ГЭК с оценкой & \@FEFUaddguillemots{Допустить к защите}\\
+			\@FEFUfield{}{0.75\@FEFUcolumnwidth} & \multirow{2}{*}{\parbox{\@FEFUcolumnwidth}{Заместитель директора ШЦЭ по УВР, \@FEFUdeputytitle}}\\
+			Секретарь ГЭК &\\
+			\@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUsecretary}{\@FEFUcolumnwidth} & \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUdeputy}{\@FEFUcolumnwidth}\\
+			\@FEFUdate{\@FEFUcolumnwidth} & \@FEFUdate{\@FEFUcolumnwidth}\\& \\
+			& УТВЕРЖДАЮ\\
+			& Директор Школы \@FEFUschool\\
+			& \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUdirector}{\@FEFUcolumnwidth}\\
+			& \@FEFUdate{\@FEFUcolumnwidth}\\ &
+		\end{tabular}\\
+		{\setstretch{1}%
+			В материалах данной выпускной квалификационной работы не содержатся сведения, составляющие государственную тайну, и сведения, подлежащие экспортному контролю.\\\par
+		}%
+		\noindent\begin{tabular}{p{\@FEFUcolumnwidth}p{\@FEFUcolumnwidth}}
+			& \@FEFUnamesign{\@FEFUexportsupervisor}{\@FEFUsignwidth}{\@FEFUcolumnwidth}\\
+			& \@FEFUfield[уполномоченный по экспортному контролю]{\@FEFUexportsupervisortitle}{\@FEFUcolumnwidth}\\
+			& \@FEFUdate{\@FEFUcolumnwidth}
+		\end{tabular}		
+	}
     \addtocounter{page}{-1}
     \newpage
 }
