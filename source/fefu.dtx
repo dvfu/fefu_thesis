@@ -507,8 +507,8 @@
 % Insert name and space for a sign afterwards
 %    \begin{macrocode}
 \newcommand{\@FEFUnamesign}[4][Ф.И.О.]{%
-    \setlength{\@FEFUlength}{#4-#3}%
-    \@FEFUfield[#1]{\@FEFUshortname{#2}}{\@FEFUlength}/\@FEFUfield[подпись]{}{#3}/%
+    \setlength{\@FEFUlength}{#4-#3-\widthof{ / /}}%
+    \@FEFUfield[#1]{\@FEFUshortname{#2}}{\@FEFUlength} /\@FEFUfield[подпись]{}{#3} /%
 }
 %    \end{macrocode}
 % \end{macro}
