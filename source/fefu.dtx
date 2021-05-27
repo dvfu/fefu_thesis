@@ -797,6 +797,7 @@
 %    \end{macrocode}
 % The sections title styles are set up here.
 %    \begin{macrocode}
+\setcounter{secnumdepth}{4}
 \titlespacing{\section}{\parindent}{0pt}{0pt}
 \titleformat{\section}[block]
     {\bfseries\normalsize}{\thesection~}{0pt}{\hyperlink{sec:contents}{#1}}
@@ -839,13 +840,20 @@
         \fi%
         \hfill%
     }
-\renewcommand{\paragraph}[1]{%
-    \stepcounter{paragraph}
-    \par{\bfseries\normalsize\theparagraph~\hyperlink{sec:contents}{#1}}
-    \phantomsection
-    \addcontentsline{toc}{paragraph}{\hbox to \cftparanumwidth{\theparagraph}#1}
-    \par
-}
+\titlespacing{\paragraph}{\parindent}{0pt}{0pt}
+\titleformat{\paragraph}[block]
+    {\bfseries\normalsize}{\theparagraph~}{0pt}{\hyperlink{sec:contents}{#1}}
+\titlespacing{name=\paragraph,numberless}{0pt}{0pt}{0pt}
+\titleformat{name=\paragraph,numberless}[block]
+    {\bfseries\normalsize}{}{0pt}{%
+        \hfill%
+        \if@FEFUnotoc#1%
+        \else%
+        \phantomsection%
+        \addcontentsline{toc}{paragraph}{#1}\hyperlink{sec:contents}{#1}%
+        \fi%
+        \hfill%
+    }
 %    \end{macrocode}
 % The bibliography style is set up here.
 %    \begin{macrocode}
