@@ -103,8 +103,8 @@
 \RequirePackage{etoolbox}
 \RequirePackage{relsize}
 \RequirePackage{multirow}
-\RequirePackage{cite}
 \RequirePackage[labelsep=endash]{caption}
+\RequirePackage[backend=biber, bibstyle=gost-numeric, maxbibnames=99]{biblatex}
 %    \end{macrocode}
 % The \textsf{tocloft} package is loaded with \textsf{subfigure} option if necessary.
 %    \begin{macrocode}
@@ -748,6 +748,15 @@
 % Set mono font.
 %    \begin{macrocode}
 \setmonofont[Scale=0.9]{Courier New}
+%    \end{macrocode}
+% Alter bibliography style
+%    \begin{macrocode}
+\DefineBibliographyStrings{russian}{ urlseen = {дата обращения: }, }
+\renewcommand*{\mkgostheading}[1]{#1}
+%    \end{macrocode}
+% Use surrounding font for urls
+%    \begin{macrocode}
+\urlstyle{same}
 %    \end{macrocode}
 % Declare centered column type.
 %    \begin{macrocode}
