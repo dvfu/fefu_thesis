@@ -104,6 +104,7 @@
 \RequirePackage{relsize}
 \RequirePackage{multirow}
 \RequirePackage{cite}
+\RequirePackage[labelsep=endash]{caption}
 %    \end{macrocode}
 % The \textsf{tocloft} package is loaded with \textsf{subfigure} option if necessary.
 %    \begin{macrocode}
@@ -888,6 +889,10 @@
 }}
 %    \end{macrocode}
 % \end{macro}
+% Removes space after table caption
+%    \begin{macrocode}
+\captionsetup[table]{skip=0pt,position=top}
+%    \end{macrocode}
 % \begin{macro}{fefutable}
 % Inserts table with tabular environment inside.
 % \begin{Options}
@@ -899,11 +904,8 @@
 \newenvironment{fefutable}[3][h]{%
     \begin{table}[#1]
         \centering
-        \refstepcounter{@FEFUtable}
+        \caption{#3}
         \begin{tabular}{#2}
-            \@FEFUcountcols%
-            \multicolumn{\@FEFUncols}{r@{}}{Т\kern 0.2em а\kern 0.2em б\kern 0.2em л%
-                \kern 0.2em и\kern 0.2em ц\kern 0.2em а \the@FEFUtable\ --- #3}\\
         }{%
         \end{tabular}
     \end{table}
