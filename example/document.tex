@@ -18,6 +18,10 @@
 \setdirector{Мирин Илья Геннадьевич}{}
 \setsecretary{Сапрыкина Елена Валерьевна}{}
 
+\addbibresource{references.bib}
+
+\newcommand{\macro}[2]{\texttt{\textbackslash#1\{#2\}}}
+
 %\newfontfamily\cyrillicfont[Ligatures=TeX]{Times New Roman}
 
 \newif\ifpractice
@@ -36,8 +40,7 @@
         \section*{Заключение}
         \subfile{subfiles/conclusion.tex}
         \newpage
-        \bibliographystyle{ugost2008ls}
-        \bibliography{references}
+        \printbibliography
         \subfile{subfiles/diary.tex}
         \subfile{subfiles/practice-task.tex}
     \else
