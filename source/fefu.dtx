@@ -105,6 +105,7 @@
 \RequirePackage{multirow}
 \RequirePackage[labelsep=endash]{caption}
 \RequirePackage[backend=biber, bibstyle=gost-numeric, maxbibnames=99]{biblatex}
+\RequirePackage[title,titletoc]{appendix}
 %    \end{macrocode}
 % The \textsf{tocloft} package is loaded with \textsf{subfigure} option if necessary.
 %    \begin{macrocode}
@@ -919,6 +920,19 @@
         }{%
         \end{tabular}
     \end{table}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{fefuappendices}
+% Starts appendix section
+%    \begin{macrocode}
+\newenvironment{fefuappendices}{%
+    \begin{appendices}
+        \let\oldaddcontentsline\addcontentsline
+        \renewcommand{\addcontentsline}[3]{\oldaddcontentsline{##1}{##2}{\thesection}}
+        \titleformat{\section}[block]{\centering\normalsize}{Приложение \thesection~}{0pt}{\\\bfseries\hyperlink{sec:contents}{##1}}
+        }{%
+    \end{appendices}
 }
 %    \end{macrocode}
 % \end{macro}
