@@ -886,11 +886,13 @@
 %    \end{macrocode}
 % Lists style is set up here.
 %    \begin{macrocode}
-\setlistdepth{2}
+\setlistdepth{3}
 \setlist[itemize,1]{itemsep=-1ex,topsep=0pt,label=\textendash,wide=\parindent}
 \setlist[itemize,2]{itemsep=-1ex,topsep=0pt,label=\textbullet,wide=1.5\parindent}
+\setlist[itemize,3]{itemsep=-1ex,topsep=0pt,label=\textperiodcentered,wide=2\parindent}
 \setlist[enumerate,1]{itemsep=-1ex,topsep=0pt,label=\arabic*.,wide=\parindent}
 \setlist[enumerate,2]{itemsep=-1ex,topsep=0pt,label=\alph*),wide=1.5\parindent}
+\setlist[enumerate,3]{itemsep=-1ex,topsep=0pt,label=\roman*.,wide=2\parindent}
 %    \end{macrocode}
 % \begin{macro}{\@FEFUcountcols}
 % Counts symbols \& in given macro.
