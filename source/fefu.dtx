@@ -658,14 +658,9 @@
 }
 %    \end{macrocode}
 % \begin{macro}{\maketableofcontents}
-% Makes table of contents.
+% Makes table of contents (deprecated).
 %    \begin{macrocode}
-\newcommand{\maketableofcontents}{
-    \thispagestyle{empty}
-    \hypertarget{sec:contents}{}
-    \tableofcontents
-    \newpage
-}
+\newcommand{\maketableofcontents}{\tableofcontents}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\makepracticetask}
@@ -741,10 +736,11 @@
 }
 %    \end{macrocode}
 % \end{macro}
-% Set correct figure name
+% Change caption names
 %    \begin{macrocode}
 \addto\captionsrussian{%
     \renewcommand{\figurename}{Рисунок}%
+    \renewcommand{\contentsname}{Оглавление}%
 }
 %    \end{macrocode}
 % No title and author by default.
@@ -776,26 +772,18 @@
 \renewcommand{\headrulewidth}{0pt}
 \pagestyle{plain}
 %    \end{macrocode}
-% Adds dots between section title and page number in toc.
+% Setup toc style
 %    \begin{macrocode}
+\tocloftpagestyle{empty}
+\renewcommand{\cfttocprehook}{\pagestyle{empty}\setstretch{1}\hypertarget{sec:contents}{}}
+\renewcommand{\cfttocposthook}{\newpage\pagestyle{plain}}
+\renewcommand{\cfttoctitlefont}{\hfill\bfseries}
+\renewcommand{\cftaftertoctitle}{\hfill\hspace{0pt}}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
-%    \end{macrocode}
-% Sets toc font.
-%    \begin{macrocode}
-\renewcommand{\cfttoctitlefont}{\normalfont\bfseries}
 %    \end{macrocode}
 % Add paragraphs to toc.
 %    \begin{macrocode}
 \setcounter{tocdepth}{4}
-%    \end{macrocode}
-% Changes toc title
-%    \begin{macrocode}
-\addto\captionsrussian{\renewcommand{\contentsname}{Оглавление}}
-%    \end{macrocode}
-% Centers toc title
-%    \begin{macrocode}
-\renewcommand{\cfttoctitlefont}{\hfill\bfseries}
-\renewcommand{\cftaftertoctitle}{\hfill\hspace{0pt}}
 %    \end{macrocode}
 % Prevents abstract from being included in toc
 %    \begin{macrocode}
@@ -805,12 +793,9 @@
 %    \begin{macrocode}
 \AtEndEnvironment{abstract}{\newpage}
 %    \end{macrocode}
-% Remove page number in toc and abstract
+% Remove page number in abstract
 %    \begin{macrocode}
 \AtBeginEnvironment{abstract}{\pagestyle{empty}}
-\tocloftpagestyle{empty}
-\pretocmd{\maketableofcontents}{\pagestyle{empty}\setstretch{1}}{}{}
-\apptocmd{\maketableofcontents}{\pagestyle{plain}\setstretch{1.5}}{}{}
 %    \end{macrocode}
 % The sections title styles are set up here.
 %    \begin{macrocode}
