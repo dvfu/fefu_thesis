@@ -531,6 +531,15 @@
 \newcommand{\@FEFUaddguillemots}[1]{\guillemotleft#1\guillemotright}
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\@FEFUremoveprefix}
+% Splits on space (default) and remove every but last item
+%    \begin{macrocode}
+\newcommand{\@FEFUremoveprefix}[2][ ]{
+    \def\@FEFUremoveprefixhelper##1#1##2\relax{\@FEFUifempty{##2}{##1}{\@FEFUremoveprefixhelper##2\relax}}%
+    \expandafter\@FEFUremoveprefixhelper#2#1\relax
+}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@FEFUcredentials}
 % Insert a field for person's credentials.
 %    \begin{macrocode}
@@ -546,8 +555,34 @@
 }
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\@FEFUheader}
+% \begin{macro}{\fefuheader}
+% Inserts FEFU page header
+%    \begin{macrocode}
+\newcommand{\@FEFUheader}{%
+    \fefuimage\\
+    {\relscale{0.786}
+        МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО
+        ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ\\
+    }
+    Федеральное государственное автономное
+    образовательное учреждение высшего образования\\
+    {\bf {«Дальневосточный федеральный университет»}}\\
+    (ДВФУ)\\
+    \bigskip
+    {\bfseries\setstretch{1.15}\MakeUppercase{Школа \@FEFUschool}\\}
+}
+\newcommand{\fefuheader}{%
+    \setstretch{1}
+    \begin{center}
+        \@FEFUheader
+    \end{center}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
 % \begin{macro}{\addtitle}
-% Inserts titlepage.
+% Adds titlepage.
 %    \begin{macrocode}
 \newcommand{\addtitle}[2]{%
     \expandafter\def\csname @FEFU@#1@titlepage\endcsname{#2}%
@@ -563,19 +598,10 @@
     \begin{titlepage}
         \setstretch{1}
         \begin{center}
-            \fefuimage\\
-            {\relscale{0.786}
-                МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО
-                ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ\\
-            }
-            Федеральное государственное автономное
-            образовательное учреждение высшего образования\\
-            {\bf {«Дальневосточный федеральный университет»}}\\
-            (ДВФУ)\\
-            \bigskip
-            {\bfseries\setstretch{1.15}\MakeUppercase{Школа \@FEFUschool}\\\vskip 2.5\bigskipamount}
+            \@FEFUheader
+            {\setstretch{1.15}\vskip 2.5\bigskipamount}
             \csname @FEFU@#2@titlepage\endcsname
-        \end{center}
+        \end{center}%
         \vfill
         {\setstretch{1.15}\centering{Владивосток\\\the\year}\par}
         \setcounter{page}{\the@FEFUpage}
@@ -745,6 +771,7 @@
 %    \end{macrocode}
 % No title and author by default.
 %    \begin{macrocode}
+\date{}
 \title{}
 \author{}
 %    \end{macrocode}
@@ -930,6 +957,67 @@
         }{%
     \end{appendices}
 }
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{@FEFUreview}
+% Inserts review page
+%    \begin{macrocode}
+\newenvironment{@FEFUreview}[5]{%
+    \fefuheader%
+    \def\@FEFUgrade{#5}%
+    \def\@FEFUreviewertitlename{#2}%
+    \def\@FEFUreviewername{#3}%
+    \def\@FEFUreviewerjobtitle{#4}%
+    {\centering\bfseries #1\\\medskip\medskip}%
+    \begingroup\setstretch{1.25}\fontsize{12}{12}\selectfont\pagestyle{empty}\setlength{\parindent}{0pt}%
+    на выпускную квалификационную работу \@FEFUgendered{студентки}{студента}\\
+    \@FEFUfield[Ф.И.О]{\@author}{\textwidth}\\
+    \smallskip\\
+    \@FEFUpostfield{Направление подготовки }{\@FEFUfaculty}{\textwidth}\\
+    \@FEFUpostfield{Магистерская программа }{\@FEFUprogram}{\textwidth}\\
+    \@FEFUifempty{\@FEFUgroup}{%
+        Группа \@FEFUfield{}{0.2\textwidth}%
+    }{%
+        Группа \@FEFUfield{\@FEFUgroup}{0cm}%
+    }\\
+    \smallskip\\
+    \@FEFUpostfield[ученая степень, ученое звание, Ф.И.О]{Руководитель ВКР }{\@FEFUremoveprefix{\@FEFUsupervisortitle}\ \@FEFUsupervisor}{\textwidth}\\
+    \smallskip\\
+    На тему {\expandafter\@FEFUunderline\@title\hfill}\\
+    \smallskip\\
+    \@FEFUifempty{\@date}{%
+        Дата защиты ВКР \@FEFUfield{}{0.15\textwidth}%
+    }{%
+        Дата защиты ВКР \@FEFUfield{\@FEFUprettydate{\@date} \the\year г.}{0cm}%
+    }
+}{\\\par%
+    \begingroup\raggedright
+    \@FEFUifempty{\@FEFUgrade}{%
+        Оценка \@FEFUfield{}{0.15\textwidth}%
+    }{%
+        Оценка \@FEFUfield{\@FEFUgrade}{0cm}%
+    }\\
+    \bigskip
+    \setlength{\@FEFUlength}{.3\textwidth-1cm}\@FEFUreviewertitlename\\
+    \@FEFUfield[должность, ученое звание]{\@FEFUreviewerjobtitle}{.4\textwidth}\hspace{.5cm}\@FEFUfield[подпись]{}{.3\textwidth}\hspace{.5cm}\@FEFUfield[Ф.И.О.]{\expandafter\@FEFUshortname\@FEFUreviewername}{\@FEFUlength}\\
+    \bigskip
+    {\raggedleft\@FEFUdate{.8\@FEFUcolumnwidth}\\}
+    \endgroup\par\newpage\endgroup}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{review}
+% Inserts review
+%    \begin{macrocode}
+\newenvironment{review}[1]{\begin{@FEFUreview}{РЕЦЕНЗИЯ}{Рецензент}{\@FEFUreviewer}{\@FEFUreviewertitle}{#1}}{\end{@FEFUreview}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{supervisorreview}
+% Inserts supervisor review
+%    \begin{macrocode}
+\newenvironment{supervisorreview}[2]{%
+    \begin{@FEFUreview}{ОТЗЫВ РУКОВОДИТЕЛЯ}{Руководитель ВКР}{\@FEFUsupervisor}{\@FEFUsupervisortitle}{#1}
+        \par\bigskip Оригинальность текста ВКР (по данным системы LMS Blackboard) \@FEFUfield{#2}{1cm}\%\\
+    }{\end{@FEFUreview}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\makediary}
