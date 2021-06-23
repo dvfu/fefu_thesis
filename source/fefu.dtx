@@ -381,15 +381,25 @@
 \def\@FEFUshortnamereversed#1{\@FEFUifempty{#1}{}{\expandafter\@FEFUshortnamereversedhelper#1\relax}}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\@FEFUgetmonth}
-% Gets month from dd.mm
+% \begin{macro}{\@FEFUgetyear}
+% Extracts year from dd.mm.yy or uses default one
 %    \begin{macrocode}
-\def\@FEFUgetmonthhelper#1.#2\relax{#2}
-\def\@FEFUgetmonth#1{\expandafter\@FEFUgetmonthhelper#1\relax}
+\def\@FEFUdropdot#1.\relax{#1}
+\newcommand{\@FEFUgetyear}[2][\the\year]{%
+    \def\@FEFUgetyearhelper##1.##2.##3\relax{\@FEFUifempty{##3}{#1}{20\@FEFUdropdot##3\relax}}%
+    \expandafter\@FEFUgetyearhelper#2.\relax%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUgetmonth}
+% Gets month from dd.mm or dd.mm.yy
+%    \begin{macrocode}
+\def\@FEFUgetmonthhelper#1.#2.#3\relax{#2}
+\def\@FEFUgetmonth#1{\expandafter\@FEFUgetmonthhelper#1.\relax}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@FEFUgetday}
-% Gets day from dd.mm
+% Gets day from dd.mm or dd.mm.yy
 %    \begin{macrocode}
 \def\@FEFUgetdayhelper#1.#2\relax{#1}
 \def\@FEFUgetday#1{\expandafter\@FEFUgetdayhelper#1\relax}
@@ -414,16 +424,22 @@
 % \begin{macro}{\@FEFUdate}
 % Inserts date field.
 %    \begin{macrocode}
-\newcommand{\@FEFUdate}[1]{%
-    \setlength{\@FEFUlength}{#1-\widthof{\guillemotleft\underline{\hspace{1cm}}\guillemotright\ \ \the\year\ г.}}%
-    \guillemotleft\underline{\hspace{1cm}}\guillemotright \underline{\hspace{\@FEFUlength}} \the\year\ г.%
+\newcommand{\@FEFUdate}[2][]{%
+    \setlength{\@FEFUlength}{#2-\widthof{\guillemotleft\underline{\hspace{1cm}}\guillemotright\ \ \the\year\ г.}}%
+    \@FEFUifempty{#1}{%
+        \guillemotleft\underline{\hspace{1cm}}\guillemotright \underline{\hspace{\@FEFUlength}} \the\year\ г.%
+    }{%
+        \guillemotleft\underline{\hbox to 1cm{\hfill\@FEFUgetday{#1}\hfill}}\guillemotright \underline{\hbox to \@FEFUlength{\hfill\csname @FEFUmonthname\@FEFUgetmonth{#1}\endcsname\hfill}} \@FEFUgetyear{#1}\ г.
+    }%
 }
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@FEFUprettydate}
-% Prints day with month name
+% Prints date with month name
 %    \begin{macrocode}
-\newcommand{\@FEFUprettydate}[1]{\@FEFUifempty{#1}{}{\@FEFUgetday{#1} \csname @FEFUmonthname\@FEFUgetmonth{#1}\endcsname}}
+\newcommand{\@FEFUprettydate}[1]{%
+    \@FEFUifempty{#1}{}{\@FEFUgetday{#1} \csname @FEFUmonthname\@FEFUgetmonth{#1}\endcsname}
+}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@FEFUlabeled}
@@ -962,16 +978,17 @@
 % \begin{macro}{@FEFUreview}
 % Inserts review page
 %    \begin{macrocode}
-\newenvironment{@FEFUreview}[5]{%
+\newenvironment{@FEFUreview}[7][\@author]{%
     \fefuheader%
-    \def\@FEFUgrade{#5}%
-    \def\@FEFUreviewertitlename{#2}%
-    \def\@FEFUreviewername{#3}%
-    \def\@FEFUreviewerjobtitle{#4}%
-    {\centering\bfseries #1\\\medskip\medskip}%
+    \def\@FEFUreviewertitlename{#3}%
+    \def\@FEFUreviewername{#4}%
+    \def\@FEFUreviewerjobtitle{#5}%
+    \def\@FEFUgrade{#6}%
+    \def\@FEFUreviewdate{#7}%
+    {\centering\bfseries #2\\\medskip\medskip}%
     \begingroup\setstretch{1.25}\fontsize{12}{12}\selectfont\pagestyle{empty}\setlength{\parindent}{0pt}%
     на выпускную квалификационную работу \@FEFUgendered{студентки}{студента}\\
-    \@FEFUfield[Ф.И.О]{\@author}{\textwidth}\\
+    \@FEFUfield[Ф.И.О]{#1}{\textwidth}\\
     \smallskip\\
     \@FEFUpostfield{Направление подготовки }{\@FEFUfaculty}{\textwidth}\\
     \@FEFUpostfield{Магистерская программа }{\@FEFUprogram}{\textwidth}\\
@@ -988,7 +1005,7 @@
     \@FEFUifempty{\@date}{%
         Дата защиты ВКР \@FEFUfield{}{0.15\textwidth}%
     }{%
-        Дата защиты ВКР \@FEFUfield{\@FEFUprettydate{\@date} \the\year г.}{0cm}%
+        Дата защиты ВКР \@FEFUfield{\@FEFUprettydate{\@date}\@FEFUgetyear{\@date} г.}{0cm}%
     }
 }{\\\par%
     \begingroup\raggedright
@@ -1001,23 +1018,61 @@
     \setlength{\@FEFUlength}{.3\textwidth-1cm}\@FEFUreviewertitlename\\
     \@FEFUfield[должность, ученое звание]{\@FEFUreviewerjobtitle}{.4\textwidth}\hspace{.5cm}\@FEFUfield[подпись]{}{.3\textwidth}\hspace{.5cm}\@FEFUfield[Ф.И.О.]{\expandafter\@FEFUshortname\@FEFUreviewername}{\@FEFUlength}\\
     \bigskip
-    {\raggedleft\@FEFUdate{.8\@FEFUcolumnwidth}\\}
+    {\raggedleft\@FEFUdate[\@FEFUreviewdate]{.8\@FEFUcolumnwidth}\\}
     \endgroup\par\newpage\endgroup}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{review}
 % Inserts review
 %    \begin{macrocode}
-\newenvironment{review}[1]{\begin{@FEFUreview}{РЕЦЕНЗИЯ}{Рецензент}{\@FEFUreviewer}{\@FEFUreviewertitle}{#1}}{\end{@FEFUreview}}
+\newenvironment{review}[3][\@author]{%
+    \begin{@FEFUreview}[#1]{РЕЦЕНЗИЯ}{Рецензент}{\@FEFUreviewer}{\@FEFUreviewertitle}{#2}{#3}}{\end{@FEFUreview}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{supervisorreview}
 % Inserts supervisor review
 %    \begin{macrocode}
-\newenvironment{supervisorreview}[2]{%
-    \begin{@FEFUreview}{ОТЗЫВ РУКОВОДИТЕЛЯ}{Руководитель ВКР}{\@FEFUsupervisor}{\@FEFUsupervisortitle}{#1}
-        \par\bigskip Оригинальность текста ВКР (по данным системы LMS Blackboard) \@FEFUfield{#2}{1cm}\%\\
+\newenvironment{supervisorreview}[4][\@author]{%
+    \begin{@FEFUreview}[#1]{ОТЗЫВ РУКОВОДИТЕЛЯ}{Руководитель ВКР}{\@FEFUsupervisor}{\@FEFUsupervisortitle}{#2}{#4}
+        \par\bigskip Оригинальность текста ВКР (по данным системы LMS Blackboard) \@FEFUfield{#3}{1cm}\%\\
     }{\end{@FEFUreview}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{thesistask}
+% Inserts thesis task page
+%    \begin{macrocode}
+\newenvironment{thesistask}[5][\@author]{%
+    \fefuheader%
+    \def\@FEFUdeadline{#4}%
+    \def\@FEFUtaskdate{#5}%
+    \def\taskitem{%
+        \def\taskitem{%
+            \def\taskitem{%
+                \def\taskitem{\item}%
+                \item Основные источники информации, используемые для разработки темы (учебная и научная литература, нормативно-правовая литература, данные, полученные в ходе преддипломной практики):\\
+            }%
+            \item Перечень вопросов, подлежащих к разработке (исследованию):\\%
+        }%
+        \item Техническое задание и исходные данные к работе:\\%
+    }%
+    {\centering\bfseries ЗАДАНИЕ\\на выпускную квалификационную работу\\\bigskip\medskip}%
+    \begingroup\setstretch{1.25}\fontsize{12}{12}\selectfont\pagestyle{empty}\setlength{\parindent}{0pt}%
+        \hbox to \textwidth{\uline{\@FEFUgendered{студентке}{студенту}\hfill#1\hfill группы \@FEFUgroup}}
+        \bigskip
+        \uline{на тему \@title\hfill\null\\утверждённую приказом от \@FEFUifempty{#2}{\@FEFUdate{.3\textwidth}}{\guillemotleft\@FEFUgetday{#2}\guillemotright\ \csname @FEFUmonthname\@FEFUgetmonth{#2}\endcsname\ \@FEFUgetyear{#2}\ г.} № \@FEFUifempty{#3}{\underline{\hspace{.2\textwidth}}}{#3}\hfill}\\
+        \medskip\medskip\\
+        \hbox to \textwidth{\uline{Руководитель ВКР\hfill\@FEFUsupervisortitle\ \@FEFUsupervisor\hfill}}\\
+        \smallskip
+        \begin{enumerate}[labelsep=1.25cm]
+    }{\end{enumerate}\bigskip%
+        \hbox to .75\textwidth{Срок предоставления работы\hfill\@FEFUdate[\@FEFUdeadline]{.35\textwidth}}
+        \bigskip
+        \hbox to .75\textwidth{Дата выдачи задания\hfill\@FEFUdate[\@FEFUdeadline]{.35\textwidth}}
+        \bigskip\bigskip
+        \hbox to \textwidth{Руководитель ВКР\hfill\hbox to .75\textwidth{\@FEFUfield[должность, ученая степень, ученое звание]{\@FEFUsupervisortitle}{.3\textwidth}\hfill\@FEFUfield[подпись]{}{.15\textwidth}\hfill\@FEFUfield[Ф.И.О.]{\@FEFUshortname{\@FEFUsupervisor}}{.25\textwidth}}}
+        \bigskip
+        \hbox to \textwidth{Задание получил\hfill\hbox to .425\textwidth{\@FEFUfield[подпись]{}{.15\textwidth}\hfill\@FEFUfield[Ф.И.О.]{\@FEFUshortname{\@author}}{.25\textwidth}}}
+    \par\newpage\endgroup}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\makediary}
