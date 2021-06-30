@@ -903,6 +903,8 @@
 % The bibliography style is set up here.
 %    \begin{macrocode}
 \renewcommand\@biblabel[1]{\indent#1.}
+\let\@FEFUprintbibliography\printbibliography
+\renewcommand{\printbibliography}[1][]{\@FEFUifempty{#1}{\@FEFUprintbibliography[title=Список использованных источников]}{\@FEFUprintbibliography[title=Список использованных источнико, #1]}}
 %    \end{macrocode}
 % The abstract style is set up here.
 %    \begin{macrocode}
