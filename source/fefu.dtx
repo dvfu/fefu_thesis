@@ -106,6 +106,7 @@
 \RequirePackage[labelsep=endash]{caption}
 \RequirePackage[backend=biber, bibstyle=gost-numeric, maxbibnames=99]{biblatex}
 \RequirePackage[title,titletoc]{appendix}
+\RequirePackage[xindy={glsnumbers=false},nonumberlist,nopostdot,nogroupskip,numberline=false,acronym]{glossaries}
 %    \end{macrocode}
 % The \textsf{tocloft} package is loaded with \textsf{subfigure} option if necessary.
 %    \begin{macrocode}
@@ -839,6 +840,12 @@
 % Remove page number in abstract
 %    \begin{macrocode}
 \AtBeginEnvironment{abstract}{\pagestyle{empty}}
+%    \end{macrocode}
+% The glossary style is set up here
+%    \begin{macrocode}
+\setglossarystyle{index}
+\renewcommand*{\glsnamefont}[1]{\textmd{#1} ---}
+\renewcommand{\@idxitem}{\setlength{\parindent}{1.25cm}\par\indent}
 %    \end{macrocode}
 % The sections title styles are set up here.
 %    \begin{macrocode}
