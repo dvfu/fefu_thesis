@@ -107,6 +107,7 @@
 \RequirePackage[backend=biber, bibstyle=gost-numeric, maxbibnames=99]{biblatex}
 \RequirePackage[title,titletoc]{appendix}
 \RequirePackage[xindy={glsnumbers=false},nonumberlist,nopostdot,nogroupskip,numberline=false,acronym]{glossaries}
+\RequirePackage{pbox}
 %    \end{macrocode}
 % The \textsf{tocloft} package is loaded with \textsf{subfigure} option if necessary.
 %    \begin{macrocode}
@@ -995,7 +996,7 @@
     \def\@FEFUgrade{#6}%
     \def\@FEFUreviewdate{#7}%
     {\centering\bfseries #2\\\medskip\medskip}%
-    \begingroup\setstretch{1.25}\fontsize{12}{12}\selectfont\pagestyle{empty}\setlength{\parindent}{0pt}%
+    \begingroup\setstretch{1.25}\fontsize{12}{12}\selectfont\pagestyle{empty}%
     на выпускную квалификационную работу \@FEFUgendered{студентки}{студента}\\
     \@FEFUfield[Ф.И.О]{#1}{\textwidth}\\
     \smallskip\\
@@ -1024,10 +1025,14 @@
         Оценка \@FEFUfield{\@FEFUgrade}{0cm}%
     }\\
     \bigskip
-    \setlength{\@FEFUlength}{.3\textwidth-1cm}\@FEFUreviewertitlename\\
-    \@FEFUfield[должность, ученое звание]{\@FEFUreviewerjobtitle}{.4\textwidth}\hspace{.5cm}\@FEFUfield[подпись]{}{.3\textwidth}\hspace{.5cm}\@FEFUfield[Ф.И.О.]{\expandafter\@FEFUshortname\@FEFUreviewername}{\@FEFUlength}\\
+    \@FEFUreviewertitlename\\
+    \smallskip
+    \begingroup\setlength\tabcolsep{.25cm}\def\arraystretch{0}\setlength{\@FEFUlength}{.3\textwidth-1cm}%
+    \begin{tabular}{@{}b{.4\textwidth}b{.3\textwidth}b{\@FEFUlength}@{}}
+        \@FEFUfield[должность, ученое звание]{\pbox[b]{.4\textwidth}{\@FEFUreviewerjobtitle}}{.4\textwidth} & \@FEFUfield[подпись]{}{.3\textwidth}& \@FEFUfield[Ф.И.О.]{\expandafter\@FEFUshortname\@FEFUreviewername}{\@FEFUlength}
+    \end{tabular}\endgroup\\
     \bigskip
-    {\raggedleft\@FEFUdate[\@FEFUreviewdate]{.8\@FEFUcolumnwidth}\\}
+    {\raggedleft\@FEFUdate[\expandafter\empty\@FEFUreviewdate]{.8\@FEFUcolumnwidth}\\}
     \endgroup\par\newpage\endgroup}
 %    \end{macrocode}
 % \end{macro}
