@@ -1016,14 +1016,10 @@
         Дата защиты ВКР \@FEFUfield{}{0.15\textwidth}%
     }{%
         Дата защиты ВКР \@FEFUfield{\@FEFUprettydate{\@date}\@FEFUgetyear{\@date} г.}{0cm}%
-    }
+    }\par%
 }{\\\par%
     \begingroup\raggedright
-    \@FEFUifempty{\@FEFUgrade}{%
-        Оценка \@FEFUfield{}{0.15\textwidth}%
-    }{%
-        Оценка \@FEFUfield{\@FEFUgrade}{0cm}%
-    }\\
+    Оценка \@FEFUfield{\@FEFUgrade}{0.15\textwidth}\\
     \bigskip
     \@FEFUreviewertitlename\\
     \smallskip
@@ -1048,7 +1044,7 @@
 %    \begin{macrocode}
 \newenvironment{supervisorreview}[4][\@author]{%
     \begin{@FEFUreview}[#1]{ОТЗЫВ РУКОВОДИТЕЛЯ}{Руководитель ВКР}{\@FEFUsupervisor}{\@FEFUsupervisortitle}{#2}{#4}
-        \par\bigskip Оригинальность текста ВКР (по данным системы LMS Blackboard) \@FEFUfield{#3}{1cm}\%\\
+        \bigskip\noindent Оригинальность текста ВКР (по данным системы LMS Blackboard) \@FEFUfield{#3}{1cm}\%\\\par
     }{\end{@FEFUreview}}
 %    \end{macrocode}
 % \end{macro}
@@ -1081,7 +1077,7 @@
     }{\end{enumerate}\bigskip%
         \hbox to .75\textwidth{Срок предоставления работы\hfill\@FEFUdate[\@FEFUdeadline]{.35\textwidth}}
         \bigskip
-        \hbox to .75\textwidth{Дата выдачи задания\hfill\@FEFUdate[\@FEFUdeadline]{.35\textwidth}}
+        \hbox to .75\textwidth{Дата выдачи задания\hfill\@FEFUdate[\@FEFUtaskdate]{.35\textwidth}}
         \bigskip\bigskip
         \hbox to \textwidth{Руководитель ВКР\hfill\hbox to .75\textwidth{\@FEFUfield[должность, ученая степень, ученое звание]{\@FEFUsupervisortitle}{.3\textwidth}\hfill\@FEFUfield[подпись]{}{.15\textwidth}\hfill\@FEFUfield[Ф.И.О.]{\@FEFUshortname{\@FEFUsupervisor}}{.25\textwidth}}}
         \bigskip
