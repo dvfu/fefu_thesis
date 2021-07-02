@@ -745,6 +745,7 @@
 %    \begin{macrocode}
 \newcommand{\makethesistitlebackside}{%
     \thispagestyle{empty}
+    \newgeometry{a4paper,left=1cm,right=2.5cm,top=2cm,bottom=2cm}
     {\setstretch{1.25}%
         \noindent\begin{tabular}{p{\@FEFUcolumnwidth}p{\@FEFUcolumnwidth}}
             & \@FEFUpostfield[подпись]{Автор работы }{}{0.9\@FEFUcolumnwidth}\\
@@ -777,6 +778,7 @@
     }
     \addtocounter{page}{-1}
     \newpage
+    \restoregeometry
 }
 %    \end{macrocode}
 % \end{macro}
