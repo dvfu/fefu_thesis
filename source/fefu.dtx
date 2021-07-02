@@ -573,6 +573,17 @@
 }
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\disablehyphenation}
+% Disables hyphenation, pushes words to a new line
+%    \begin{macrocode}
+\renewcommand{\disablehyphenation}{%
+    \tolerance=1%
+    \emergencystretch=\maxdimen%
+    \hyphenpenalty=10000%
+    \hbadness=10000%
+}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@FEFUheader}
 % \begin{macro}{\fefuheader}
 % Inserts FEFU page header
