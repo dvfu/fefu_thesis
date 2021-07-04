@@ -1005,9 +1005,10 @@
 \newenvironment{fefuappendices}{%
     \def\russian@realAlph##1{\ifcase##1\or А\or Б\or В\or Г\or Д\or Е\or Ж\or З\or И\or К\or Л\or М\or Н\or О\or П\or Р\or С\or Т\or У\or Ф\or Х\or Ц\or Ч\or Ш\or Щ\or Э\or Ю\or Я\else\xpg@ill@value{##1}{russian@Alph}\fi}
     \begin{appendices}
+        \gdef\thesection{\expandafter\russian@realAlph\c@section}
         \let\oldaddcontentsline\addcontentsline
-        \renewcommand{\addcontentsline}[3]{\oldaddcontentsline{##1}{##2}{\expandafter\russian@realAlph\c@section}}
-        \titleformat{\section}[block]{\centering\normalsize}{Приложение \expandafter\russian@realAlph\c@section~}{0pt}{\\\bfseries\hyperlink{sec:contents}{##1}}
+        \renewcommand{\addcontentsline}[3]{\oldaddcontentsline{##1}{##2}{\thesection}}
+        \titleformat{\section}[block]{\centering\normalsize}{Приложение \thesection~}{0pt}{\\\bfseries\hyperlink{sec:contents}{##1}}
         }{%
     \end{appendices}
 }
