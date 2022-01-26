@@ -1,0 +1,153 @@
+% \iffalse meta-comment
+% !TEX program  = xeLaTeX
+%<*driver>
+\ProvidesFile{fefu_presentation.dtx}
+%</driver>
+%<class>\NeedsTeXFormat{LaTeX2e}
+%<class>\ProvidesClass{fefu_presentation}
+%<*class>
+    [2022/01/26 LaTeX presentation class for FEFU bachelor's thesis]
+%</class>
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian,english]{babel}
+\usepackage[a4paper,left=4cm]{geometry}
+%\OnlyDescription
+\begin{document}
+    \DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+%\fi
+%
+% \newenvironment{Options}%
+%    {\begin{list}{}{%
+%    \renewcommand{\makelabel}[1]{\llap{$^{\dagger\:}$}\texttt{##1}\hfil}%
+%    \setlength{\itemsep}{-.5\parsep}
+%    \settowidth{\labelwidth}{\texttt{xxxxxxxxxxx\space}}%
+%    \setlength{\leftmargin}{\labelwidth}%
+%    \addtolength{\leftmargin}{\labelsep}}%
+%    \raggedright}
+%    {\end{list}}
+%
+% \title{FEFU presentation class}
+% \author{}
+% \date{}
+% \maketitle
+% \begin{abstract}
+%    The class provides styles for FEFU presentation.
+% \end{abstract}
+% \section{Class options}
+% \begin{Options}
+%     \item[subfigure] Loads \texttt{tocloft} package with the option \texttt{subfigure}.
+% \end{Options}
+%
+%\CheckSum{0}
+%\StopEventually{}
+% \section{Implementation}
+%    \begin{macrocode}
+%<*class>
+%    \end{macrocode}
+% Iternal switches are declared here.
+%    \begin{macrocode}
+\newif\if@FEFUseenfontsize
+\newif\if@FEFUnodefaultfont
+%    \end{macrocode}
+% The options are defined and processed here.
+%    \begin{macrocode}
+\DeclareOption{8pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{8pt}{beamer}}
+\DeclareOption{9pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{9pt}{beamer}}
+\DeclareOption{10pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{10pt}{beamer}}
+\DeclareOption{11pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{11pt}{beamer}}
+\DeclareOption{12pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{12pt}{beamer}}
+\DeclareOption{14pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{14pt}{beamer}}
+\DeclareOption{17pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{17pt}{beamer}}
+\DeclareOption{20pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{20pt}{beamer}}
+\DeclareOption{nodefaultfont}{\@FEFUnodefaultfonttrue}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{beamer}}
+\ProcessOptions\relax
+\if@FEFUseenfontsize\else\PassOptionsToClass{10pt, unicode}{beamer}\fi
+%    \end{macrocode}
+% This class' base is \textsf{extarticle}.
+%    \begin{macrocode}
+\LoadClass{beamer}
+%    \end{macrocode}
+% This package requires the following packages:
+%    \begin{macrocode}
+\RequirePackage{fefu_base}
+%    \end{macrocode}
+% Font and languages paramters are set up here.
+%    \begin{macrocode}
+\setdefaultlanguage{russian}
+\setotherlanguage{english}
+
+\if@FEFUnodefaultfont
+\else
+\setsansfont{Fira Sans}
+\newfontfamily\cyrillicfont{Fira Mono}
+\renewcommand\UrlFont{\ttfamilylatin}
+\fi
+%    \end{macrocode}
+% Theme is set up here
+%    \begin{macrocode}
+\usetheme[progressbar=frametitle,numbering=fraction]{metropolis}
+\setlength{\metropolis@progressinheadfoot@linewidth}{2pt}
+%    \end{macrocode}
+% \begin{macro}{\enablenotes}
+% Enables note page along side the main page. Optional arguments controlls position.
+%    \begin{macrocode}
+\newcommand{\enablenotes}[1][right]{
+    \setbeamertemplate{note page}[plain]
+    \setbeameroption{show notes on second screen=#1}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{subtitle}
+%   Set the subtitle on the title page.
+%    \begin{macrocode}
+\setbeamertemplate{subtitle}{
+  \raggedright%
+  \insertsubtitle%
+  \par%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{author}
+%  Set the author on the title page.
+%    \begin{macrocode}
+\setbeamertemplate{author}{
+  \vfill
+  \@FEFUgendered{Судентка}{Студент}\ группы \@FEFUgroup\\
+  \@FEFUschoolreferencetitle\ \@FEFUschool\ ДВФУ\\
+  \insertauthor%
+  \par%
+  \vspace*{1em}
+  Руководитель:\\
+  \@FEFUsupervisortitle\\
+  \@FEFUsupervisor%
+  \par%
+  \vspace*{1em}
+}
+%    \end{macrocode}
+% \end{macro}
+% Set default subtitle
+%    \begin{macrocode}
+\subtitle{Магистерская диссертация}
+%    \end{macrocode}
+% \begin{macro}{\presentationtitlepage}
+% Inserts title beamer frame
+%    \begin{macrocode}
+\newcommand{\presentationtitlepage}{
+    \frame{\thispagestyle{empty}\titlepage}
+}
+%    \end{macrocode}
+% \end{macro}
+% Sets page borders
+%    \begin{macrocode}
+\setbeamersize{text margin left=3.5mm,text margin right=3.5mm}
+%    \end{macrocode}
+%    \begin{macrocode}
+%</class>
+%    \end{macrocode}
+% \Finale

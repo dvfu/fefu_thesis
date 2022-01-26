@@ -1,0 +1,348 @@
+ % \iffalse meta-comment
+% !TEX program  = xeLaTeX
+%<*driver>
+\ProvidesFile{fefu_utils.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}
+%<package>\ProvidesPackage{fefu_base}
+%<*package>
+    [2019/05/30 LaTeX utility package for FEFU classes]
+%</package>
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian,english]{babel}
+\usepackage[a4paper,left=4cm]{geometry}
+%\OnlyDescription
+\begin{document}
+    \DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+%\fi
+%
+% \title{FEFU utilities}
+% \author{}
+% \date{}
+% \maketitle
+% \begin{abstract}
+%    The package provides utility macros for FEFU classes.
+% \end{abstract}
+%
+%\CheckSum{0}
+%\StopEventually{}
+%
+% \section{Implementation}
+%    \begin{macrocode}
+%<*package>
+%    \end{macrocode}
+% This package requires the following packages:
+%    \begin{macrocode}
+\RequirePackage{ulem}
+\RequirePackage{calc}
+\RequirePackage{xifthen}
+\RequirePackage{graphicx}
+\RequirePackage{fontspec}
+\RequirePackage{polyglossia}
+%    \end{macrocode}
+% The iternal variables are set up here.
+%    \begin{macrocode}
+\newcommand{\@FEFUschool}{цифровой экономики}
+\newcommand{\@FEFUgroup}{}
+\newcommand{\@FEFUsupervisor}{}
+\newcommand{\@FEFUsupervisortitle}{}
+\newcommand{\@FEFUconsultant}{}
+\newcommand{\@FEFUoffsitesupervisor}{}
+\newcommand{\@FEFUoffsitesupervisortitle}{}
+\newcommand{\@FEFUreviewer}{}
+\newcommand{\@FEFUreviewertitle}{}
+\newcommand{\@FEFUdirector}{}
+\newcommand{\@FEFUdirectortitle}{}
+\newcommand{\@FEFUsecretary}{}
+\newcommand{\@FEFUsecretarytitle}{}
+\newcommand{\@FEFUdeputy}{}
+\newcommand{\@FEFUdeputytitle}{}
+\newcommand{\@FEFUexportsupervisor}{}
+\newcommand{\@FEFUexportsupervisortitle}{}
+\newcommand{\@FEFUplace}{}
+\newcommand{\@FEFUstartdate}{}
+\newcommand{\@FEFUenddate}{}
+\newcommand{\@FEFUstartyear}{\the\year}
+\newcommand{\@FEFUendyear}{\the\year}
+\newcommand{\@FEFUpracticetask}{}
+\newcommand{\@FEFUfaculty}{}
+\newcommand{\@FEFUprogram}{}
+\newcommand{\@FEFUpracticetitle}{Учебная ознакомительная практика}
+\newcommand{\@FEFUfeedback}{}
+\newcommand{\@FEFUschooltitle}{Школа}
+\newcommand{\@FEFUschoolreferencetitle}{Школы}
+%    \end{macrocode}
+% \begin{macro}{\setschool}
+% \begin{macro}{\setgroup}
+% \begin{macro}{\setplace}
+% \begin{macro}{\setpracticetask}
+% \begin{macro}{\setpracticetitle}
+% \begin{macro}{\setfaculty}
+% \begin{macro}{\setprogram}
+% \begin{macro}{\setfeedback}
+% \begin{macro}{\setconsultant}
+% Sets respective internal variable
+%    \begin{macrocode}
+\newcommand{\setschool}[1]{\renewcommand{\@FEFUschool}{#1}}
+\newcommand{\setgroup}[1]{\renewcommand{\@FEFUgroup}{#1}}
+\newcommand{\setplace}[1]{\renewcommand{\@FEFUplace}{#1}}
+\newcommand{\setpracticetask}[1]{\renewcommand{\@FEFUpracticetask}{#1}}
+\newcommand{\setpracticetitle}[1]{\renewcommand{\@FEFUpracticetitle}{#1}}
+\newcommand{\setfaculty}[1]{\renewcommand{\@FEFUfaculty}{#1}}
+\newcommand{\setprogram}[1]{\renewcommand{\@FEFUprogram}{#1}}
+\newcommand{\setfeedback}[1]{\renewcommand{\@FEFUfeedback}{#1}}
+\newcommand{\setconsultant}[1]{\renewcommand{\@FEFUconsultant}{#1}}
+\newcommand{\setschooltitle}[1]{\renewcommand{\@FEFUschooltitle}{#1}}
+\newcommand{\setschoolreferencetitle}[1]{\renewcommand{\@FEFUschoolreferencetitle}{#1}}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% Iternal switches are declared here.
+%    \begin{macrocode}
+\newif\if@FEFUfemale
+\newif\if@FEFUoffsite
+%    \end{macrocode}
+% \begin{macro}{\setsupervisor}
+% Sets supervisor and supervisor's title iternal variables.
+%    \begin{macrocode}
+\newcommand{\setsupervisor}[2]{
+    \renewcommand{\@FEFUsupervisor}{#1}
+    \renewcommand{\@FEFUsupervisortitle}{#2}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setoffsitesupervisor}
+% Sets offsite supervisor and offsite supervisor's title iternal variables.
+%    \begin{macrocode}
+\newcommand{\setoffsitesupervisor}[2]{
+    \renewcommand{\@FEFUoffsitesupervisor}{#1}
+    \renewcommand{\@FEFUoffsitesupervisortitle}{#2}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setreviewer}
+% Sets reviewer and reviewer's title iternal variables.
+%    \begin{macrocode}
+\newcommand{\setreviewer}[2]{
+    \renewcommand{\@FEFUreviewer}{#1}
+    \renewcommand{\@FEFUreviewertitle}{#2}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setdirector}
+% Sets director and director's title iternal variables.
+%    \begin{macrocode}
+\newcommand{\setdirector}[2]{
+    \renewcommand{\@FEFUdirector}{#1}
+    \renewcommand{\@FEFUdirectortitle}{#2}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setsecretary}
+% Sets secretary and secretary's title iternal variables.
+%    \begin{macrocode}
+\newcommand{\setsecretary}[2]{
+    \renewcommand{\@FEFUsecretary}{#1}
+    \renewcommand{\@FEFUsecretarytitle}{#2}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setdeputy}
+% Sets deputy and deputy's title iternal variables.
+%    \begin{macrocode}
+\newcommand{\setdeputy}[2]{
+    \renewcommand{\@FEFUdeputy}{#1}
+    \renewcommand{\@FEFUdeputytitle}{#2}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setexportsupervisor}
+% Sets export supervisor and their title iternal variables.
+%    \begin{macrocode}
+\newcommand{\setexportsupervisor}[2]{
+    \renewcommand{\@FEFUexportsupervisor}{#1}
+    \renewcommand{\@FEFUexportsupervisortitle}{#2}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setstartdate}
+% Sets start date internal variable.
+%    \begin{macrocode}
+\newcommand{\setstartdate}[2][]{
+    \renewcommand{\@FEFUstartdate}{#2}
+    \@FEFUifempty{#1}{}{\renewcommand{\@FEFUstartyear}{#1}}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setenddate}
+% Sets end date internal variable.
+%    \begin{macrocode}
+\newcommand{\setenddate}[2][]{
+    \renewcommand{\@FEFUenddate}{#2}
+    \@FEFUifempty{#1}{}{\renewcommand{\@FEFUendyear}{#1}}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setmonthname}
+% Sets a name to be displayed for a month
+%    \begin{macrocode}
+\newcommand{\setmonthname}[2]{\expandafter\def\csname @FEFUmonthname#1\endcsname{#2}}
+\setmonthname{01}{января}
+\setmonthname{02}{февраля}
+\setmonthname{03}{марта}
+\setmonthname{04}{апреля}
+\setmonthname{05}{мая}
+\setmonthname{06}{июня}
+\setmonthname{07}{июля}
+\setmonthname{08}{августа}
+\setmonthname{09}{сентября}
+\setmonthname{10}{октября}
+\setmonthname{11}{ноября}
+\setmonthname{12}{декабря}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setfemale}
+% \begin{macro}{\setmale}
+% Changes endings of some words.
+%    \begin{macrocode}
+\newcommand{\setfemale}{\@FEFUfemaletrue}
+\newcommand{\setmale}{\@FEFUfemalefalse}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \begin{macro}{\setoffsite}
+% \begin{macro}{\setonsite}
+% Adds or removes offsite fields.
+%    \begin{macrocode}
+\newcommand{\setoffsite}{\@FEFUoffsitetrue}
+\newcommand{\setonsite}{\@FEFUoffsitefalse}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \begin{macro}{\@FEFUunderline}
+% Used to underline multiline macro.
+%    \begin{macrocode}
+\useunder{\uline}{\@FEFUunderline}{}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUshortyear}
+% Prints short year.
+%    \begin{macrocode}
+\newcommand*\@FEFUshortyear[1]{\expandafter\@gobbletwo\number\numexpr#1\relax}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUshortname}
+% Prints short name.
+%    \begin{macrocode}
+\def\@FEFUshortnamehelper#1 #2 #3\relax{%
+    \StrLeft{#2}{1}[\@FEFU@name]\StrLeft{#3}{1}[\@FEFU@middlename]%
+    #1 \@FEFU@name. \@FEFU@middlename.%
+}
+\def\@FEFUshortname#1{\@FEFUifempty{#1}{}{\expandafter\@FEFUshortnamehelper#1\relax}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUshortnamereversed}
+% Prints short name, surname last
+%    \begin{macrocode}
+\def\@FEFUshortnamereversedhelper#1 #2 #3\relax{%
+    \StrLeft{#2}{1}[\@FEFU@name]\StrLeft{#3}{1}[\@FEFU@middlename]%
+    \@FEFU@name. \@FEFU@middlename. #1%
+}
+\def\@FEFUshortnamereversed#1{\@FEFUifempty{#1}{}{\expandafter\@FEFUshortnamereversedhelper#1\relax}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUgetyear}
+% Extracts year from dd.mm.yy or uses default one
+%    \begin{macrocode}
+\def\@FEFUdropdot#1.\relax{#1}
+\newcommand{\@FEFUgetyear}[2][\the\year]{%
+    \def\@FEFUgetyearhelper##1.##2.##3\relax{\@FEFUifempty{##3}{#1}{20\@FEFUdropdot##3\relax}}%
+    \expandafter\@FEFUgetyearhelper#2.\relax%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUgetmonth}
+% Gets month from dd.mm or dd.mm.yy
+%    \begin{macrocode}
+\def\@FEFUgetmonthhelper#1.#2.#3\relax{#2}
+\def\@FEFUgetmonth#1{\expandafter\@FEFUgetmonthhelper#1.\relax}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUgetday}
+% Gets day from dd.mm or dd.mm.yy
+%    \begin{macrocode}
+\def\@FEFUgetdayhelper#1.#2\relax{#1}
+\def\@FEFUgetday#1{\expandafter\@FEFUgetdayhelper#1\relax}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUifempty}
+% Selects \marg{arg2} or \marg{arg3} depending on whether \marg{arg1} is empty or not.
+%    \begin{macrocode}
+\newcommand{\@FEFUifempty}[3]{%
+    \ifthenelse{\equal{#1}{}}{#2}{#3}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUcoalesce}
+% Returns first \marg{arg1} if it's not empty otherwise returns \marg{arg2}.
+%    \begin{macrocode}
+\newcommand{\@FEFUcoalesce}[2]{%
+    \@FEFUifempty{#1}{\@FEFUifempty{#2}{}{#2}}{#1}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUgendered}
+% Select argument depending on gender setting. \marg{arg1} for female, and \marg{arg2} for male.
+%    \begin{macrocode}
+\newcommand{\@FEFUgendered}[2]{\if@FEFUfemale#1\else#2\fi}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUsplitandapply}
+% Splits on space (default) and applies macro to either split
+%    \begin{macrocode}
+\newcommand{\@FEFUsplitandapply}[4][ ]{%
+    {%
+        \def\@FEFUsplitandapplyhelper##1#1##2\relax{#3{##1}#1#4{##2}}%
+        \expandafter\@FEFUsplitandapplyhelper#2\relax%
+    }%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUaddguillemots}
+% Adds guillemots around argument
+%    \begin{macrocode}
+\newcommand{\@FEFUaddguillemots}[1]{\guillemotleft#1\guillemotright}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUremoveprefix}
+% Splits on space (default) and remove every but last item
+%    \begin{macrocode}
+\newcommand{\@FEFUremoveprefix}[2][ ]{
+    \def\@FEFUremoveprefixhelper##1#1##2\relax{\@FEFUifempty{##2}{##1}{\@FEFUremoveprefixhelper##2\relax}}%
+    \expandafter\@FEFUremoveprefixhelper#2#1\relax
+}
+%    \end{macrocode}
+% \end{macro}
+% No title and author by default.
+%    \begin{macrocode}
+\date{}
+\title{}
+\author{}
+%    \end{macrocode}
+%    \begin{macrocode}
+%</package>
+%    \end{macrocode}
+% \Finale
+
