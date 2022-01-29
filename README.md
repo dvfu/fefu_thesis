@@ -43,8 +43,15 @@ git submodule add git@github.com:dvfu/fefu_thesis.git
 ...
 ```
 ### В качестве локального класса
-Скопировать файл `cls/fefu.cls` в локальную директорию классов LaTeX. Установить класс документа в основном `.tex` файле отчёта
+Скопировать файл `cls/fefu.cls`, `cls/fefu_base.sty` и `cls/fefu_presentation.cls` в локальную директорию классов LaTeX. Установить класс документа в основном `.tex` файле отчёта
 ```
 \documentclass{fefu}
+...
+```
+
+или 
+
+```
+\documentclass{fefu_presentation}
 ...
 ```
