@@ -1,0 +1,74 @@
+\documentclass{../../cls/fefu}
+
+\usepackage{subfiles}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{nicefrac}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage{multirow}
+\usepackage{subcaption}
+\usepackage{placeins}
+\addbibresource{references.bib}
+\graphicspath{{./images/}}
+
+\newcommand{\pa}[1]{\left(#1\right)}
+\newcommand{\code}[2][text]{\mintinline{#1}{#2}}
+\newcommand{\paramrow}[4][-]{\code{#2} & \code{#3} & \code{#1} & #4\\}
+\newcommand{\paramrowlistvalue}[4][]{\code{#2} & \code{#3} & \code{[#1]} & #4\\}
+\newcommand{\niceref}[2]{\hyperref[#1]{#2 \ref{#1}}}
+\DeclareMathOperator{\sech}{sech}
+
+\author{Фамилия Имя Отчество}
+\setgroup{№ группы}
+\setfaculty{00.00.00 Направление подготовки}
+\setprogram{Магистерская программа}
+\setsupervisor{Фамилия Имя Отчество}{должность, степень}
+\setdirector{Фамилия Имя Отчество}{должность, степень}
+\setdeputy{Фамилия Имя Отчество}{должность, степень}
+\setreviewer{Фамилия Имя Отчество}{должность, степень}
+\setexportsupervisor{Фамилия Имя Отчество}{должность, степень}
+\setsecretary{Фамилия Имя Отчество}{должность, степень}
+\setschool{Название школы/института}
+\title{Тема работы}
+\setconsultant{Фамилия Имя Отчество}
+
+% \newif\ifreviewsonly
+\reviewsonlytrue
+
+\disablehyphenation
+
+\begin{document}
+    \ifreviewsonly
+        \begingroup
+            \setreviewer{Фамилия Имя Отчество}{должность, степень}
+            \title{Тема работы}
+            \subfile{subfiles/supervisor_review.tex}
+            \subfile{subfiles/review.tex}
+        \endgroup
+    \else
+        \maketitle{thesis}
+        \makethesistitlebackside[1.2]
+        \title{Тема работы}
+        \subfile{subfiles/task.tex}
+        \setcounter{page}{4}
+        \subfile{subfiles/abstract.tex}
+        \tableofcontents
+        \subfile{subfiles/introduction.tex}
+        \newpage
+        \subfile{subfiles/subject.tex}
+        \newpage
+        \subfile{subfiles/project.tex}
+        \newpage
+        \subfile{subfiles/development.tex}
+        \newpage
+        \subfile{subfiles/tests.tex}
+        \newpage
+        \subfile{subfiles/conclusion.tex}
+        \newpage
+        \printbibliography
+        \newpage
+        \subfile{subfiles/appendices.tex}
+    \fi
+\end{document}
