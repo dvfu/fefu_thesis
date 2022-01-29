@@ -17,6 +17,8 @@ make install
 ```
 install.ps1
 ```
+
+Для выполнения скрипта необходимо установить Unrestricted [политику выполнения](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.2).
 ### Ручная установка
 ```
 cd source
