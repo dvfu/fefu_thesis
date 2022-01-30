@@ -40,9 +40,12 @@
 %    \begin{macrocode}
 \RequirePackage{ulem}
 \RequirePackage{calc}
+\RequirePackage{pbox}
+\RequirePackage{array}
 \RequirePackage{xifthen}
 \RequirePackage{graphicx}
 \RequirePackage{fontspec}
+\RequirePackage{etoolbox}
 \RequirePackage{polyglossia}
 %    \end{macrocode}
 % The iternal variables are set up here.
@@ -340,6 +343,11 @@
 \date{}
 \title{}
 \author{}
+%    \end{macrocode}
+% Declare centered column type.
+%    \begin{macrocode}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}m{#1}}
 %    \end{macrocode}
 %    \begin{macrocode}
 %</package>

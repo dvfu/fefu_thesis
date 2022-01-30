@@ -89,18 +89,15 @@
 \RequirePackage{stackengine}
 \RequirePackage{pgffor}
 \RequirePackage{longtable}
-\RequirePackage{array}
 \RequirePackage{xstring}
 \RequirePackage{xparse}
 \RequirePackage{ifplatform}
-\RequirePackage{etoolbox}
 \RequirePackage{relsize}
 \RequirePackage{multirow}
 \RequirePackage[labelsep=endash]{caption}
 \RequirePackage[backend=biber, bibstyle=gost-numeric, maxbibnames=99]{biblatex}
 \RequirePackage[title,titletoc]{appendix}
 \RequirePackage[xindy={glsnumbers=false},nonumberlist,nopostdot,nogroupskip,numberline=false,acronym]{glossaries}
-\RequirePackage{pbox}
 %    \end{macrocode}
 % The \textsf{tocloft} package is loaded with \textsf{subfigure} option if necessary.
 %    \begin{macrocode}
@@ -538,11 +535,6 @@
 % Use surrounding font for urls
 %    \begin{macrocode}
 \urlstyle{same}
-%    \end{macrocode}
-% Declare centered column type.
-%    \begin{macrocode}
-\newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
-\newcolumntype{P}[1]{>{\raggedright\arraybackslash}m{#1}}
 %    \end{macrocode}
 % Sets page style: page number at the bottom right corner and no head rule.
 %    \begin{macrocode}
