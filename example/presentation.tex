@@ -1,5 +1,10 @@
 \documentclass{../cls/fefu_presentation}
 
+\usepackage{graphicx}
+\graphicspath{{images/}}
+
+\usepackage{subcaption} % subfigure
+
 \setgroup{М9999-99.99.99xxxx}
 \setsupervisor{Петров Пётр Петрович}{учёная степень, учёное звание\\должность, место работы}
 \setschoolreferencetitle{Института}
@@ -51,11 +56,31 @@
     \begin{frame}{Анализ существующих решений}
         \begin{block}{}
             \begin{itemize}
-                \item Указать описание существующий решений
+                \item Указать описание существующих решений
                 \item Подробнее остановиться на наиболее существенных
                 \item Привести сравнительную таблицу
             \end{itemize}
         \end{block}
+
+        \begin{fefucomparisontable}
+            \feature{convenient}{Удобно}
+            \feature{free}{Бесплатно}
+            \feature[3cm]{grade}{Можно получить оценку}
+
+            \comparate{LaTeX}
+            \convenient[$\pm$]
+            \free
+            \grade
+
+            \comparate{PowerPoint}
+            \grade
+
+            \comparate{Не делать}
+            \convenient
+            \free
+
+            \comparate{Лист бумаги}
+        \end{fefucomparisontable}
     \end{frame}
 
     \note{}
@@ -75,6 +100,17 @@
                 \item При оформлении математических формул необходимо описать на слайде все переменные, используемые в них
                 \item Для неоригинальных формул привести источники
             \end{itemize}
+        \end{block}
+        \begin{block}{Эквивалентность массы и энергии\footnote{Эйнштейн 1905}}
+            \begin{equation}
+                E=mc^2
+            \end{equation}
+
+            \centering
+            \begin{tabular}{ll}
+                $E$ --- энергия & $m$ --- масса\\
+                $c$ --- скорость звука&\\
+            \end{tabular}
         \end{block}
     \end{frame}
 
@@ -99,6 +135,20 @@
 
     \note{}
     
+    \begin{frame}{Примеры оформления слайдов презентации}
+        \begin{figure}[h]
+            \centering
+            \begin{subfigure}[t]{0.49\textwidth}
+                \includegraphics[width=\textwidth]{slide1.png}
+                \caption{Математическая модель}
+            \end{subfigure}
+            \begin{subfigure}[t]{0.49\textwidth}
+                \includegraphics[width=\textwidth]{slide2.png}
+                \caption{Проектные решения}
+            \end{subfigure}
+        \end{figure}
+    \end{frame}
+
     \begin{frame}{Реализация и тестирование}
         \begin{block}{}
             \begin{itemize}
