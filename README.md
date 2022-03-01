@@ -4,7 +4,7 @@
 ## Требования
 * XeLaTeX или LuaLaTeX
 * Шрифт Times New Roman
-* При сборке должна быть передана опция `-shell-escape`
+* При сборке должна быть передана опция `--shell-escape`
 * Рекомендуется использовать [TeXstudio](https://www.texstudio.org/)
 * Для оформления списка литературы необходим пакет [gost](https://www.ctan.org/pkg/gost)
 
