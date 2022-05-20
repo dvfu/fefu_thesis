@@ -53,6 +53,7 @@
 %    \begin{macrocode}
 \newif\if@FEFUseenfontsize
 \newif\if@FEFUnodefaultfont
+\newif\if@FEFUdefaulttitlepage
 %    \end{macrocode}
 % The options are defined and processed here.
 %    \begin{macrocode}
@@ -65,6 +66,7 @@
 \DeclareOption{17pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{17pt}{beamer}}
 \DeclareOption{20pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{20pt}{beamer}}
 \DeclareOption{nodefaultfont}{\@FEFUnodefaultfonttrue}
+\DeclareOption{defaulttitlepage}{\@FEFUdefaulttitlepagetrue}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{beamer}}
 \ProcessOptions\relax
 \if@FEFUseenfontsize\else\PassOptionsToClass{10pt, unicode}{beamer}\fi
@@ -106,16 +108,19 @@
 % \begin{macro}{subtitle}
 %   Set the subtitle on the title page.
 %    \begin{macrocode}
+\if@FEFUdefaulttitlepage\else
 \setbeamertemplate{subtitle}{
   \raggedright%
   \insertsubtitle%
   \par%
 }
+\fi
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{author}
 %  Set the author on the title page.
 %    \begin{macrocode}
+\if@FEFUdefaulttitlepage\else
 \setbeamertemplate{author}{
   \vfill
   \@FEFUgendered{Судентка}{Студент}\ группы \@FEFUgroup\\
@@ -129,11 +134,14 @@
   \par%
   \vspace*{1em}
 }
+\fi
 %    \end{macrocode}
 % \end{macro}
 % Set default subtitle
 %    \begin{macrocode}
+\if@FEFUdefaulttitlepage\else
 \subtitle{Магистерская диссертация}
+\fi
 %    \end{macrocode}
 % \begin{macro}{\presentationtitlepage}
 % Inserts title beamer frame
