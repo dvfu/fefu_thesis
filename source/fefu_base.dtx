@@ -1,4 +1,4 @@
- % \iffalse meta-comment
+% \iffalse meta-comment
 % !TEX program  = xeLaTeX
 %<*driver>
 \ProvidesFile{fefu_utils.dtx}
@@ -264,6 +264,18 @@
     \@FEFU@name. \@FEFU@middlename. #1%
 }
 \def\@FEFUshortnamereversed#1{\@FEFUifempty{#1}{}{\expandafter\@FEFUshortnamereversedhelper#1\relax}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUacronym}
+% Makes an acronym skipping words of length 1
+%    \begin{macrocode}
+\def\@FEFUacronymhelper#1 #2\relax{%
+    \StrLen{#1}[\WordLength]%
+    \StrLeft{#1}{1}[\FirstLetter]%
+    \ifthenelse{\equal{\WordLength}{1}}{}{\MakeUppercase{\FirstLetter}}%
+    \@FEFUifempty{#2}{}{\expandafter\@FEFUacronymhelper#2\relax}%
+}
+\def\@FEFUacronym#1{\@FEFUifempty{#1}{}{\expandafter\@FEFUacronymhelper\expanded{#1} \relax}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@FEFUgetyear}
