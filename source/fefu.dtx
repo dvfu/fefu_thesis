@@ -97,7 +97,7 @@
 \RequirePackage[labelsep=endash]{caption}
 \RequirePackage[backend=biber, bibstyle=gost-numeric, maxbibnames=99]{biblatex}
 \RequirePackage[title,titletoc]{appendix}
-\RequirePackage[xindy={glsnumbers=false},nonumberlist,nopostdot,nogroupskip,numberline=false,acronym]{glossaries}
+\RequirePackage[xindy={glsnumbers=false},nonumberlist,nogroupskip,numberline=false,acronym]{glossaries}
 %    \end{macrocode}
 % The \textsf{tocloft} package is loaded with \textsf{subfigure} option if necessary.
 %    \begin{macrocode}
@@ -874,6 +874,35 @@
     \hspace{2cm}Подпись {\expandafter\@FEFUunderline\hspace{2cm}}
     /\@FEFUshortname{\@FEFUoffsitesupervisor}/
     \vfill\endgroup\newpage
+}
+%    \end{macrocode}
+% \end{macro}
+% Glossary setup is defined here
+%    \begin{macrocode}
+\newglossarystyle{fefu}{%
+    \let\oldglsentryitem\glsentryitem
+    \renewcommand*{\glsentryitem}[1]{
+        \oldglsentryitem{##1}\setlength{\parindent}{1.25cm}\par
+    }
+    \renewcommand*{\glossentry}[2]{%
+        \glsentryitem{##1}%
+        \ifglshaslong{##1}{% probably an acronym
+            \glstarget{##1}{\glsentryshort{##1}}%
+        }{% probably an entry
+            \glstarget{##1}{\Glsentryname{##1}}%
+            \ifglshasshort{##1}{\space(\glsentryshort{##1})}{}%
+        }
+        \space\textemdash\space\glossentrydesc{##1}.%
+    }
+}
+\setglossarystyle{fefu}
+%    \end{macrocode}
+% \begin{macro}{\migrateacronyms}
+% Use to migrate acronym entries to main glossary.
+%    \begin{macrocode}
+\newcommand{\migrateacronyms}{
+    \def\@FEFUlocalfoo{}
+    \forallglsentries[\acronymtype]{\@FEFUlocalfoo}{\glsmoveentry{\@FEFUlocalfoo}{main}}
 }
 %    \end{macrocode}
 % \end{macro}
