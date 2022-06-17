@@ -97,7 +97,7 @@
 \RequirePackage[labelsep=endash]{caption}
 \RequirePackage[backend=biber, bibstyle=gost-numeric, maxbibnames=99]{biblatex}
 \RequirePackage[title,titletoc]{appendix}
-\RequirePackage[xindy={glsnumbers=false},nonumberlist,nogroupskip,numberline=false,acronym,entrycounter]{glossaries}
+\RequirePackage[xindy={glsnumbers=false},nonumberlist,nogroupskip,numberline=false,acronym]{glossaries}
 %    \end{macrocode}
 % The \textsf{tocloft} package is loaded with \textsf{subfigure} option if necessary.
 %    \begin{macrocode}
@@ -376,22 +376,6 @@
         }{%
     \end{appendices}
 }
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{review}
-% Inserts review
-%    \begin{macrocode}
-\newenvironment{review}[3][\@author]{%
-    \begin{@FEFUreview}[#1]{РЕЦЕНЗИЯ}{Рецензент}{\@FEFUreviewer}{\@FEFUreviewertitle}{#2}{#3}}{\end{@FEFUreview}}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{supervisorreview}
-% Inserts supervisor review
-%    \begin{macrocode}
-\newenvironment{supervisorreview}[4][\@author]{%
-    \begin{@FEFUreview}[#1]{ОТЗЫВ РУКОВОДИТЕЛЯ}{Руководитель ВКР}{\@FEFUsupervisor}{\@FEFUsupervisortitle}{#2}{#4}
-        \bigskip\noindent Оригинальность текста ВКР (по данным системы LMS Blackboard) \@FEFUfield{#3}{1cm}\%\\\par
-    }{\end{@FEFUreview}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{diaryentry}

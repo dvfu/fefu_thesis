@@ -51,7 +51,7 @@
     образовательное учреждение высшего образования\\
     {\bf {«Дальневосточный федеральный университет»}}\\
     (ДВФУ)\\
-    {\setstretch{1.15}\MakeUppercase{\textbf{\@FEFUschooltitle\ \@FEFUschool}}\\\MakeUppercase{\@FEFUdepartmenttitle \@FEFUdepartment}}
+    {\setstretch{1.15}\MakeUppercase{\textbf{\@FEFUschooltitle\ \@FEFUschool}}\\\MakeUppercase{\@FEFUdepartmenttitle\ \@FEFUdepartment}}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -162,6 +162,95 @@
         Задание \@FEFUgendered{приняла}{принял} к исполнению \@FEFUtaskdate\\
         \par\parbox[b]{0.5\textwidth}{\@FEFUgendered{Студентка}{Студент}\ \@FEFUfield[И.О.Ф.]{\@FEFUshortnamereversed{\@author}}{.25\textwidth}\hfill\null} \@FEFUfield[подпись]{}{.3\textwidth}
     \par\newpage\endgroup}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{supervisorreview}
+%    \begin{macrocode}
+\renewenvironment{supervisorreview}[1][\@author]{%
+    \def\@FEFUnextreviewitemtitle{%
+        \def\@FEFUnextreviewitemtitle{%
+            \def\@FEFUnextreviewitemtitle{%
+                \def\@FEFUnextreviewitemtitle{%
+                    \def\@FEFUnextreviewitemtitle{%
+                        \def\@FEFUnextreviewitemtitle{%
+                            \def\@FEFUnextreviewitemtitle{\def\@FEFUreviewitemtitle{}}%
+                            \def\@FEFUreviewitemtitle{Рекомендации}%
+                        }
+                        \def\@FEFUreviewitemtitle{Оценка работы \@FEFUgendered{выпускницы}{выпускника}}%
+                    }
+                    \def\@FEFUreviewitemtitle{Допуск к защите}%
+                }
+                \def\@FEFUreviewitemtitle{Замечания по работе обучающегося}%
+            }
+            \def\@FEFUreviewitemtitle{Характеристика работы обучающегося}%
+        }
+        \def\@FEFUreviewitemtitle{Актуальность работы}%
+    }
+    \def\reviewitem{\bigskip\medskip\par\@FEFUnextreviewitemtitle\textbf{\@FEFUreviewitemtitle}\\}
+    \fefuheader
+    \begin{center}
+        \bigskip
+        {\bfseries ОТЗЫВ\\руководителя ВКР на работу обучающегося\\}
+        \bigskip\bigskip
+        #1\\
+        направление подготовки \@FEFUfaculty\\
+        магистерская программа \@FEFUaddguillemots{\@FEFUprogram}\\
+        \bigskip
+        \textbf{над выпускной квалификационной работой магистра}\\\@FEFUaddguillemots{\@title}
+    \end{center}
+    \vskip -\bigskipamount
+    \begingroup\fontsize{12}{12}\selectfont\pagestyle{empty}\setlength{\parindent}{0pt}%
+}{%
+    \par\bigskip\bigskip
+    Руководитель ВКР:\\
+    \par\begingroup\setlength\tabcolsep{.25cm}\def\arraystretch{0}\setlength{\@FEFUlength}{.3\textwidth-1cm}%
+    \begin{tabular}{@{}b{.4\textwidth}b{\@FEFUlength}b{.3\textwidth}@{}}
+        \@FEFUfield[должность, ученое звание]{\pbox[b]{.4\textwidth}{\@FEFUsupervisortitle}}{.4\textwidth} & \@FEFUfield[Ф.И.О.]{\@FEFUshortname{\@FEFUsupervisor}}{\@FEFUlength} & \@FEFUfield[подпись]{}{.3\textwidth}
+    \end{tabular}\\
+    \par\@FEFUdate{\@FEFUcolumnwidth}\endgroup
+    \par\newpage\endgroup
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{review}
+%    \begin{macrocode}
+\renewenvironment{review}[1][\@author]{%
+    \def\@FEFUnextreviewitemtitle{%
+        \def\@FEFUnextreviewitemtitle{%
+            \def\@FEFUnextreviewitemtitle{%
+                \def\@FEFUnextreviewitemtitle{%
+                    \def\@FEFUnextreviewitemtitle{%
+                        \def\@FEFUnextreviewitemtitle{\def\@FEFUreviewitemtitle{}}%
+                    }
+                    \def\@FEFUreviewitemtitle{Заключение}%
+                }
+                \def\@FEFUreviewitemtitle{Замечания по работе}%
+            }
+            \def\@FEFUreviewitemtitle{Характеристика работы обучающегося}%
+        }
+        \def\@FEFUreviewitemtitle{Актуальность работы}%
+    }
+    \def\reviewitem{\bigskip\medskip\par\@FEFUnextreviewitemtitle\textbf{\@FEFUreviewitemtitle}\\}
+    \fefuheader
+    \begin{center}
+        \bigskip
+        {\bfseries РЕЦЕНЗИЯ\\на выпускную квалификационную работу\\}
+        \@FEFUaddguillemots{\@title}\\
+        \bigskip\bigskip
+        {\bfseries выполненную обучающимся Дальневосточного федерального университета}\\
+        #1
+    \end{center}
+    \begingroup\fontsize{12}{12}\selectfont\pagestyle{empty}\setlength{\parindent}{0pt}%
+}{%
+    \par\bigskip\bigskip
+    Рецензент:\\
+    \par\begingroup\setlength\tabcolsep{.25cm}\def\arraystretch{0}\setlength{\@FEFUlength}{.3\textwidth-1cm}%
+    \begin{tabular}{@{}b{.4\textwidth}b{\@FEFUlength}b{.3\textwidth}@{}}
+        \@FEFUfield[должность, ученое звание]{\pbox[b]{.4\textwidth}{\@FEFUreviewertitle}}{.4\textwidth} & \@FEFUfield[Ф.И.О.]{\@FEFUshortname{\@FEFUreviewer}}{\@FEFUlength} & \@FEFUfield[подпись]{}{.3\textwidth}
+    \end{tabular}\\
+    \par\@FEFUdate{\@FEFUcolumnwidth}\endgroup
+    \par\newpage\endgroup
+}
 %    \end{macrocode}
 % \end{macro}
 % Set default values

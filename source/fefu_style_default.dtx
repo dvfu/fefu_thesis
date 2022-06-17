@@ -401,6 +401,22 @@
     \endgroup\par\newpage\endgroup}
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{review}
+% Inserts review
+%    \begin{macrocode}
+\newenvironment{review}[3][\@author]{%
+    \begin{@FEFUreview}[#1]{РЕЦЕНЗИЯ}{Рецензент}{\@FEFUreviewer}{\@FEFUreviewertitle}{#2}{#3}}{\end{@FEFUreview}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{supervisorreview}
+% Inserts supervisor review
+%    \begin{macrocode}
+\newenvironment{supervisorreview}[4][\@author]{%
+    \begin{@FEFUreview}[#1]{ОТЗЫВ РУКОВОДИТЕЛЯ}{Руководитель ВКР}{\@FEFUsupervisor}{\@FEFUsupervisortitle}{#2}{#4}
+        \bigskip\noindent Оригинальность текста ВКР (по данным системы LMS Blackboard) \@FEFUfield{#3}{1cm}\%\\\par
+    }{\end{@FEFUreview}}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{thesistask}
 % Inserts thesis task page
 %    \begin{macrocode}
