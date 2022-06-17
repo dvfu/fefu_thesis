@@ -65,6 +65,7 @@
 \newcommand{\@FEFUsecretarytitle}{}
 \newcommand{\@FEFUdeputy}{}
 \newcommand{\@FEFUdeputytitle}{}
+\newcommand{\@FEFUdeputyjobtitle}{}
 \newcommand{\@FEFUexportsupervisor}{}
 \newcommand{\@FEFUexportsupervisortitle}{}
 \newcommand{\@FEFUplace}{}
@@ -79,6 +80,9 @@
 \newcommand{\@FEFUfeedback}{}
 \newcommand{\@FEFUschooltitle}{Школа}
 \newcommand{\@FEFUschoolreferencetitle}{Школы}
+\newcommand{\@FEFUdepartment}{}
+\newcommand{\@FEFUdepartmenttitle}{}
+\newcommand{\@FEFUdepartmentreferencetitle}{}
 %    \end{macrocode}
 % \begin{macro}{\setschool}
 % \begin{macro}{\setgroup}
@@ -94,6 +98,9 @@
 \newcommand{\setschool}[1]{\renewcommand{\@FEFUschool}{#1}}
 \newcommand{\setgroup}[1]{\renewcommand{\@FEFUgroup}{#1}}
 \newcommand{\setplace}[1]{\renewcommand{\@FEFUplace}{#1}}
+\newcommand{\setdepartment}[1]{\renewcommand{\@FEFUdepartment}{#1}}
+\newcommand{\setdepartmenttitle}[1]{\renewcommand{\@FEFUdepartmenttitle}{#1}}
+\newcommand{\setdepartmentreferencetitle}[1]{\renewcommand{\@FEFUdepartmentreferencetitle}{#1}}
 \newcommand{\setpracticetask}[1]{\renewcommand{\@FEFUpracticetask}{#1}}
 \newcommand{\setpracticetitle}[1]{\renewcommand{\@FEFUpracticetitle}{#1}}
 \newcommand{\setfaculty}[1]{\renewcommand{\@FEFUfaculty}{#1}}
@@ -165,9 +172,10 @@
 % \begin{macro}{\setdeputy}
 % Sets deputy and deputy's title iternal variables.
 %    \begin{macrocode}
-\newcommand{\setdeputy}[2]{
-    \renewcommand{\@FEFUdeputy}{#1}
-    \renewcommand{\@FEFUdeputytitle}{#2}
+\newcommand{\setdeputy}[3][]{
+    \renewcommand{\@FEFUdeputy}{#2}
+    \renewcommand{\@FEFUdeputytitle}{#3}
+    \renewcommand{\@FEFUdeputyjobtitle}{#1}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -365,4 +373,3 @@
 %</package>
 %    \end{macrocode}
 % \Finale
-

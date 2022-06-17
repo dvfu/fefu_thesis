@@ -1,0 +1,179 @@
+% \iffalse meta-comment
+% !TEX program  = xeLaTeX
+%<*driver>
+\ProvidesFile{fefu_style_default.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}
+%<package>\ProvidesPackage{fefu_style_imct}
+%<*package>
+    [2022/06/14 LaTeX default style for FEFU document]
+%</package>
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian,english]{babel}
+\usepackage[a4paper,left=4cm]{geometry}
+%\OnlyDescription
+\begin{document}
+    \DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+%\fi
+%
+% \title{FEFU deault style}
+% \author{}
+% \date{}
+% \maketitle
+% \begin{abstract}
+%    The package provides default style for FEFU documents.
+% \end{abstract}
+%
+%\CheckSum{0}
+%\StopEventually{}
+%
+% \section{Implementation}
+%    \begin{macrocode}
+%<*package>
+%    \end{macrocode}
+%    \begin{macrocode}
+\RequirePackage{multirow}
+%    \end{macrocode}
+% \begin{macro}{\@FEFUheader}
+%    \begin{macrocode}
+\renewcommand{\@FEFUheader}{%
+    \fefuimage\\
+    {\relscale{0.786}
+        МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО
+        ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ\\
+    }
+    Федеральное государственное автономное
+    образовательное учреждение высшего образования\\
+    {\bf {«Дальневосточный федеральный университет»}}\\
+    (ДВФУ)\\
+    {\setstretch{1.15}\MakeUppercase{\textbf{\@FEFUschooltitle\ \@FEFUschool}}\\\MakeUppercase{\@FEFUdepartmenttitle \@FEFUdepartment}}
+}
+%    \end{macrocode}
+% \end{macro}
+%    \begin{macrocode}
+\addtitle{thesis}{
+    {\setstretch{1.15}\normalsize
+        \vskip 2\bigskipamount
+        \par\vbox to 8\bigskipamount {%
+            \@FEFUifempty{\@author}{~}{\@author}\\\vskip 2\bigskipamount
+            {\bfseries ВЫПУСКНАЯ КВАЛИФИКАЦИОННАЯ РАБОТА\\}
+            Магистерская диссертация\\
+        }
+        \vskip\bigskipamount
+        \par\vbox to 8\bigskipamount {\MakeUppercase{\@title}\\}
+        по направлению подготовки\\
+        \@FEFUifempty{\@FEFUfaculty}{}{\@FEFUsplitandapply{\@FEFUfaculty}{}{\@FEFUaddguillemots}},\\
+        магистерская программа \@FEFUaddguillemots{\@FEFUprogram}
+    }%
+}
+%    \end{macrocode}
+% \begin{macro}{\makethesistitlebackside}
+%    \begin{macrocode}
+\renewcommand{\makethesistitlebackside}[1][1.25]{%
+    \thispagestyle{empty}
+    \newgeometry{a4paper,left=1cm,right=2.5cm,top=2cm,bottom=2cm}
+    \setlength{\@FEFUcolumnwidth}{.45\textwidth}
+    {\setstretch{#1}\small%
+        \noindent\begin{tabular}{p{\@FEFUcolumnwidth}p{.03\textwidth}p{\@FEFUcolumnwidth}}
+            \multirow{4}{\@FEFUcolumnwidth}{\setstretch{1}В материалах данной выпускной квалификационной работы не\\ содержатся сведения, составляющие\\ государственную тайну, и сведения,\\ подлежащие экспортному контролю} && \@FEFUpostfield[подпись]{Автор работы }{}{0.9\@FEFUcolumnwidth}\\
+            && Группа \@FEFUgroup\\
+            && \@FEFUdate{\@FEFUcolumnwidth}\\ &&\\ &&\\
+            Уполномоченый по экспортному контролю && \@FEFUmultilinepostfield[{\tiny должность, уч. степень, уч. звание}]{Руководитель ВКР }{\@FEFUsupervisortitle}{\@FEFUcolumnwidth}\\
+            \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUexportsupervisor}{\@FEFUcolumnwidth} && \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUsupervisor}{\@FEFUcolumnwidth}\\
+            \@FEFUdate{\@FEFUcolumnwidth} && \@FEFUdate{\@FEFUcolumnwidth}\\ && \\
+            && Консультант\\
+            && \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUconsultant}{\@FEFUcolumnwidth}\\
+            && \@FEFUdate{\@FEFUcolumnwidth}\\ &&\\
+            && \@FEFUmultilinepostfield[уч. степень, уч. звание]{Назначен рецензент }{\@FEFUreviewertitle}{\@FEFUcolumnwidth}\\
+            && \@FEFUfield[фамилия, имя, отчество]{\@FEFUshortname{\@FEFUreviewer}}{\@FEFUcolumnwidth}\\
+            &&\\ &&\\ &&\\
+            Защищена в ГЭК с оценкой && \textbf{\@FEFUaddguillemots{Допустить к защите}}\\
+            \@FEFUfield{}{0.75\@FEFUcolumnwidth} && \multirow{3}{\@FEFUcolumnwidth}{\@FEFUdeputyjobtitle\ \@FEFUdepartmentreferencetitle\ \@FEFUdepartment,\ \@FEFUdeputytitle}\\ &&\\
+            Секретарь ГЭК &&\\
+            \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUsecretary}{\@FEFUcolumnwidth} && \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUdeputy}{\@FEFUcolumnwidth}\\
+            \@FEFUdate{\@FEFUcolumnwidth} && \@FEFUdate{\@FEFUcolumnwidth}\\
+        \end{tabular}\\
+        % {\setstretch{1}%
+        %     В материалах данной выпускной квалификационной работы не содержатся сведения, составляющие государственную тайну, и сведения, подлежащие экспортному контролю.\\\par
+        % }%
+        % \noindent\begin{tabular}{p{\@FEFUcolumnwidth}p{\@FEFUcolumnwidth}}
+        %     & \@FEFUnamesign{\@FEFUexportsupervisor}{\@FEFUsignwidth}{\@FEFUcolumnwidth}\\
+        %     & \@FEFUfield[уполномоченный по экспортному контролю]{\@FEFUexportsupervisortitle}{\@FEFUcolumnwidth}\\
+        %     & \@FEFUdate{\@FEFUcolumnwidth}
+        % \end{tabular}       
+    }
+    \addtocounter{page}{-1}
+    \newpage
+    \restoregeometry
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{thesistask}
+%    \begin{macrocode}
+\newcounter{@FEFUtaskitemcounter}
+\setcounter{@FEFUtaskitemcounter}{0}
+\renewenvironment{thesistask}[5][\@author]{%
+    \fefuheader%
+    \def\@FEFUdeadline{#4}%
+    \def\@FEFUtaskdate{#5}%
+    \setcounter{@FEFUtaskitemcounter}{0}%
+    \def\@FEFUnexttaskitemtitle{%
+        \def\@FEFUnexttaskitemtitle{%
+            \def\@FEFUnexttaskitemtitle{%
+                \def\@FEFUnexttaskitemtitle{%
+                    \def\@FEFUnexttaskitemtitle{%
+                        \def\@FEFUnexttaskitemtitle{%
+                            \def\@FEFUnexttaskitemtitle{%
+                                \def\@FEFUnexttaskitemtitle{\def\@FEFUtaskitemtitle{}}%
+                                \def\@FEFUtaskitemtitle{Основные источники информации: научная литература по тематике исследования,\hfill\null\\ нормативно-правовая литература, результаты, полученные в ходе преддипломной практики,\hfill\null\\}%
+                            }%
+                            \def\@FEFUtaskitemtitle{Консультанты по работе:}%
+                        }%
+                        \def\@FEFUtaskitemtitle{Перечень графического материала (с указанием обязательных чертежей):\hfill\null\\}%
+                    }%
+                    \def\@FEFUtaskitemtitle{Содержание работы (перечень подлежащих разработке вопросов):\hfill\null\\}%
+                }%
+                \def\@FEFUtaskitemtitle{Исходные данные по работе:\hfill\null\\}%
+            }%
+            \def\@FEFUtaskitemtitle{Срок сдачи студентом законченной работы:}%
+        }%
+        \def\@FEFUtaskitemtitle{Тема работы:}%
+    }%
+    \def\skiptaskitem{\@FEFUnexttaskitemtitle}%
+    \def\taskitem##1{\@FEFUnexttaskitemtitle\uline{\stepcounter{@FEFUtaskitemcounter}\the@FEFUtaskitemcounter.\ \expandafter\empty\@FEFUtaskitemtitle\ ##1\hfill\null}\bigskip\medskip\par}%
+    {\centering\bfseries ЗАДАНИЕ\\на выпускную квалификационную работу\\\bigskip\medskip}%
+    \begingroup\setstretch{1.25}\fontsize{12}{12}\selectfont\pagestyle{empty}\setlength{\parindent}{0pt}%
+        \hbox to \textwidth{\uline{\@FEFUgendered{студентке}{студенту}\hfill#1\hfill}}
+        \bigskip\bigskip
+        \hbox to \textwidth{\uline{\@FEFUfaculty, группы \@FEFUgroup\hfill}}
+        \par\bigskip\bigskip
+        \taskitem{\@title}
+        \taskitem{\@FEFUdeadline}
+    }{\def\@FEFUnexttaskitemtitle{\def\@FEFUtaskitemtitle{Дата выдачи задания:}}
+        \taskitem{\@FEFUtaskdate}
+        \bigskip%
+        \parbox[b]{0.5\textwidth}{Руководитель ВКР:\ \@FEFUfield[И.О.Ф.]{\@FEFUshortnamereversed{\@FEFUsupervisor}}{.25\textwidth}\hfill\null} \@FEFUfield[подпись]{}{.3\textwidth}\\
+        \par\medskip
+        Задание \@FEFUgendered{приняла}{принял} к исполнению \@FEFUtaskdate\\
+        \par\parbox[b]{0.5\textwidth}{\@FEFUgendered{Студентка}{Студент}\ \@FEFUfield[И.О.Ф.]{\@FEFUshortnamereversed{\@author}}{.25\textwidth}\hfill\null} \@FEFUfield[подпись]{}{.3\textwidth}
+    \par\newpage\endgroup}
+%    \end{macrocode}
+% \end{macro}
+% Set default values
+%    \begin{macrocode}
+\setdepartment{цифровой трансформации}
+\setdepartmenttitle{Академия}
+\setdepartmentreferencetitle{Академии}
+\setschool{математики и компьютерных технологий}
+\setschooltitle{Институт}
+\setschoolreferencetitle{Института}
+%    \end{macrocode}
+%    \begin{macrocode}
+%</package>
+%    \end{macrocode}
+% \Finale

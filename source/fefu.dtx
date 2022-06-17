@@ -97,7 +97,7 @@
 \RequirePackage[labelsep=endash]{caption}
 \RequirePackage[backend=biber, bibstyle=gost-numeric, maxbibnames=99]{biblatex}
 \RequirePackage[title,titletoc]{appendix}
-\RequirePackage[xindy={glsnumbers=false},nonumberlist,nogroupskip,numberline=false,acronym]{glossaries}
+\RequirePackage[xindy={glsnumbers=false},nonumberlist,nogroupskip,numberline=false,acronym,entrycounter]{glossaries}
 %    \end{macrocode}
 % The \textsf{tocloft} package is loaded with \textsf{subfigure} option if necessary.
 %    \begin{macrocode}
@@ -222,7 +222,7 @@
     \settowidth{\@FEFUfieldlength}{#3}%
     \setlength{\@FEFUpostfieldlength}{#4-\widthof{#2}}%
     \ifthenelse{\lengthtest{\@FEFUpostfieldlength<\@FEFUfieldlength}}{%
-        \parbox{#4}{\hbox{#2}\@FEFUfield[#1]{#3}{#4}}%
+        \parbox[t]{#4}{\hbox{#2}\@FEFUfield[#1]{#3}{#4}}%
     }{%
         #2\@FEFUfield[#1]{#3}{\@FEFUpostfieldlength}%
     }%
@@ -307,32 +307,6 @@
 }
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\@FEFUheader}
-% \begin{macro}{\fefuheader}
-% Inserts FEFU page header
-%    \begin{macrocode}
-\newcommand{\@FEFUheader}{%
-    \fefuimage\\
-    {\relscale{0.786}
-        МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО
-        ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ\\
-    }
-    Федеральное государственное автономное
-    образовательное учреждение высшего образования\\
-    {\bf {«Дальневосточный федеральный университет»}}\\
-    (ДВФУ)\\
-    \bigskip
-    {\bfseries\setstretch{1.15}\MakeUppercase{\@FEFUschooltitle\ \@FEFUschool}\\}
-}
-\newcommand{\fefuheader}{%
-    \setstretch{1}
-    \begin{center}
-        \@FEFUheader
-    \end{center}%
-}
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
 % \begin{macro}{\addtitle}
 % Adds titlepage.
 %    \begin{macrocode}
@@ -364,327 +338,19 @@
 }
 %    \end{macrocode}
 % \end{macro}
-% Add practice report title.
-%    \begin{macrocode}
-\addtitle{practice}{
-    {\setstretch{1.15}\small
-        {\bf
-            ОТЧЁТ ПО ПРАКТИКЕ\\
-            \@FEFUpracticetitle\\
-        }
-        в период \@FEFUdaterange{true}{true}{false}{2.75cm}\\
-        в \@FEFUfield[наименование базы практики]{\@FEFUplace}{10cm}
-        \vskip 3.5\bigskipamount
-        \begin{flushright}
-            \parbox[l]{.5\textwidth}{\raggedright
-                \@FEFUpostfield[группа]{\@FEFUgendered{Выполнила студентка}{Выполнил студент} }{\@FEFUgroup}{\@FEFUcolumnwidth}\\
-                \vskip 0.75\bigskipamount
-                \@FEFUsigname{\@FEFUsignwidth}{\@author}{\@FEFUcolumnwidth}
-                \vskip 0.75\bigskipamount
-                \@FEFUdate{\@FEFUcolumnwidth}\\
-                \vskip 1.7\bigskipamount
-                Руководитель практики\\ от университета\\
-                \@FEFUsigname{\@FEFUsignwidth}{\@FEFUsupervisor}{\@FEFUcolumnwidth}
-                \vskip 0.75\bigskipamount
-                \@FEFUdate{\@FEFUcolumnwidth}\\
-                \vskip 0.75\bigskipamount
-                Оценка \underline{\hspace{\@FEFUsignwidth}}\\
-                \if@FEFUoffsite%
-                    \vskip 1.7\bigskipamount
-                    Руководитель практики\\ от базы практики\\
-                    \@FEFUsigname{\@FEFUsignwidth}{\@FEFUoffsitesupervisor}{\@FEFUcolumnwidth}
-                    \vskip 0.75\bigskipamount
-                    \@FEFUdate{\@FEFUcolumnwidth}
-                \fi%
-            }
-        \end{flushright}
-    }%
-}
-%    \end{macrocode}
-% Add diary title.
-%    \begin{macrocode}
-\addtitle{diary}{
-    {\setstretch{1.15}\fontsize{12}{12}\selectfont
-        {\bf
-            ДНЕВНИК\\
-            Прохождения практики\\
-            \@FEFUpracticetitle\\
-        }
-        \vskip 60pt
-        \begin{flushleft}
-            \@FEFUpostfield{Студент }{\@author}{.75\textwidth}\\
-            \@FEFUpostfield{Группа }{\@FEFUgroup}{.75\textwidth}\\
-        \end{flushleft}
-    }%
-}
-%    \end{macrocode}
-% Add thesis title.
-%    \begin{macrocode}
-\addtitle{thesis}{
-    {\setstretch{1.15}\normalsize
-        \vskip 2\bigskipamount
-        \par\vbox to 8\bigskipamount {%
-            \@FEFUifempty{\@author}{~}{\@author}\\\vskip 2\bigskipamount
-            \MakeUppercase{\@title}
-        }
-        \vskip\bigskipamount
-        {\bfseries ВЫПУСКНАЯ КВАЛИФИКАЦИОННАЯ РАБОТА\\}
-        по направлению подготовки\\
-        \@FEFUifempty{\@FEFUfaculty}{}{\@FEFUsplitandapply{\@FEFUfaculty}{}{\@FEFUaddguillemots}},\\
-        магистерская программа \@FEFUaddguillemots{\@FEFUprogram}
-    }%
-}
-%    \end{macrocode}
 % \begin{macro}{\maketableofcontents}
 % Makes table of contents (deprecated).
 %    \begin{macrocode}
 \newcommand{\maketableofcontents}{\ClassWarning{fefu}{\noexpand\maketableofcontents is deprecated. Use \noexpand\tableofcontents}\tableofcontents}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\makepracticetask}
-% Makes practice task page.
-%    \begin{macrocode}
-\NewDocumentCommand{\makepracticetask}{O{}O{10}}{
-    \thispagestyle{empty}
-    {\setlength\parindent{0pt}\setstretch{1.15}
-        \centerline{\bf Индивидуальное задание по практике}
-        \vskip 14pt
-        \@FEFUpostfield[Ф.И.О.]{\@FEFUgendered{Студентке}{Студенту} группы \@FEFUfield[группа]{\@FEFUgroup}{4.5cm} }{\@author}{\textwidth}
-        \vskip 14pt
-        \ifthenelse{\equal{\protect\@FEFUcoalesce{#1}{\@FEFUplace}}{\protect\@FEFUcoalesce{}{}}}{%
-            \@FEFUpostunderline{Место прохождения практики: }{\textwidth}\\
-            \underline{\hspace{\textwidth}}%
-        }{%
-            Место прохождения практики: \@FEFUifempty{#1}{{\expandafter\@FEFUunderline\@FEFUplace}}{{\expandafter\@FEFUunderline#1}}%
-        }
-        \vskip 14pt
-        Сроки прохождения практики \@FEFUdaterange{false}{false}{true}{2.75cm} \@FEFUendyear\ года
-        \vskip 28pt
-        \@FEFUifempty{\@FEFUpracticetask}{%
-            \@FEFUpostunderline{Виды работ и требования по их выполнению: }{\textwidth}\\
-            \foreach \n in {1,...,#2}{\underline{\hspace{\textwidth}}\\}
-        }{Виды работ и требования по их выполнению: {\expandafter\@FEFUunderline\@FEFUpracticetask}}
-        \vskip 28pt
-        Руководитель практики от ДВФУ\\
-        \@FEFUpostfield[Ф.И.О.]{\@FEFUfield[должность]{\@FEFUsupervisortitle}{5cm} \@FEFUfield[подпись]{}{5cm} }{\@FEFUshortname{\@FEFUsupervisor}}{\textwidth}
-        \vskip 28pt
-        \@FEFUdate{\@FEFUcolumnwidth}
-        \newpage
-    }
-}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\makethesistitlebackside}
-% Make thesis title back side.
-%    \begin{macrocode}
-\newcommand{\makethesistitlebackside}[1][1.25]{%
-    \thispagestyle{empty}
-    \newgeometry{a4paper,left=1cm,right=2.5cm,top=2cm,bottom=2cm}
-    {\setstretch{#1}%
-        \noindent\begin{tabular}{p{\@FEFUcolumnwidth}p{\@FEFUcolumnwidth}}
-            & \@FEFUpostfield[подпись]{Автор работы }{}{0.9\@FEFUcolumnwidth}\\
-            & \@FEFUdate{\@FEFUcolumnwidth}\\ &\\
-            & Консультант\\
-            & \@FEFUsigname{\@FEFUsignwidth}{\@FEFUconsultant}{\@FEFUcolumnwidth}\\
-            & \@FEFUdate{\@FEFUcolumnwidth}\\ &\\
-            & \@FEFUmultilinepostfield[{\tiny должность, уч. степень, уч. звание}]{Руководитель ВКР }{\@FEFUsupervisortitle}{\@FEFUcolumnwidth}\\
-            & \@FEFUsigname{\@FEFUsignwidth}{\@FEFUsupervisor}{\@FEFUcolumnwidth}\\ & \\
-            & \@FEFUmultilinepostfield[уч. степень, уч. звание]{Назначен рецензент }{\@FEFUreviewertitle}{\@FEFUcolumnwidth}\\
-            & \@FEFUfield[фамилия, имя, отчество]{\@FEFUshortname{\@FEFUreviewer}}{\@FEFUcolumnwidth}\\ &\\
-            Защищена в ГЭК с оценкой & \@FEFUaddguillemots{Допустить к защите}\\
-            \@FEFUfield{}{0.75\@FEFUcolumnwidth} & \multirow{2}{*}{\parbox{\@FEFUcolumnwidth}{Заместитель директора \@FEFUacronym{\@FEFUschooltitle}\@FEFUacronym{\@FEFUschool} по УВР, \@FEFUdeputytitle}}\\
-            Секретарь ГЭК &\\
-            \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUsecretary}{\@FEFUcolumnwidth} & \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUdeputy}{\@FEFUcolumnwidth}\\
-            \@FEFUdate{\@FEFUcolumnwidth} & \@FEFUdate{\@FEFUcolumnwidth}\\& \\
-            & УТВЕРЖДАЮ\\
-            & Директор \@FEFUschoolreferencetitle\ \@FEFUschool\\
-            & \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUdirector}{\@FEFUcolumnwidth}\\
-            & \@FEFUdate{\@FEFUcolumnwidth}\\ &
-        \end{tabular}\\
-        {\setstretch{1}%
-            В материалах данной выпускной квалификационной работы не содержатся сведения, составляющие государственную тайну, и сведения, подлежащие экспортному контролю.\\\par
-        }%
-        \noindent\begin{tabular}{p{\@FEFUcolumnwidth}p{\@FEFUcolumnwidth}}
-            & \@FEFUnamesign{\@FEFUexportsupervisor}{\@FEFUsignwidth}{\@FEFUcolumnwidth}\\
-            & \@FEFUfield[уполномоченный по экспортному контролю]{\@FEFUexportsupervisortitle}{\@FEFUcolumnwidth}\\
-            & \@FEFUdate{\@FEFUcolumnwidth}
-        \end{tabular}       
-    }
-    \addtocounter{page}{-1}
-    \newpage
-    \restoregeometry
-}
-%    \end{macrocode}
-% \end{macro}
-% Change caption names
-%    \begin{macrocode}
-\addto\captionsrussian{%
-    \renewcommand{\figurename}{Рисунок}%
-    \renewcommand{\contentsname}{Оглавление}%
-}
-%    \end{macrocode}
-% Set mono font.
-%    \begin{macrocode}
-\setmonofont[Scale=0.9]{Courier New}
-%    \end{macrocode}
-% Alter bibliography style
-%    \begin{macrocode}
-\DefineBibliographyStrings{russian}{ urlseen = {дата обращения: }, }
-\renewcommand*{\mkgostheading}[1]{#1}
-%    \end{macrocode}
-% Use surrounding font for urls
-%    \begin{macrocode}
-\urlstyle{same}
-%    \end{macrocode}
-% Sets page style: page number at the bottom right corner and no head rule.
-%    \begin{macrocode}
-\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\thepage}}
-\renewcommand{\headrulewidth}{0pt}
-\pagestyle{plain}
-%    \end{macrocode}
-% Setup toc style
-%    \begin{macrocode}
-\tocloftpagestyle{empty}
-\renewcommand{\cfttocprehook}{\pagestyle{empty}\setstretch{1}\hypertarget{sec:contents}{}}
-\renewcommand{\cfttocposthook}{\newpage\pagestyle{plain}}
-\renewcommand{\cfttoctitlefont}{\hfill\bfseries}
-\renewcommand{\cftaftertoctitle}{\hfill\hspace{0pt}}
-\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
-%    \end{macrocode}
-% Set toc depth
-%    \begin{macrocode}
-\setcounter{tocdepth}{2}
-%    \end{macrocode}
-% Prevents abstract from being included in toc
-%    \begin{macrocode}
-\AtBeginEnvironment{abstract}{\@FEFUnotoctrue}
-%    \end{macrocode}
-% Starts new page after abstract
-%    \begin{macrocode}
-\AtEndEnvironment{abstract}{\newpage}
-%    \end{macrocode}
-% Remove page number in abstract
-%    \begin{macrocode}
-\AtBeginEnvironment{abstract}{\pagestyle{empty}}
-%    \end{macrocode}
-% The glossary style is set up here
-%    \begin{macrocode}
-\setglossarystyle{index}
-\renewcommand*{\glsnamefont}[1]{\textmd{#1} ---}
-\renewcommand{\@idxitem}{\setlength{\parindent}{1.25cm}\par\indent}
-%    \end{macrocode}
-% The sections title styles are set up here.
-%    \begin{macrocode}
-\setcounter{secnumdepth}{4}
-\titlespacing{\section}{\parindent}{0pt}{0pt}
-\titleformat{\section}[block]
-    {\bfseries\normalsize}{\thesection~}{0pt}{\hyperlink{sec:contents}{#1}}
-\titlespacing{name=\section,numberless}{0pt}{0pt}{0pt}
-\titleformat{name=\section,numberless}[block]
-    {\bfseries\normalsize}{}{0pt}{%
-        \hfill%
-        \if@FEFUnotoc#1%
-        \else%
-            \phantomsection%
-            \addcontentsline{toc}{section}{#1}\hyperlink{sec:contents}{#1}%
-        \fi%
-        \hfill%
-    }
-\titlespacing{\subsection}{\parindent}{0pt}{0pt}
-\titleformat{\subsection}[block]
-    {\bfseries\normalsize}{\thesubsection~}{0pt}{\hyperlink{sec:contents}{#1}}
-\titlespacing{name=\subsection,numberless}{0pt}{0pt}{0pt}
-\titleformat{name=\subsection,numberless}[block]
-    {\bfseries\normalsize}{}{0pt}{%
-        \hfill%
-        \if@FEFUnotoc#1%
-        \else%
-           \phantomsection%
-           \addcontentsline{toc}{subsection}{#1}\hyperlink{sec:contents}{#1}%
-        \fi%
-        \hfill%
-    }
-\titlespacing{\subsubsection}{\parindent}{0pt}{0pt}
-\titleformat{\subsubsection}[block]
-    {\bfseries\normalsize}{\thesubsubsection~}{0pt}{\hyperlink{sec:contents}{#1}}
-\titlespacing{name=\subsubsection,numberless}{0pt}{0pt}{0pt}
-\titleformat{name=\subsubsection,numberless}[block]
-    {\bfseries\normalsize}{}{0pt}{%
-        \hfill%
-        \if@FEFUnotoc#1%
-        \else%
-            \phantomsection%
-            \addcontentsline{toc}{subsubsection}{#1}\hyperlink{sec:contents}{#1}%
-        \fi%
-        \hfill%
-    }
-\titlespacing{\paragraph}{\parindent}{0pt}{0pt}
-\titleformat{\paragraph}[block]
-    {\bfseries\normalsize}{\theparagraph~}{0pt}{\hyperlink{sec:contents}{#1}}
-\titlespacing{name=\paragraph,numberless}{0pt}{0pt}{0pt}
-\titleformat{name=\paragraph,numberless}[block]
-    {\bfseries\normalsize}{}{0pt}{%
-        \hfill%
-        \if@FEFUnotoc#1%
-        \else%
-        \phantomsection%
-        \addcontentsline{toc}{paragraph}{#1}\hyperlink{sec:contents}{#1}%
-        \fi%
-        \hfill%
-    }
-%    \end{macrocode}
-% The bibliography style is set up here.
-%    \begin{macrocode}
-\renewcommand\@biblabel[1]{\indent#1.}
-\let\@FEFUprintbibliography\printbibliography
-\renewcommand{\printbibliography}[1][]{\begingroup\sloppy\@FEFUifempty{#1}{\@FEFUprintbibliography[title=Список использованных источников]}{\@FEFUprintbibliography[title=Список использованных источников, #1]}\endgroup}
-%    \end{macrocode}
-% The abstract style is set up here.
-%    \begin{macrocode}
-\renewcommand{\abstracttextfont}{\normalfont\normalsize}
-\setlength{\absleftindent}{0pt}
-\setlength{\absrightindent}{0pt}
-\setlength{\abstitleskip}{\lineskip}
-\renewcommand{\abstitlestyle}[1]{\section*{#1}}
-%    \end{macrocode}
-% Lists style is set up here.
-%    \begin{macrocode}
-\setlistdepth{3}
-\setlist[itemize,1]{itemsep=-1ex,topsep=0pt,label=\textendash,wide=\parindent}
-\setlist[itemize,2]{itemsep=-1ex,topsep=0pt,label=\textbullet,wide=1.5\parindent}
-\setlist[itemize,3]{itemsep=-1ex,topsep=0pt,label=\textperiodcentered,wide=2\parindent}
-\setlist[enumerate,1]{itemsep=-1ex,topsep=0pt,label=\arabic*.,wide=\parindent}
-\setlist[enumerate,2]{itemsep=-1ex,topsep=0pt,label=\alph*),wide=1.5\parindent}
-\setlist[enumerate,3]{itemsep=-1ex,topsep=0pt,label=\roman*.,wide=2\parindent}
-%    \end{macrocode}
-% \begin{macro}{\@FEFUcountcols}
-% Counts symbols \& in given macro.
-%    \begin{macrocode}
-\def\@FEFUcountcolshelper#1#2&#3{%
-    \ifx\@FEFUcountcolshelper#3#1%
-    \expandafter\@gobble%
-    \else%
-    \expandafter\@firstofone%
-    \fi%
-    {\@FEFUcountcolshelper{\the\numexpr#1+1\relax}#3}%
-}
-\def\@FEFUcountcols{\noalign{%
-        \xdef\@FEFUncols{\expandafter\@FEFUcountcolshelper\expandafter1\@preamble&\@FEFUcountcolshelper}%
-}}
-%    \end{macrocode}
-% \end{macro}
-% Removes space after table caption
-%    \begin{macrocode}
-\captionsetup[table]{skip=0pt,position=top,justification=raggedright,singlelinecheck=false}
-\captionsetup[longtable]{skip=0pt,position=top,justification=raggedright,singlelinecheck=false}
-%    \end{macrocode}
-% \begin{macro}{fefutable}
 % Inserts table with tabular environment inside.
 % \begin{Options}
 %     \item[\oarg{arg1}] Specifies table placement;
 %     \item[\marg{arg2}] Columns specification for tabular environment;
 %     \item[\marg{arg3}] Table caption.
 % \end{Options}
+% \begin{macro}{fefutable}
 %    \begin{macrocode}
 \newenvironment{fefutable}[3][h]{%
     \begin{table}[#1]
@@ -712,53 +378,6 @@
 }
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{@FEFUreview}
-% Inserts review page
-%    \begin{macrocode}
-\newenvironment{@FEFUreview}[7][\@author]{%
-    \fefuheader%
-    \def\@FEFUreviewertitlename{#3}%
-    \def\@FEFUreviewername{#4}%
-    \def\@FEFUreviewerjobtitle{#5}%
-    \def\@FEFUgrade{#6}%
-    \def\@FEFUreviewdate{#7}%
-    {\centering\bfseries #2\\\medskip\medskip}%
-    \begingroup\setstretch{1.25}\fontsize{12}{12}\selectfont\pagestyle{empty}%
-    на выпускную квалификационную работу \@FEFUgendered{студентки}{студента}\\
-    \@FEFUfield[Ф.И.О]{#1}{\textwidth}\\
-    \smallskip\\
-    \@FEFUpostfield{Направление подготовки }{\@FEFUfaculty}{\textwidth}\\
-    \@FEFUpostfield{Магистерская программа }{\@FEFUprogram}{\textwidth}\\
-    \@FEFUifempty{\@FEFUgroup}{%
-        Группа \@FEFUfield{}{0.2\textwidth}%
-    }{%
-        Группа \@FEFUfield{\@FEFUgroup}{0cm}%
-    }\\
-    \smallskip\\
-    \@FEFUpostfield[ученая степень, ученое звание, Ф.И.О]{Руководитель ВКР }{\@FEFUsupervisortitle\ \@FEFUsupervisor}{\textwidth}\\
-    \smallskip\\
-    На тему {\expandafter\@FEFUunderline\@title\hfill}\\
-    \smallskip\\
-    \@FEFUifempty{\@date}{%
-        Дата защиты ВКР \@FEFUfield{}{0.15\textwidth}%
-    }{%
-        Дата защиты ВКР \@FEFUfield{\@FEFUprettydate{\@date}\@FEFUgetyear{\@date} г.}{0cm}%
-    }\par%
-}{\\\par%
-    \begingroup\raggedright
-    Оценка \@FEFUfield{\@FEFUgrade}{0.15\textwidth}\\
-    \bigskip
-    \@FEFUreviewertitlename\\
-    \smallskip
-    \begingroup\setlength\tabcolsep{.25cm}\def\arraystretch{0}\setlength{\@FEFUlength}{.3\textwidth-1cm}%
-    \begin{tabular}{@{}b{.4\textwidth}b{.3\textwidth}b{\@FEFUlength}@{}}
-        \@FEFUfield[должность, ученое звание]{\pbox[b]{.4\textwidth}{\@FEFUreviewerjobtitle}}{.4\textwidth} & \@FEFUfield[подпись]{}{.3\textwidth}& \@FEFUfield[Ф.И.О.]{\expandafter\@FEFUshortname\@FEFUreviewername}{\@FEFUlength}
-    \end{tabular}\endgroup\\
-    \bigskip
-    {\raggedleft\@FEFUdate[\expandafter\empty\@FEFUreviewdate]{.8\@FEFUcolumnwidth}\\}
-    \endgroup\par\newpage\endgroup}
-%    \end{macrocode}
-% \end{macro}
 % \begin{macro}{review}
 % Inserts review
 %    \begin{macrocode}
@@ -775,83 +394,6 @@
     }{\end{@FEFUreview}}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{thesistask}
-% Inserts thesis task page
-%    \begin{macrocode}
-\newenvironment{thesistask}[5][\@author]{%
-    \fefuheader%
-    \def\@FEFUdeadline{#4}%
-    \def\@FEFUtaskdate{#5}%
-    \def\taskitem{%
-        \def\taskitem{%
-            \def\taskitem{%
-                \def\taskitem{\item}%
-                \item Основные источники информации, используемые для разработки темы (учебная и научная литература, нормативно-правовая литература, данные, полученные в ходе преддипломной практики):\\
-            }%
-            \item Перечень вопросов, подлежащих к разработке (исследованию):\\%
-        }%
-        \item Техническое задание и исходные данные к работе:\\%
-    }%
-    {\centering\bfseries ЗАДАНИЕ\\на выпускную квалификационную работу\\\bigskip\medskip}%
-    \begingroup\setstretch{1.25}\fontsize{12}{12}\selectfont\pagestyle{empty}\setlength{\parindent}{0pt}%
-        \hbox to \textwidth{\uline{\@FEFUgendered{студентке}{студенту}\hfill#1\hfill группы \@FEFUgroup}}
-        \bigskip
-        \uline{на тему \@title\hfill\null\\утверждённую приказом от \@FEFUifempty{#2}{\@FEFUdate{.3\textwidth}}{\guillemotleft\@FEFUgetday{#2}\guillemotright\ \csname @FEFUmonthname\@FEFUgetmonth{#2}\endcsname\ \@FEFUgetyear{#2}\ г.} № \@FEFUifempty{#3}{\underline{\hspace{.2\textwidth}}}{#3}\hfill}\\
-        \medskip\medskip\\
-        \hbox to \textwidth{\uline{Руководитель ВКР\hfill\@FEFUsupervisortitle\ \@FEFUsupervisor\hfill}}\\
-        \smallskip
-        \begin{enumerate}[labelsep=1.25cm]
-    }{\end{enumerate}\bigskip%
-        \hbox to .75\textwidth{Срок предоставления работы\hfill\@FEFUdate[\@FEFUdeadline]{.35\textwidth}}
-        \bigskip
-        \hbox to .75\textwidth{Дата выдачи задания\hfill\@FEFUdate[\@FEFUtaskdate]{.35\textwidth}}
-        \bigskip\bigskip
-        \begingroup\setlength\tabcolsep{.0125\textwidth}\def\arraystretch{0}%
-        \begin{tabular}{@{}b{.25\textwidth}@{}b{.3\textwidth}b{.15\textwidth}b{.25\textwidth}@{}}
-            Руководитель ВКР & \@FEFUfield[должность, ученое звание]{\pbox[b]{.3\textwidth}{\@FEFUsupervisortitle}}{.3\textwidth} & \@FEFUfield[подпись]{}{.15\textwidth} & \@FEFUfield[Ф.И.О.]{\@FEFUshortname{\@FEFUsupervisor}}{.25\textwidth}
-        \end{tabular}\\
-        \bigskip
-        \begin{tabular}{@{}b{.25\textwidth}@{}b{.3\textwidth}b{.15\textwidth}b{.25\textwidth}@{}}
-            Задание получил & & \@FEFUfield[подпись]{}{.15\textwidth} & \@FEFUfield[Ф.И.О.]{\@FEFUshortname{\@author}}{.25\textwidth}
-        \end{tabular}\endgroup
-    \par\newpage\endgroup}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\makediary}
-% Inserts diary table.
-%    \begin{macrocode}
-\newcommand{\makediary}{%
-    \maketitle[]{diary}%
-    \thispagestyle{empty}%
-    \begin{center}
-        \setstretch{1}\fontsize{12}{12}\selectfont%
-        \renewcommand{\arraystretch}{1.75}%
-        \setcounter{@FEFUcounter}{0}%
-        \addtocounter{@FEFUdiarycounter}{-1}
-        \begin{longtable}{|C{2.5cm}|C{3cm}|P{7.5cm}|C{2.5cm}|}
-            \hline
-            \bfseries{Дата выполнения работ} & \bfseries{Место} & \multicolumn{1}{C{7.5cm}|}{\bfseries{Краткое содержание выполняемых работ}} & \bfseries{Отметка о выполнении работы}\\
-            \hline
-            \ifnum-1<\the@FEFUdiarycounter\relax
-                \whiledo{\the@FEFUcounter<\the@FEFUdiarycounter}{%
-                    \csname @FEFUdiaryentry@\the@FEFUcounter\endcsname%
-                    \stepcounter{@FEFUcounter}%
-                }%
-                \csname @FEFUdiaryentry@\the@FEFUdiarycounter\endcsname%
-            \fi%
-        \end{longtable}
-        \stepcounter{@FEFUdiarycounter}%
-        \renewcommand{\arraystretch}{1}%
-    \end{center}%
-    \if@FEFUoffsite%
-        \noindent\@FEFUcredentials{Руководитель практики от предприятия}{\@FEFUifempty{\@FEFUoffsitesupervisor}{}{\@FEFUshortname{\@FEFUoffsitesupervisor}}}{\@FEFUoffsitesupervisortitle}%
-        \vskip 14pt%
-    \fi        
-    \noindent\@FEFUcredentials{Руководитель практики от университета}{\@FEFUifempty{\@FEFUsupervisor}{}{\@FEFUshortname{\@FEFUsupervisor}}}{\@FEFUsupervisortitle}
-    \newpage
-}
-%    \end{macrocode}
-% \end{macro}
 % \begin{macro}{diaryentry}
 % Inserts diary entry.
 %    \begin{macrocode}
@@ -861,42 +403,7 @@
 }
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\makefeedback}
-% Insert supervisor feedback page
-%    \begin{macrocode}
-\newcommand{\makefeedback}{%
-    \thispagestyle{empty}\begingroup\setstretch{1}
-    \centerline{ЗАКЛЮЧЕНИЕ РУКОВОДИТЕЛЯ ПРАКТИКИ ОТ ПРЕДПРИЯТИЯ}
-    \vskip 28pt
-    \@FEFUfeedback
-    \vfill\null
-    Дата {\expandafter\@FEFUunderline\hspace{2cm}}
-    \hspace{2cm}Подпись {\expandafter\@FEFUunderline\hspace{2cm}}
-    /\@FEFUshortname{\@FEFUoffsitesupervisor}/
-    \vfill\endgroup\newpage
-}
-%    \end{macrocode}
-% \end{macro}
-% Glossary setup is defined here
-%    \begin{macrocode}
-\newglossarystyle{fefu}{%
-    \let\oldglsentryitem\glsentryitem
-    \renewcommand*{\glsentryitem}[1]{
-        \oldglsentryitem{##1}\setlength{\parindent}{1.25cm}\par
-    }
-    \renewcommand*{\glossentry}[2]{%
-        \glsentryitem{##1}%
-        \ifglshaslong{##1}{% probably an acronym
-            \glstarget{##1}{\glsentryshort{##1}}%
-        }{% probably an entry
-            \glstarget{##1}{\Glsentryname{##1}}%
-            \ifglshasshort{##1}{\space(\glsentryshort{##1})}{}%
-        }
-        \space\textemdash\space\glossentrydesc{##1}.%
-    }
-}
-\setglossarystyle{fefu}
-%    \end{macrocode}
+
 % \begin{macro}{\migrateacronyms}
 % Use to migrate acronym entries to main glossary.
 %    \begin{macrocode}
@@ -906,6 +413,18 @@
 }
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\fefuloadstyle}
+% Loads fefu document style
+%    \begin{macrocode}
+\newcommand{\fefuloadstyle}[1]{%
+    \RequirePackage{fefu_style_#1}
+}
+%    \end{macrocode}
+% \end{macro}
+% Load default package
+%    \begin{macrocode}
+\fefuloadstyle{default}
+%    \end{macrocode}
 % \begin{macro}{\fefuimage}
 % Inserts dvfu image
 %    \begin{macrocode}
