@@ -82,13 +82,13 @@
         \noindent\begin{tabular}{p{\@FEFUcolumnwidth}p{.03\textwidth}p{\@FEFUcolumnwidth}}
             \multirow{4}{\@FEFUcolumnwidth}{\setstretch{1}В материалах данной выпускной квалификационной работы не\\ содержатся сведения, составляющие\\ государственную тайну, и сведения,\\ подлежащие экспортному контролю} && \@FEFUpostfield[подпись]{Автор работы }{}{0.9\@FEFUcolumnwidth}\\
             && Группа \@FEFUgroup\\
-            && \@FEFUdate[\@date]{\@FEFUcolumnwidth}\\ &&\\ &&\\
+            && \expandafter\@FEFUdate\expandafter[\@date]{\@FEFUcolumnwidth}\\ &&\\ &&\\
             Уполномоченый по экспортному контролю && \@FEFUmultilinepostfield[{\tiny должность, уч. степень, уч. звание}]{Руководитель ВКР }{\@FEFUsupervisortitle}{\@FEFUcolumnwidth}\\
             \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUexportsupervisor}{\@FEFUcolumnwidth} && \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUsupervisor}{\@FEFUcolumnwidth}\\
-            \@FEFUdate[\@date]{\@FEFUcolumnwidth} && \@FEFUdate[\@date]{\@FEFUcolumnwidth}\\ && \\
+            \expandafter\@FEFUdate\expandafter[\@FEFUexportcontroldate]{\@FEFUcolumnwidth} && \expandafter\@FEFUdate\expandafter[\@FEFUsupervisordate]{\@FEFUcolumnwidth}\\ && \\
             && Консультант\\
             && \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUconsultant}{\@FEFUcolumnwidth}\\
-            && \@FEFUdate[\@date]{\@FEFUcolumnwidth}\\ &&\\
+            && \expandafter\@FEFUdate\expandafter[\@FEFUconsultantdate]{\@FEFUcolumnwidth}\\ &&\\
             && \@FEFUmultilinepostfield[уч. степень, уч. звание]{Назначен рецензент }{\@FEFUreviewertitle}{\@FEFUcolumnwidth}\\
             && \@FEFUfield[фамилия, имя, отчество]{\@FEFUreviewer}{\@FEFUcolumnwidth}\\
             &&\\ &&\\ &&\\
@@ -96,16 +96,8 @@
             \@FEFUfield{}{0.75\@FEFUcolumnwidth} && \multirow{3}{\@FEFUcolumnwidth}{\@FEFUdeputyjobtitle\ \@FEFUdepartmentreferencetitle\ \@FEFUdepartment,\ \@FEFUdeputytitle}\\ &&\\
             Секретарь ГЭК &&\\
             \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUsecretary}{\@FEFUcolumnwidth} && \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUdeputy}{\@FEFUcolumnwidth}\\
-            \@FEFUdate[\@date]{\@FEFUcolumnwidth} && \@FEFUdate[\@FEFUadmissiondate]{\@FEFUcolumnwidth}\\
-        \end{tabular}\\
-        % {\setstretch{1}%
-        %     В материалах данной выпускной квалификационной работы не содержатся сведения, составляющие государственную тайну, и сведения, подлежащие экспортному контролю.\\\par
-        % }%
-        % \noindent\begin{tabular}{p{\@FEFUcolumnwidth}p{\@FEFUcolumnwidth}}
-        %     & \@FEFUnamesign{\@FEFUexportsupervisor}{\@FEFUsignwidth}{\@FEFUcolumnwidth}\\
-        %     & \@FEFUfield[уполномоченный по экспортному контролю]{\@FEFUexportsupervisortitle}{\@FEFUcolumnwidth}\\
-        %     & \@FEFUdate{\@FEFUcolumnwidth}
-        % \end{tabular}       
+            \expandafter\@FEFUdate\expandafter[\@FEFUsecretarydate]{\@FEFUcolumnwidth} && \expandafter\@FEFUdate\expandafter[\@FEFUadmissiondate]{\@FEFUcolumnwidth}\\
+        \end{tabular}\\    
     }
     \addtocounter{page}{-1}
     \newpage

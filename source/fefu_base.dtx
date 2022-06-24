@@ -83,18 +83,31 @@
 \newcommand{\@FEFUdepartment}{}
 \newcommand{\@FEFUdepartmenttitle}{}
 \newcommand{\@FEFUdepartmentreferencetitle}{}
-\newcommand{\@FEFUadmissiondate}{}
+\newcommand{\@FEFUadmissiondate}{\@date}
+\newcommand{\@FEFUexportcontroldate}{\@date}
+\newcommand{\@FEFUsupervisordate}{\@date}
+\newcommand{\@FEFUconsultantdate}{\@date}
+\newcommand{\@FEFUsecretarydate}{\@date}
 %    \end{macrocode}
 % \begin{macro}{\setschool}
 % \begin{macro}{\setgroup}
 % \begin{macro}{\setplace}
+% \begin{macro}{\setdepartment}
+% \begin{macro}{\setdepartmenttitle}
+% \begin{macro}{\setdepartmentreferencetitle}
 % \begin{macro}{\setpracticetask}
 % \begin{macro}{\setpracticetitle}
 % \begin{macro}{\setfaculty}
 % \begin{macro}{\setprogram}
 % \begin{macro}{\setfeedback}
 % \begin{macro}{\setconsultant}
-% \begin{macro}{\setconsultant}
+% \begin{macro}{\setschooltitle}
+% \begin{macro}{\setschoolreferencetitle}
+% \begin{macro}{\setadmissiondate}
+% \begin{macro}{\setadmissiondate}
+% \begin{macro}{\setadmissiondate}
+% \begin{macro}{\setadmissiondate}
+% \begin{macro}{\setadmissiondate}
 % Sets respective internal variable
 %    \begin{macrocode}
 \newcommand{\setschool}[1]{\renewcommand{\@FEFUschool}{#1}}
@@ -112,7 +125,20 @@
 \newcommand{\setschooltitle}[1]{\renewcommand{\@FEFUschooltitle}{#1}}
 \newcommand{\setschoolreferencetitle}[1]{\renewcommand{\@FEFUschoolreferencetitle}{#1}}
 \newcommand{\setadmissiondate}[1]{\renewcommand{\@FEFUadmissiondate}{#1}}
+\newcommand{\setexportcontroldate}[1]{\renewcommand{\@FEFUexportcontroldate}{#1}}
+\newcommand{\setsupervisordate}[1]{\renewcommand{\@FEFUsupervisordate}{#1}}
+\newcommand{\setconsultantdate}[1]{\renewcommand{\@FEFUconsultantdate}{#1}}
+\newcommand{\setsecretarydate}[1]{\renewcommand{\@FEFUsecretarydate}{#1}}
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 % \end{macro}
