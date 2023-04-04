@@ -24,7 +24,7 @@ install.ps1
 cd source
 latex fefu.ins
 cd ..
-mkdir scr
+mkdir src
 cp source/fefu_base.sty cls
 cp source/fefu.cls cls
 cp source/fefu_presentation.cls cls
