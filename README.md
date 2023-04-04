@@ -8,7 +8,7 @@
 * Рекомендуется использовать [TeXstudio](https://www.texstudio.org/)
 * Для оформления списка литературы необходим пакет [gost](https://www.ctan.org/pkg/gost)
 
-## Установка
+## Сборка
 ### Linux
 ```
 make install
@@ -19,7 +19,7 @@ install.ps1
 ```
 
 Для выполнения скрипта необходимо установить Unrestricted [политику выполнения](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.2).
-### Ручная установка
+### Ручная сборка
 ```
 cd source
 latex fefu.ins
@@ -28,24 +28,11 @@ mkdir scr
 cp source/fefu_base.sty cls
 cp source/fefu.cls cls
 cp source/fefu_presentation.cls cls
+cp source/fefu_style_default.sty cls
+cp source/fefu_style_imct.sty cls
 ```
 ## Использование
-### В качестве git submodule
-Добавить репозиторий как submodule в папку отчёта
-```
-git submodule add https://github.com/dvfu/fefu_thesis.git
-```
-или
-```
-git submodule add git@github.com:dvfu/fefu_thesis.git
-```
-Установить класс документа в основном файле `.tex`
-```
-\documentclass{fefu_thesis/cls/fefu}
-...
-```
-### В качестве локального класса
-Скопировать файл `cls/fefu.cls`, `cls/fefu_base.sty` и `cls/fefu_presentation.cls` в локальную директорию классов LaTeX. Установить класс документа в основном `.tex` файле отчёта
+Скопировать файлы из папки `cls` в локальную директорию классов LaTeX (предпочтительно, происходит автоматически на Linux) или в папку проекта. Установить класс документа в основном `.tex` файле отчёта
 ```
 \documentclass{fefu}
 ...
