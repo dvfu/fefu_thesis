@@ -87,25 +87,32 @@
         \end{minted}
         \caption{\label{sample}Пример использования \texttt{fefutable}}
     \end{listing}
-    \subsection{Установка}
+    \subsection{Сборка}
     \noindent Linux:\\
     \indent\texttt{make install}\\
     \noindent Windows:\\
     \indent\texttt{install.ps1}\\
-    \noindent Ручная установка:\\
-    \indent\texttt{latex source/fefu.ins}\\
-    \indent\texttt{mkdir scr}\\
-    \indent\texttt{cp source/fefu.png cls}\\
-    \indent\texttt{cp fefu.cls cls}
+    \noindent Ручная сборка:
+    \begin{minted}{bash}
+cd source
+latex fefu.ins
+cd ..
+mkdir -p src
+cp source/fefu_base.sty cls
+cp source/fefu.cls cls
+cp source/fefu_presentation.cls cls
+cp source/fefu_style_default.sty cls
+cp source/fefu_style_imct.sty cls
+    \end{minted}
     \subsection{Использование}
-    \subsubsection{В качестве git submodule}
-    \noindent Добавить репозиторий как submodule в папку отчёта\\
-    \indent\texttt{git submodule add https://github.com/dvfu/fefu\_thesis.git}\\
-    \noindent или\\
-    \indent\texttt{git submodule add git@github.com:dvfu/fefu\_thesis.git}\\
-    \noindent Установить класс документа в основном файле \texttt{.tex}\\
-    \indent\texttt{\textbackslash documentclass\{fefu\_thesis/cls/fefu\}}
-    \subsubsection{В качестве локального класса}
-    \noindent Скопировать файлы \texttt{cls/fefu.tex} и \texttt{cls/fefu.png} в локальную директорию классов LaTeX. Установить класс документа в основном \texttt{.tex} файле отчёта\\
-    \indent\texttt{\textbackslash documentclass\{fefu\}}
+    Скопировать файлы из папки \texttt{cls} в локальную директорию классов LaTeX (предпочтительно, происходит автоматически на Linux) или в папку проекта. Установить класс документа в основном \texttt{.tex} файле отчёта
+    \begin{minted}{tex}
+\textbackslash documentclass{fefu}
+...
+    \end{minted}
+    или
+\begin{minted}{tex}
+\textbackslash documentclass{fefu_presentation}
+...
+    \end{minted}
 \end{document}
