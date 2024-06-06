@@ -250,6 +250,23 @@
 \fancypagestyle{plain}{\fancyhf{}\fancyfoot[R]{\thepage}}
 \pagestyle{plain}
 %    \end{macrocode}
+% Adjust section title styles.
+%    \begin{macrocode}
+% \setcounter{secnumdepth}{4}
+% \titlespacing{\section}{\parindent}{0pt}{0pt}
+\titlespacing{\section}{0pt}{0pt}{1em}
+\titleformat{\section}[block]
+    {\bfseries\normalsize}{}{0pt}{\hfill\thesection~\hyperlink{sec:contents}{#1}\hfill}
+
+\titlespacing{name=\section,numberless}{0pt}{0pt}{1em}
+
+\titlespacing{name=\subsection,numberless}{0pt}{0pt}{1em}
+\titlespacing{\subsection}{\parindent}{0pt}{1em}
+\titlespacing{name=\subsubsection,numberless}{0pt}{0pt}{1em}
+\titlespacing{\subsubsection}{\parindent}{0pt}{1em}
+\titlespacing{name=\paragraph,numberless}{0pt}{0pt}{1em}
+\titlespacing{\paragraph}{\parindent}{0pt}{1em}
+%    \end{macrocode}
 % Set default values
 %    \begin{macrocode}
 \setdepartment{цифровой трансформации}
