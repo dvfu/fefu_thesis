@@ -329,7 +329,8 @@
 %    \begin{macrocode}
 \renewcommand\@biblabel[1]{\indent#1.}
 \let\@FEFUprintbibliography\printbibliography
-\renewcommand{\printbibliography}[1][]{\begingroup\sloppy\@FEFUifempty{#1}{\@FEFUprintbibliography[title=Список использованных источников]}{\@FEFUprintbibliography[title=Список использованных источников, #1]}\endgroup}
+\newcommand{\@FEFUbibtitle}{Список использованных источников}
+\renewcommand{\printbibliography}[1][]{\begingroup\sloppy\@FEFUifempty{#1}{\@FEFUprintbibliography[title=\@FEFUbibtitle]}{\@FEFUprintbibliography[title=\@FEFUbibtitle, #1]}\endgroup}
 %    \end{macrocode}
 % The abstract style is set up here.
 %    \begin{macrocode}

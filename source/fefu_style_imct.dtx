@@ -267,6 +267,14 @@
 \titlespacing{name=\paragraph,numberless}{0pt}{0pt}{1em}
 \titlespacing{\paragraph}{\parindent}{0pt}{1em}
 %    \end{macrocode}
+% Make some default titles uppercase
+%    \begin{macrocode}
+\addto\captionsrussian{%
+    \renewcommand{\contentsname}{СОДЕРЖАНИЕ}%
+    \renewcommand{\abstractname}{АННОТАЦИЯ}%
+}
+\renewcommand{\@FEFUbibtitle}{СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}
+%    \end{macrocode}
 % Set default values
 %    \begin{macrocode}
 \setdepartment{цифровой трансформации}
