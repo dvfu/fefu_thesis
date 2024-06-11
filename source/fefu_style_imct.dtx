@@ -51,7 +51,7 @@
     образовательное учреждение высшего образования\\
     {\bf {«Дальневосточный федеральный университет»}}\\
     (ДВФУ)\\
-    {\setstretch{1.15}\MakeUppercase{\textbf{\@FEFUschooltitle\ \@FEFUschool}}\\\MakeUppercase{\@FEFUdepartmenttitle\ \@FEFUdepartment}}
+    {\setstretch{1.15}\textbf{\@FEFUschooltitle\ \@FEFUschool\@FEFUifempty{\@FEFUschoolsuffix}{}{\ \@FEFUschoolsuffix}}\\\@FEFUdepartmenttitle\ \@FEFUdepartment}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -283,6 +283,7 @@
 \setschool{математики и компьютерных технологий}
 \setschooltitle{Институт}
 \setschoolreferencetitle{Института}
+\setschoolsuffix{(Школа)}
 %    \end{macrocode}
 %    \begin{macrocode}
 %</package>
