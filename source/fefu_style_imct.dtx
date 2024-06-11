@@ -43,21 +43,28 @@
 %    \begin{macrocode}
 \renewcommand{\@FEFUheader}{%
     \fefuimage\\
-    {\relscale{0.786}
-        МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО
-        ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ\\
+    {\setstretch{1}\small
+        МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ\\
+        Федеральное государственное автономное
+        образовательное учреждение высшего образования\\
+        \textbf{«Дальневосточный федеральный университет»}\\
+        (ДВФУ)\\
+        {\bfseries\@FEFUschooltitle\ \@FEFUschool\@FEFUifempty{\@FEFUschoolsuffix}{}{\ \@FEFUschoolsuffix}}\\
+        \@FEFUdepartmenttitle\ \@FEFUdepartment\\
     }
-    Федеральное государственное автономное
-    образовательное учреждение высшего образования\\
-    {\bf {«Дальневосточный федеральный университет»}}\\
-    (ДВФУ)\\
-    {\setstretch{1.15}\textbf{\@FEFUschooltitle\ \@FEFUschool\@FEFUifempty{\@FEFUschoolsuffix}{}{\ \@FEFUschoolsuffix}}\\\@FEFUdepartmenttitle\ \@FEFUdepartment}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUfooter}
+%    \begin{macrocode}
+\renewcommand{\@FEFUfooter}{%
+    {\setstretch{1}\small\centering{Владивосток\\\the\year}\par}
 }
 %    \end{macrocode}
 % \end{macro}
 %    \begin{macrocode}
 \addtitle{thesis}{
-    {\setstretch{1.15}\normalsize
+    {\setstretch{1}\small
         \vskip 2\bigskipamount
         \par\vbox to 8\bigskipamount {%
             \@FEFUifempty{\@author}{~}{\@author}\\\vskip 2\bigskipamount
@@ -65,10 +72,10 @@
             Магистерская диссертация\\
         }
         \vskip\bigskipamount
-        \par\vbox to 8\bigskipamount {\MakeUppercase{\@title}\\}
+        \par\vbox to 8\bigskipamount {\bfseries\MakeUppercase{\@title}\\}
         по направлению подготовки\\
         \@FEFUifempty{\@FEFUfaculty}{}{\@FEFUsplitandapply{\@FEFUfaculty}{}{\@FEFUaddguillemots}},\\
-        магистерская программа \@FEFUaddguillemots{\@FEFUprogram}
+        магистерская программа \@FEFUaddguillemots{\@FEFUprogram}\\
     }%
 }
 %    \end{macrocode}
@@ -138,8 +145,8 @@
     }%
     \def\skiptaskitem{\@FEFUnexttaskitemtitle}%
     \def\taskitem##1{\@FEFUnexttaskitemtitle\uline{\stepcounter{@FEFUtaskitemcounter}\the@FEFUtaskitemcounter.\ \expandafter\empty\@FEFUtaskitemtitle\ ##1\hfill\null}\bigskip\medskip\par}%
-    {\centering\bfseries ЗАДАНИЕ\\на выпускную квалификационную работу\\\bigskip\medskip}%
-    \begingroup\setstretch{1.25}\fontsize{12}{12}\selectfont\pagestyle{empty}\setlength{\parindent}{0pt}%
+    {\centering\bfseries\small ЗАДАНИЕ\\на выпускную квалификационную работу\\\bigskip\medskip}%
+    \begingroup\setstretch{1.25}\small\pagestyle{empty}\setlength{\parindent}{0pt}%
         \hbox to \textwidth{\uline{\@FEFUgendered{студентке}{студенту}\hfill#1\hfill}}
         \bigskip\bigskip
         \hbox to \textwidth{\uline{\@FEFUfaculty, группы \@FEFUgroup\hfill}}
@@ -180,20 +187,20 @@
     }
     \def\reviewitem{\bigskip\medskip\par\@FEFUnextreviewitemtitle\textbf{\@FEFUreviewitemtitle}\\}
     \fefuheader
-    \begin{center}
-        \bigskip
+    {\centering\small
         {\bfseries ОТЗЫВ\\руководителя ВКР на работу обучающегося\\}
-        \bigskip\bigskip
+        \bigskip
         #1\\
+        \bigskip
         направление подготовки \@FEFUfaculty\\
+        \bigskip
         магистерская программа \@FEFUaddguillemots{\@FEFUprogram}\\
         \bigskip
-        \textbf{над выпускной квалификационной работой магистра}\\\@FEFUaddguillemots{\@title}
-    \end{center}
-    \vskip -\bigskipamount
-    \begingroup\fontsize{12}{12}\selectfont\pagestyle{empty}\setlength{\parindent}{0pt}%
+        {\bfseries над выпускной квалификационной работой магистра\\\@FEFUaddguillemots{\@title}}\\
+    }
+    \begingroup\small\pagestyle{empty}\setlength{\parindent}{0pt}%
 }{%
-    \par\bigskip\bigskip
+    \par\bigskip
     Руководитель ВКР:\\
     \par\begingroup\setlength\tabcolsep{.25cm}\def\arraystretch{0}\setlength{\@FEFUlength}{.3\textwidth-1cm}%
     \begin{tabular}{@{}b{.4\textwidth}b{\@FEFUlength}b{.3\textwidth}@{}}
@@ -224,17 +231,15 @@
     }
     \def\reviewitem{\bigskip\medskip\par\@FEFUnextreviewitemtitle\textbf{\@FEFUreviewitemtitle}\\}
     \fefuheader
-    \begin{center}
+    {\centering\small
+        {\bfseries РЕЦЕНЗИЯ\\на выпускную квалификационную работу\\\@FEFUaddguillemots{\@title},\\}
         \bigskip
-        {\bfseries РЕЦЕНЗИЯ\\на выпускную квалификационную работу\\}
-        \@FEFUaddguillemots{\@title}\\
-        \bigskip\bigskip
         {\bfseries выполненную обучающимся Дальневосточного федерального университета}\\
-        #1
-    \end{center}
-    \begingroup\fontsize{12}{12}\selectfont\pagestyle{empty}\setlength{\parindent}{0pt}%
+        #1\\
+    }
+    \begingroup\small\pagestyle{empty}\setlength{\parindent}{0pt}%
 }{%
-    \par\bigskip\bigskip
+    \par\bigskip
     Рецензент:\\
     \par\begingroup\setlength\tabcolsep{.25cm}\def\arraystretch{0}\setlength{\@FEFUlength}{.3\textwidth-1cm}%
     \begin{tabular}{@{}b{.4\textwidth}b{\@FEFUlength}b{.3\textwidth}@{}}
@@ -277,6 +282,12 @@
 \setschooltitle{Институт}
 \setschoolreferencetitle{Института}
 \setschoolsuffix{(Школа)}
+%    \end{macrocode}
+% Smaller logo
+%    \begin{macrocode}
+\renewcommand{\@FEFUimage}{%
+    \includegraphics[scale=0.13]{\jobname-fefu.png}%
+}
 %    \end{macrocode}
 %    \begin{macrocode}
 %</package>

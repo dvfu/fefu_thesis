@@ -329,7 +329,7 @@
             \csname @FEFU@#2@titlepage\endcsname
         \end{center}%
         \vfill
-        {\setstretch{1.15}\centering{Владивосток\\\the\year}\par}
+        \@FEFUfooter
         \setcounter{page}{\the@FEFUpage}
         \stepcounter{@FEFUpage}
     \end{titlepage}
@@ -870,6 +870,10 @@ LTZH/cF7H1Zm8WXwrUiy1WK41h+451MN+G2tV8dqsQx/pHL3FeD/G/DzrVfHarEMP7tl/13fJorn
 sVqTaK367hwpg2/N4VutqcDfUQz4/xHh32G9IlZrMg01/jFKZgJ+nfVqWK3JNIz4o0X4l1qvhtWa
 TEMW/zJEkt/AAtYvrFfDak0Hfu9tSYgk34J+sfS1/w89/ppuOCtMKQAAAABJRU5ErkJggg==
 \end{filecontents*}
+\newcommand{\@FEFUimage}{%
+    \includegraphics[scale=0.15]{\jobname-fefu.png}%
+}
+
 \newcommand{\fefuimage}{%
     \IfFileExists{\jobname-fefu.png}{}{%
         \ifwindows%
@@ -878,7 +882,7 @@ TEMW/zJEkt/AAtYvrFfDak0Hfu9tSYgk34J+sfS1/w89/ppuOCtMKQAAAABJRU5ErkJggg==
             \immediate\write18{base64 -d \jobname-fefu.64 > \jobname-fefu.png}%
         \fi%
     }%
-    \includegraphics[scale=0.15]{\jobname-fefu.png}%
+    \@FEFUimage%
 }
 %    \end{macrocode}
 % \end{macro}
