@@ -401,6 +401,14 @@
 \newcolumntype{C}[1]{>{\centering\arraybackslash}m{#1}}
 \newcolumntype{P}[1]{>{\raggedright\arraybackslash}m{#1}}
 %    \end{macrocode}
+% \begin{macro}{\fefuloadstyle}
+% Loads fefu document style
+%    \begin{macrocode}
+\newcommand{\fefuloadstyle}[1]{%
+    \RequirePackage{fefu_style_#1}
+}
+%    \end{macrocode}
+% \end{macro}
 %    \begin{macrocode}
 %</package>
 %    \end{macrocode}
