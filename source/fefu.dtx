@@ -55,6 +55,7 @@
 \newif\if@FEFUhassubfigure
 \newif\if@FEFUseenfontsize
 \newif\if@FEFUnotoc
+\newif\if@FEFUnosortbib
 %    \end{macrocode}
 % The options are defined and processed here.
 %    \begin{macrocode}
@@ -67,6 +68,7 @@
 \DeclareOption{17pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{17pt}{extarticle}}
 \DeclareOption{20pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{20pt}{extarticle}}
 \DeclareOption{subfigure}{\@FEFUhassubfiguretrue}
+\DeclareOption{nosortbib}{\@FEFUnosortbibtrue}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{extarticle}}
 \ProcessOptions\relax
 \if@FEFUseenfontsize\else\PassOptionsToClass{14pt}{extarticle}\fi
@@ -95,7 +97,6 @@
 \RequirePackage{relsize}
 \RequirePackage{multirow}
 \RequirePackage[labelsep=endash]{caption}
-\RequirePackage[backend=biber, bibstyle=gost-numeric, maxbibnames=99]{biblatex}
 \RequirePackage[title,titletoc]{appendix}
 \RequirePackage[xindy={glsnumbers=false},nonumberlist,nogroupskip,numberline=false,acronym]{glossaries}
 %    \end{macrocode}
@@ -106,6 +107,14 @@
     \RequirePackage[subfigure]{tocloft}
 \else
     \RequirePackage{tocloft}
+\fi
+%    \end{macrocode}
+% Disable bibliography sorting
+%    \begin{macrocode}
+\if@FEFUnosortbib
+    \RequirePackage[backend=biber, bibstyle=gost-numeric, maxbibnames=99, sorting=none]{biblatex}
+\else
+    \RequirePackage[backend=biber, bibstyle=gost-numeric, maxbibnames=99]{biblatex}
 \fi
 %    \end{macrocode}
 % The iternal counters are set up here.
