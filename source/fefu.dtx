@@ -112,9 +112,9 @@
 % Disable bibliography sorting
 %    \begin{macrocode}
 \if@FEFUnosortbib
-    \RequirePackage[backend=biber, bibstyle=gost-numeric, maxbibnames=99, sorting=none]{biblatex}
+    \RequirePackage[backend=biber, bibstyle=gost-numeric, maxbibnames=99, sorting=none, autolang=other, language=autobib, clearlang=true]{biblatex}
 \else
-    \RequirePackage[backend=biber, bibstyle=gost-numeric, maxbibnames=99]{biblatex}
+    \RequirePackage[backend=biber, bibstyle=gost-numeric, maxbibnames=99, autolang=other, language=autobib, clearlang=true]{biblatex}
 \fi
 %    \end{macrocode}
 % The iternal counters are set up here.
