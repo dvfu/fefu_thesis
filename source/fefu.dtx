@@ -55,7 +55,6 @@
 \newif\if@FEFUhassubfigure
 \newif\if@FEFUseenfontsize
 \newif\if@FEFUnotoc
-\newif\if@FEFUnosortbib
 %    \end{macrocode}
 % The options are defined and processed here.
 %    \begin{macrocode}
@@ -68,7 +67,8 @@
 \DeclareOption{17pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{17pt}{extarticle}}
 \DeclareOption{20pt}{\@FEFUseenfontsizetrue\PassOptionsToClass{20pt}{extarticle}}
 \DeclareOption{subfigure}{\@FEFUhassubfiguretrue}
-\DeclareOption{nosortbib}{\@FEFUnosortbibtrue}
+\DeclareOption{nosortbib}{\PassOptionsToPackage{sorting=none}{biblatex}}
+\DeclareOption{defernumbers}{\PassOptionsToPackage{defernumbers=true}{biblatex}}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{extarticle}}
 \ProcessOptions\relax
 \if@FEFUseenfontsize\else\PassOptionsToClass{14pt}{extarticle}\fi
@@ -99,6 +99,7 @@
 \RequirePackage[labelsep=endash]{caption}
 \RequirePackage[title,titletoc]{appendix}
 \RequirePackage[xindy={glsnumbers=false},nonumberlist,nogroupskip,numberline=false,acronym]{glossaries}
+\RequirePackage[backend=biber, bibstyle=gost-numeric, maxbibnames=99, autolang=other, language=autobib, clearlang=true]{biblatex}
 %    \end{macrocode}
 % The \textsf{tocloft} package is loaded with \textsf{subfigure} option if necessary.
 %    \begin{macrocode}
@@ -107,14 +108,6 @@
     \RequirePackage[subfigure]{tocloft}
 \else
     \RequirePackage{tocloft}
-\fi
-%    \end{macrocode}
-% Disable bibliography sorting
-%    \begin{macrocode}
-\if@FEFUnosortbib
-    \RequirePackage[backend=biber, bibstyle=gost-numeric, maxbibnames=99, sorting=none, autolang=other, language=autobib, clearlang=true]{biblatex}
-\else
-    \RequirePackage[backend=biber, bibstyle=gost-numeric, maxbibnames=99, autolang=other, language=autobib, clearlang=true]{biblatex}
 \fi
 %    \end{macrocode}
 % The iternal counters are set up here.
