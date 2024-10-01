@@ -404,8 +404,8 @@
 % \begin{macro}{\fefuloadstyle}
 % Loads fefu document style
 %    \begin{macrocode}
-\newcommand{\fefuloadstyle}[1]{%
-    \RequirePackage{fefu_style_#1}
+\newcommand{\fefuloadstyle}[2][]{%
+    \RequirePackage{#1fefu_style_#2}
 }
 %    \end{macrocode}
 % \end{macro}
