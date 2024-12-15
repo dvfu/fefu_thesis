@@ -409,6 +409,71 @@
 }
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\@FEFUcreateLanguageKey}
+% Creates a key for the language.
+%    \begin{macrocode}
+\ExplSyntaxOn
+
+\newcommand{\@FEFUcreateLanguageKey}[1]{
+    \keys_define:nn { fefu/languages }
+    {
+        #1 .tl_set:c = { l_fefu_language_#1_tl }
+    }
+}
+
+\ExplSyntaxOff
+%    \end{macrocode}
+% \end{macro}
+% Patch polyglossia macro to keep the list of currently enabled languages
+%    \begin{macrocode}
+\ExplSyntaxOn
+
+\let\@FEFUoriginalsetmainlanguage\setmainlanguage
+\let\@FEFUoriginalsetotherlanguage\setotherlanguage
+\let\@FEFUoriginalsetotherlanguages\setotherlanguages
+
+\prop_new:N \g_fefu_languages_prop
+
+\cs_new_protected:Npn \fefu_set_main_language:n #1 {
+    \prop_put:Nnn \g_fefu_languages_prop { main } {#1}
+    \@FEFUcreateLanguageKey{#1}
+    \@FEFUoriginalsetmainlanguage{#1}
+}
+
+\cs_new_protected:Npn \fefu_set_other_language:n #1 {
+    \prop_put:Nnn \g_fefu_languages_prop {other-#1} {#1}
+    \@FEFUcreateLanguageKey{#1}
+    \@FEFUoriginalsetotherlanguage{#1}
+}
+
+\cs_new_protected:Npn \fefu_set_other_languages:n #1 {
+    \seq_map_inline:Nn #1 {
+        \prop_put:Nnn \g_fefu_languages_prop {other-##1} {##1}
+        \@FEFUcreateLanguageKey{##1}
+        \@FEFUoriginalsetmainlanguage{##1}
+    }
+}
+
+\cs_gset_eq:NN \setmainlanguage    \fefu_set_main_language:n
+\cs_gset_eq:NN \setotherlanguage   \fefu_set_other_language:n
+\cs_gset_eq:NN \setotherlanguages  \fefu_set_other_languages:n
+%    \end{macrocode}
+% \begin{macro}{\fefuchooselanguage}
+% Chooses one of the arguments based on the current main language.
+%    \begin{macrocode}
+\ExplSyntaxOn
+
+\cs_new_protected:Nn \fefu_choose_language:n
+{
+    \keys_set:nn { fefu/languages } { #1 }
+    \tl_use:c { l_fefu_language_\xpg@main@language _tl }
+}
+
+\NewDocumentCommand{\fefuchooselanguage} { m }{\fefu_choose_language:n { #1 }}
+
+\ExplSyntaxOff
+%    \end{macrocode}
+% \end{macro}
 %    \begin{macrocode}
 %</package>
 %    \end{macrocode}
