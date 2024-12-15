@@ -1,0 +1,71 @@
+% \iffalse meta-comment
+% !TEX program  = xeLaTeX
+%<*driver>
+\ProvidesFile{fefu_style_phd.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}
+%<package>\ProvidesPackage{fefu_style_phd}
+%<*package>
+    [2024/03/05 LaTeX phd style for FEFU document]
+%</package>
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian,english]{babel}
+\usepackage[a4paper,left=4cm]{geometry}
+%\OnlyDescription
+\begin{document}
+    \DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+%\fi
+%
+% \title{FEFU deault style}
+% \author{}
+% \date{}
+% \maketitle
+% \begin{abstract}
+%    The package provides default style for FEFU documents.
+% \end{abstract}
+%
+%\CheckSum{0}
+%\StopEventually{}
+%
+% \section{Implementation}
+%    \begin{macrocode}
+%<*package>
+%    \end{macrocode}
+% Captions setup
+%    \begin{macrocode}
+\DeclareCaptionLabelSeparator{tabsep}{~\cyrdash\ }
+
+\captionsetup[table]{
+	format=plain,
+	font=normal,
+	skip=0pt,
+	parskip=0pt,
+	position=above,
+	justification=justified,
+	indent=0cm,
+	labelsep=tabsep,
+	singlelinecheck=false
+}
+
+\DeclareCaptionLabelSeparator{figsep}{~\cyrdash\ }
+
+\captionsetup[figure]{
+    format=plain,
+    font=normal,
+    skip=0pt,
+    parskip=0pt,
+    position=below,
+    singlelinecheck=true,
+    justification=centerlast,
+    labelsep=figsep,
+}
+%    \end{macrocode}
+%    \begin{macrocode}
+%</package>
+%    \end{macrocode}
+% \Finale
