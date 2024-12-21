@@ -524,6 +524,14 @@
 \ExplSyntaxOff
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\fefuiflanguage}
+% Selects a branch depending on the current main language
+%    \begin{macrocode}
+\newcommand{\fefuiflanguage}[3]{%
+    \ifthenelse{\equal{#1}{\xpg@main@language}}{#2}{#3}%
+}
+%    \end{macrocode}
+% \end{macro}
 %    \begin{macrocode}
 %</package>
 %    \end{macrocode}
