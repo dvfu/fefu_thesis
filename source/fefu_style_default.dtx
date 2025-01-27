@@ -50,8 +50,10 @@
     образовательное учреждение высшего образования\\
     {\bf {«Дальневосточный федеральный университет»}}\\
     (ДВФУ)\\
-    \bigskip
-    {\bfseries\setstretch{1.15}\MakeUppercase{\@FEFUschooltitle\ \@FEFUschool}\@FEFUifempty{\@FEFUschoolsuffix}{}{\ \@FEFUschoolsuffix}\\}
+    \@FEFUifempty{\@FEFUschool}{}{%
+        \bigskip
+        {\bfseries\setstretch{1.15}\MakeUppercase{\@FEFUschooltitle\ \@FEFUschool}\@FEFUifempty{\@FEFUschoolsuffix}{}{\ \@FEFUschoolsuffix}\\}
+    }
 }
 \newcommand{\fefuheader}{%
     \setstretch{1}
