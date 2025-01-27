@@ -42,6 +42,7 @@
 \RequirePackage{calc}
 \RequirePackage{pbox}
 \RequirePackage{array}
+\RequirePackage[hidelinks]{hyperref}
 \RequirePackage{xifthen}
 \RequirePackage{graphicx}
 \RequirePackage{fontspec}
@@ -530,6 +531,12 @@
 \newcommand{\fefuiflanguage}[3]{%
     \ifthenelse{\equal{#1}{\xpg@main@language}}{#2}{#3}%
 }
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\fefuniceref}
+% Inserts a hyperref reference to the the label \#1, preceded by \#2.
+%    \begin{macrocode}
+\newcommand{\fefuniceref}[2]{\hyperref[#1]{#2 \ref{#1}}}
 %    \end{macrocode}
 % \end{macro}
 %    \begin{macrocode}
