@@ -255,6 +255,48 @@
 }
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{schedule}
+% Schedule plan for the thesis.
+%    \begin{macrocode}
+\newenvironment{schedule}[1][]{%
+    \begingroup\pagestyle{empty}
+    \def\@FEFUscheduledate{#1}
+    \fefuheader
+    \setstretch{1}\small
+    \begin{center}
+        \bfseries\small
+        КАЛЕНДАРНЫЙ ГРАФИК\\
+        Выполнения обучающимся выпускной квалификационной работы
+    \end{center}
+    \setcounter{scheduleitemnumber}{0}%
+    \begin{center}
+        \begin{tabular}{|C{.05\textwidth}|m{.525\textwidth}|C{.15\textwidth}|m{.175\textwidth}|}
+            \hline
+            \multicolumn{1}{|C{.05\textwidth}|}{№ п/п} & \multicolumn{1}{C{.525\textwidth}|}{Наименование этапов выполнения ВКР} & \multicolumn{1}{C{.15\textwidth}|}{Срок выполнения этапов ВКР} & \multicolumn{1}{C{.175\textwidth}|}{Примечания}\\
+            \hline
+}{%
+        \end{tabular}
+    \end{center}
+    \noindent Дата утверждения графика\hfill\expandafter\@FEFUdate\expandafter[\@FEFUscheduledate]{.4\textwidth}\par
+    \bigskip
+    \bigskip
+    \bigskip
+    \noindent\hbox to .2\textwidth{Руководитель ВКР\hfill}\hfill\@FEFUlabeled{\uline{\mbox{\hspace{.2\textwidth}}}}{подпись}\hfill\@FEFUfield[И.О.Ф.]{\@FEFUshortnamereversed{\@FEFUsupervisor}}{.4\textwidth}\par
+    \bigskip
+    \noindent\hbox to .2\textwidth{Обучающийся}\hfill\@FEFUlabeled{\uline{\mbox{\hspace{.2\textwidth}}}}{подпись}\hfill\@FEFUfield[И.О.Ф.]{\@FEFUshortnamereversed{\@author}}{.4\textwidth}\par
+    \endgroup
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{scheduleitem}
+%    \begin{macrocode}
+\newcounter{scheduleitemnumber}
+\newcommand{\scheduleitem}[3]{%
+    \stepcounter{scheduleitemnumber} \thescheduleitemnumber & #1 & #2 & #3 \\
+    \hline
+}
+%    \end{macrocode}
+% \end{macro}
 % Set page number style
 %    \begin{macrocode}
 \fancypagestyle{plain}{\fancyhf{}\fancyfoot[R]{\thepage}}
