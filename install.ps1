@@ -5,6 +5,8 @@ cp source/fefu.ins $CACHE_DIR
 cp source/fefu_base.dtx $CACHE_DIR
 cp source/fefu.dtx $CACHE_DIR
 cp source/fefu_presentation.dtx $CACHE_DIR
+cp source/fefu_style_default.dtx $CACHE_DIR
+cp source/fefu_style_imct.dtx $CACHE_DIR
 cd $CACHE_DIR
 
 latex fefu.ins

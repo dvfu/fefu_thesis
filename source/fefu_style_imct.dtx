@@ -93,9 +93,14 @@
             Уполномоченый по экспортному контролю && \@FEFUmultilinepostfield[{\tiny должность, уч. степень, уч. звание}]{Руководитель ВКР }{\@FEFUsupervisortitle}{\@FEFUcolumnwidth}\\
             \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUexportsupervisor}{\@FEFUcolumnwidth} && \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUsupervisor}{\@FEFUcolumnwidth}\\
             \expandafter\@FEFUdate\expandafter[\@FEFUexportcontroldate]{\@FEFUcolumnwidth} && \expandafter\@FEFUdate\expandafter[\@FEFUsupervisordate]{\@FEFUcolumnwidth}\\ && \\
-            && Консультант\\
-            && \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUconsultant}{\@FEFUcolumnwidth}\\
-            && \expandafter\@FEFUdate\expandafter[\@FEFUconsultantdate]{\@FEFUcolumnwidth}\\ &&\\
+            && Нормконтролер\\
+            && \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUdocumentreviewer}{\@FEFUcolumnwidth}\\
+            && \expandafter\@FEFUdate\expandafter[\@FEFUdocumentreviewerdate]{\@FEFUcolumnwidth}\\ &&\\
+            \@FEFUifempty{\@FEFUconsultant}{}{%
+                && Консультант\\
+                && \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUconsultant}{\@FEFUcolumnwidth}\\
+                && \expandafter\@FEFUdate\expandafter[\@FEFUconsultantdate]{\@FEFUcolumnwidth}\\ &&\\
+            }
             && \@FEFUmultilinepostfield[уч. степень, уч. звание]{Назначен рецензент }{\@FEFUreviewertitle}{\@FEFUcolumnwidth}\\
             && \@FEFUfield[фамилия, имя, отчество]{\@FEFUreviewer}{\@FEFUcolumnwidth}\\
             &&\\ &&\\ &&\\
@@ -104,7 +109,7 @@
             Секретарь ГЭК &&\\
             \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUsecretary}{\@FEFUcolumnwidth} && \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUdeputy}{\@FEFUcolumnwidth}\\
             \expandafter\@FEFUdate\expandafter[\@FEFUsecretarydate]{\@FEFUcolumnwidth} && \expandafter\@FEFUdate\expandafter[\@FEFUadmissiondate]{\@FEFUcolumnwidth}\\
-        \end{tabular}\\    
+        \end{tabular}\\
     }
     \addtocounter{page}{-1}
     \newpage
@@ -272,6 +277,13 @@
     \renewcommand{\abstractname}{АННОТАЦИЯ}%
 }
 \renewcommand{\@FEFUbibtitle}{СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}
+%    \end{macrocode}
+% Document reviewer name.
+%    \begin{macrocode}
+\newcommand{\@FEFUdocumentreviewer}{}
+\newcommand{\setdocumentreviewer}[1]{\renewcommand{\@FEFUdocumentreviewer}{#1}}
+\newcommand{\@FEFUdocumentreviewerdate}{}
+\newcommand{\setdocumentreviewerdate}[1]{\renewcommand{\@FEFUdocumentreviewerdate}{#1}}
 %    \end{macrocode}
 % Set default values
 %    \begin{macrocode}
