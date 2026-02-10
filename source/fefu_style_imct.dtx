@@ -81,15 +81,23 @@
 %    \end{macrocode}
 % \begin{macro}{\makethesistitlebackside}
 %    \begin{macrocode}
+\newlength{\@FEFUheight}
+\newsavebox{\@FEFUbox}
 \renewcommand{\makethesistitlebackside}[1][1.25]{%
     \thispagestyle{empty}
     \newgeometry{a4paper,left=1cm,right=2.5cm,top=2cm,bottom=2cm}
     \setlength{\@FEFUcolumnwidth}{.45\textwidth}
+    \def\@FEFUexportstring{\setstretch{#1}\small В материалах данной выпускной квалификационной работы не\\ содержатся сведения, составляющие\\ государственную тайну, и сведения,\\ подлежащие экспортному контролю}
+    \savebox{\@FEFUbox}{\begin{minipage}{\@FEFUcolumnwidth}
+        \@FEFUexportstring
+    \end{minipage}}
+    \@FEFUheight=\dimexpr\ht\@FEFUbox+\dp\@FEFUbox\relax
+    \renewcommand{\arraystretch}{1.5}
     {\setstretch{#1}\small%
         \noindent\begin{tabular}{p{\@FEFUcolumnwidth}p{.03\textwidth}p{\@FEFUcolumnwidth}}
-            \multirow{4}{\@FEFUcolumnwidth}{\setstretch{1}В материалах данной выпускной квалификационной работы не\\ содержатся сведения, составляющие\\ государственную тайну, и сведения,\\ подлежащие экспортному контролю} && \@FEFUpostfield[подпись]{Автор работы }{}{0.9\@FEFUcolumnwidth}\\
-            && Группа \@FEFUgroup\\
-            && \expandafter\@FEFUdate\expandafter[\@date]{\@FEFUcolumnwidth}\\ &&\\ &&\\
+            \multirow{3}{\@FEFUcolumnwidth}{\@FEFUexportstring} && \@FEFUpostfield[подпись]{Автор работы \hspace{5pt}}{}{\@FEFUcolumnwidth}\\
+            && \rule{0pt}{.27\@FEFUheight}\@FEFUpostfield{Группа \hspace{5pt}}{\@FEFUgroup}{\@FEFUcolumnwidth}\\
+            && \rule{0pt}{.25\@FEFUheight}\expandafter\@FEFUdate\expandafter[\@date]{\@FEFUcolumnwidth}\\ &&\\
             Уполномоченый по экспортному контролю && \@FEFUmultilinepostfield[{\tiny должность, уч. степень, уч. звание}]{Руководитель ВКР }{\@FEFUsupervisortitle}{\@FEFUcolumnwidth}\\
             \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUexportsupervisor}{\@FEFUcolumnwidth} && \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUsupervisor}{\@FEFUcolumnwidth}\\
             \expandafter\@FEFUdate\expandafter[\@FEFUexportcontroldate]{\@FEFUcolumnwidth} && \expandafter\@FEFUdate\expandafter[\@FEFUsupervisordate]{\@FEFUcolumnwidth}\\ && \\
@@ -103,17 +111,18 @@
             }
             && \@FEFUmultilinepostfield[уч. степень, уч. звание]{Назначен рецензент }{\@FEFUreviewertitle}{\@FEFUcolumnwidth}\\
             && \@FEFUfield[фамилия, имя, отчество]{\@FEFUreviewer}{\@FEFUcolumnwidth}\\
-            &&\\ &&\\ &&\\
+            &&\\
             Защищена в ГЭК с оценкой && \textbf{\@FEFUaddguillemots{Допустить к защите}}\\
-            \@FEFUfield{}{0.75\@FEFUcolumnwidth} && \multirow{3}{\@FEFUcolumnwidth}{\@FEFUdeputyjobtitle\ \@FEFUdepartmentreferencetitle\ \@FEFUdepartment,\ \@FEFUdeputytitle}\\ &&\\
-            Секретарь ГЭК &&\\
-            \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUsecretary}{\@FEFUcolumnwidth} && \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUdeputy}{\@FEFUcolumnwidth}\\
+            \@FEFUfield{}{0.75\@FEFUcolumnwidth} && \multicolumn{1}{>{\raggedright\arraybackslash}p{\@FEFUcolumnwidth}}{\@FEFUdirectorjobtitle\ \@FEFUdepartmentreferencetitle\ \@FEFUdepartment}\\
+            Секретарь ГЭК && \@FEFUfield[уч. степень, уч. звание]{\@FEFUdirectortitle}{\@FEFUcolumnwidth}\\
+            \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUsecretary}{\@FEFUcolumnwidth} && \@FEFUsignamereversed{\@FEFUsignwidth}{\@FEFUdirector}{\@FEFUcolumnwidth}\\
             \expandafter\@FEFUdate\expandafter[\@FEFUsecretarydate]{\@FEFUcolumnwidth} && \expandafter\@FEFUdate\expandafter[\@FEFUadmissiondate]{\@FEFUcolumnwidth}\\
         \end{tabular}\\
     }
     \addtocounter{page}{-1}
     \newpage
     \restoregeometry
+    \renewcommand{\arraystretch}{1}
 }
 %    \end{macrocode}
 % \end{macro}
@@ -161,11 +170,12 @@
     }{\def\@FEFUnexttaskitemtitle{\def\@FEFUtaskitemtitle{Дата выдачи задания:}}
         \taskitem{\@FEFUtaskdate}
         \bigskip%
-        \parbox[b]{0.5\textwidth}{Руководитель ВКР:\ \@FEFUfield[И.О.Ф.]{\@FEFUshortnamereversed{\@FEFUsupervisor}}{.25\textwidth}\hfill\null} \@FEFUfield[подпись]{}{.3\textwidth}\\
-        \par\medskip
-        Задание \@FEFUgendered{приняла}{принял} к исполнению \@FEFUtaskdate\\
-        \par\parbox[b]{0.5\textwidth}{\@FEFUgendered{Студентка}{Студент}\ \@FEFUfield[И.О.Ф.]{\@FEFUshortnamereversed{\@author}}{.25\textwidth}\hfill\null} \@FEFUfield[подпись]{}{.3\textwidth}
-    \par\newpage\endgroup}
+        \noindent\hbox to .2\textwidth{Руководитель ВКР\hfill}\hfill\@FEFUfield[И.О.Ф.]{\@FEFUshortnamereversed{\@FEFUsupervisor}}{.3\textwidth}\hfill\@FEFUlabeled{\uline{\mbox{\hspace{.2\textwidth}}}}{подпись}\hfill\null\par
+        \bigskip
+        Задание \@FEFUgendered{приняла}{принял} к исполнению \@FEFUtaskdate\par
+        \bigskip
+        \noindent\hbox to .2\textwidth{\@FEFUgendered{Студентка}{Студент}\hfill}\hfill\@FEFUfield[И.О.Ф.]{\@FEFUshortnamereversed{\@author}}{.3\textwidth}\hfill\@FEFUlabeled{\uline{\mbox{\hspace{.2\textwidth}}}}{подпись}\hfill\null\par
+    \newpage\endgroup}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{supervisorreview}
@@ -327,9 +337,29 @@
 \newcommand{\@FEFUdocumentreviewerdate}{}
 \newcommand{\setdocumentreviewerdate}[1]{\renewcommand{\@FEFUdocumentreviewerdate}{#1}}
 %    \end{macrocode}
+% \begin{macro}{\setdirector}
+% Redefine setdirector to accept job title
+%    \begin{macrocode}
+\newcommand{\@FEFUdirectorjobtitle}{}
+\renewcommand{\setdirector}[3][Директор]{
+    \renewcommand{\@FEFUdirector}{#2}
+    \renewcommand{\@FEFUdirectortitle}{#3}
+    \renewcommand{\@FEFUdirectorjobtitle}{#1}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\setdirectordate}
+% Set date for the director signature
+%    \begin{macrocode}
+\newcommand{\@FEFUdirectordate}{}
+\newcommand{\setdirectordate}[1]{
+    \renewcommand{\@FEFUdirectordate}{#1}
+}
+%    \end{macrocode}
+% \end{macro}
 % Set default values
 %    \begin{macrocode}
-\setdepartment{цифровой трансформации}
+\setdepartment{цифровой \mbox{трансформации}}
 \setdepartmenttitle{Академия}
 \setdepartmentreferencetitle{Академии}
 \setschool{математики и компьютерных технологий}
