@@ -153,7 +153,7 @@
                 }%
                 \def\@FEFUtaskitemtitle{Исходные данные по работе:\hfill\null\\}%
             }%
-            \def\@FEFUtaskitemtitle{Срок сдачи студентом законченной работы:}%
+            \def\@FEFUtaskitemtitle{Срок сдачи \@FEFUgendered{студенткой}{студентом} законченной работы:}%
         }%
         \def\@FEFUtaskitemtitle{Тема работы:}%
     }%
@@ -248,7 +248,7 @@
                 }
                 \def\@FEFUreviewitemtitle{Замечания по работе}%
             }
-            \def\@FEFUreviewitemtitle{Характеристика работы обучающегося}%
+            \def\@FEFUreviewitemtitle{Характеристика работы \@FEFUgendered{обучающейся}{обучающегося}}%
         }
         \def\@FEFUreviewitemtitle{Актуальность работы}%
     }
@@ -257,7 +257,7 @@
     {\centering\small
         {\bfseries РЕЦЕНЗИЯ\\на выпускную квалификационную работу\\\@FEFUaddguillemots{\@title},\\}
         \bigskip
-        {\bfseries выполненную обучающимся Дальневосточного федерального университета}\\
+        {\bfseries выполненную \@FEFUgendered{обучающейся}{обучающимся} Дальневосточного федерального университета}\\
         #1\\
     }
     \begingroup\small\pagestyle{empty}\setlength{\parindent}{0pt}%
@@ -284,7 +284,7 @@
     \begin{center}
         \bfseries\small
         КАЛЕНДАРНЫЙ ГРАФИК\\
-        Выполнения обучающимся выпускной квалификационной работы
+        Выполнения \@FEFUgendered{обучающейся}{обучающимся} выпускной квалификационной работы
     \end{center}
     \setcounter{scheduleitemnumber}{0}%
     \begin{center}
@@ -301,7 +301,7 @@
     \bigskip
     \noindent\hbox to .2\textwidth{Руководитель ВКР\hfill}\hfill\@FEFUlabeled{\uline{\mbox{\hspace{.2\textwidth}}}}{подпись}\hfill\@FEFUfield[И.О.Ф.]{\@FEFUshortnamereversed{\@FEFUsupervisor}}{.4\textwidth}\par
     \bigskip
-    \noindent\hbox to .2\textwidth{Обучающийся}\hfill\@FEFUlabeled{\uline{\mbox{\hspace{.2\textwidth}}}}{подпись}\hfill\@FEFUfield[И.О.Ф.]{\@FEFUshortnamereversed{\@author}}{.4\textwidth}\par
+    \noindent\hbox to .2\textwidth{\@FEFUgendered{Обучающаяся}{Обучающийся}}\hfill\@FEFUlabeled{\uline{\mbox{\hspace{.2\textwidth}}}}{подпись}\hfill\@FEFUfield[И.О.Ф.]{\@FEFUshortnamereversed{\@author}}{.4\textwidth}\par
     \endgroup
 }
 %    \end{macrocode}
