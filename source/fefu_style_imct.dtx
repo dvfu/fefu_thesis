@@ -180,7 +180,10 @@
 % \end{macro}
 % \begin{macro}{supervisorreview}
 %    \begin{macrocode}
-\renewenvironment{supervisorreview}[1][\@author]{%
+\renewenvironment{supervisorreview}[2][\@author]{%
+    \def\@FEFUreviewextra{}
+    \def\@FEFUacceptedtext{Выпускная квалификационная работа \@FEFUshortname{#1} по теме \@FEFUaddguillemots{\@title} отвечает основным требованиям, предъявляемым к квалификационным работам выпускника университета по направлению \@FEFUsplitandapply{\@FEFUfaculty}{}{\@FEFUaddguillemots} и может быть рекомендована к защите.}
+    \def\@FEFUgradetext{Работу #1 оцениваю на #2. При успешной защите ВКР \@FEFUgendered{ей}{ему} может быть присвоена квалификация магистра.}
     \def\@FEFUnextreviewitemtitle{%
         \def\@FEFUnextreviewitemtitle{%
             \def\@FEFUnextreviewitemtitle{%
@@ -188,34 +191,39 @@
                     \def\@FEFUnextreviewitemtitle{%
                         \def\@FEFUnextreviewitemtitle{%
                             \def\@FEFUnextreviewitemtitle{\def\@FEFUreviewitemtitle{}}%
-                            \def\@FEFUreviewitemtitle{Рекомендации}%
+                            \def\@FEFUreviewitemtitle{Рекомендации}\def\@FEFUreviewextra{}%
                         }
-                        \def\@FEFUreviewitemtitle{Оценка работы \@FEFUgendered{выпускницы}{выпускника}}%
+                        \def\@FEFUreviewitemtitle{Оценка работы \@FEFUgendered{выпускницы}{выпускника}}\def\@FEFUreviewextra{\@FEFUgradetext}%
                     }
-                    \def\@FEFUreviewitemtitle{Допуск к защите}%
+                    \def\@FEFUreviewitemtitle{Допуск к защите}\def\@FEFUreviewextra{\@FEFUacceptedtext}%
                 }
-                \def\@FEFUreviewitemtitle{Замечания по работе обучающегося}%
+                \def\@FEFUreviewitemtitle{Замечания по работе \@FEFUgendered{обучающейся}{обучающегося}}%
             }
-            \def\@FEFUreviewitemtitle{Характеристика работы обучающегося}%
+            \def\@FEFUreviewitemtitle{Характеристика работы \@FEFUgendered{обучающейся}{обучающегося}}%
         }
         \def\@FEFUreviewitemtitle{Актуальность работы}%
     }
-    \def\reviewitem{\bigskip\medskip\par\@FEFUnextreviewitemtitle\textbf{\@FEFUreviewitemtitle}\\}
+    \def\reviewitem##1{\bigskip\medskip\par\@FEFUnextreviewitemtitle\textbf{\@FEFUreviewitemtitle}\\##1\@FEFUreviewextra}
     \fefuheader
-    {\centering\small
-        {\bfseries ОТЗЫВ\\руководителя ВКР на работу обучающегося\\}
-        \bigskip
-        #1\\
-        \bigskip
-        направление подготовки \@FEFUfaculty\\
-        \bigskip
-        магистерская программа \@FEFUaddguillemots{\@FEFUprogram}\\
-        \bigskip
-        {\bfseries над выпускной квалификационной работой магистра\\\@FEFUaddguillemots{\@title}}\\
-    }
+    {\small
+        \begin{center}\bfseries
+            ОТЗЫВ\\
+            руководителя ВКР на работу \@FEFUgendered{обучающейся}{обучающегося}
+        \end{center}
+        \begin{center}
+            #1\\
+            \@FEFUfaculty\\
+            \@FEFUprogram
+        \end{center}
+        \begin{center}
+            \textbf{над выпускной квалификационной работой магистра}\\
+            \@FEFUaddguillemots{\@title}
+        \end{center}
+    }%
+    \vskip -16pt%
     \begingroup\small\pagestyle{empty}\setlength{\parindent}{0pt}%
 }{%
-    \par\bigskip
+    \par\bigskip\medskip
     Руководитель ВКР:\\
     \par\begingroup\setlength\tabcolsep{.25cm}\def\arraystretch{0}\setlength{\@FEFUlength}{.3\textwidth-1cm}%
     \begin{tabular}{@{}b{.4\textwidth}b{\@FEFUlength}b{.3\textwidth}@{}}
@@ -361,7 +369,7 @@
 %    \begin{macrocode}
 \setdepartment{цифровой \mbox{трансформации}}
 \setdepartmenttitle{Академия}
-\setdepartmentreferencetitle{Академии}
+\setdepartmentreferencetitle{академии}
 \setschool{математики и компьютерных технологий}
 \setschooltitle{Институт}
 \setschoolreferencetitle{Института}
