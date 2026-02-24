@@ -288,7 +288,7 @@
         \if@FEFUnotoc#1%
         \else%
             \phantomsection%
-            \addcontentsline{toc}{section}{#1}\hyperlink{sec:contents}{#1}%
+            \addcontentsline{toc}{section}{#1\label{toc::\thesection}}\hyperlink{toc::\thesection}{#1}%
         \fi%
         \hfill%
     }
@@ -302,7 +302,7 @@
         \if@FEFUnotoc#1%
         \else%
            \phantomsection%
-           \addcontentsline{toc}{subsection}{#1}\hyperlink{sec:contents}{#1}%
+           \addcontentsline{toc}{subsection}{#1\label{toc::\thesection-\thesubsection}}\hyperlink{toc::\thesection-\thesubsection}{#1}%
         \fi%
         \hfill%
     }
@@ -316,7 +316,7 @@
         \if@FEFUnotoc#1%
         \else%
             \phantomsection%
-            \addcontentsline{toc}{subsubsection}{#1}\hyperlink{sec:contents}{#1}%
+            \addcontentsline{toc}{subsubsection}{#1\label{toc::\thesection-\thesubsection-\thesubsubsection}}\hyperlink{toc::\thesection-\thesubsection-\thesubsubsection}{#1}%
         \fi%
         \hfill%
     }
@@ -330,7 +330,7 @@
         \if@FEFUnotoc#1%
         \else%
         \phantomsection%
-        \addcontentsline{toc}{paragraph}{#1}\hyperlink{sec:contents}{#1}%
+        \addcontentsline{toc}{paragraph}{#1\label{toc::\thesection-\thesubsection-\thesubsubsection-\theparagraph}}\hyperlink{toc::\thesection-\thesubsection-\thesubsubsection-\theparagraph}{#1}%
         \fi%
         \hfill%
     }
