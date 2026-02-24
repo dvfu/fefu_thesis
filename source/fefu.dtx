@@ -145,6 +145,7 @@
 
 \newlength{\@FEFUlength}
 \newlength{\@FEFUfieldlength}
+\newlength{\@FEFUprefieldlength}
 \newlength{\@FEFUpostfieldlength}
 \newlength{\@FEFUcredentialslength}
 %    \end{macrocode}
@@ -214,6 +215,15 @@
 \newcommand{\@FEFUpostfield}[4][]{%
     \setlength{\@FEFUpostfieldlength}{#4-\widthof{#2}}%
     #2\@FEFUfield[#1]{#3}{\@FEFUpostfieldlength}%
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@FEFUprefield}
+% Inserts \marg{arg1} and fills avaliable space before it with a field.
+%    \begin{macrocode}
+\newcommand{\@FEFUprefield}[4][]{%
+    \setlength{\@FEFUprefieldlength}{#4-\widthof{#2}}%
+    \@FEFUfield[#1]{#3}{\@FEFUprefieldlength}#2%
 }
 %    \end{macrocode}
 % \end{macro}
