@@ -516,7 +516,7 @@
 \cs_new_protected:Nn \fefu_choose_language:n
 {
     \keys_set:nn { fefu/languages } { #1 }
-    \tl_use:c { l_fefu_language_\xpg@main@language _tl }
+    \tl_use:c { l_fefu_language_\languagename _tl }
 }
 
 \NewDocumentCommand{\fefuchooselanguage} { m }{\fefu_choose_language:n { #1 }}
@@ -528,7 +528,7 @@
 % Selects a branch depending on the current main language
 %    \begin{macrocode}
 \newcommand{\fefuiflanguage}[3]{%
-    \ifthenelse{\equal{#1}{\xpg@main@language}}{#2}{#3}%
+    \ifthenelse{\equal{#1}{\languagename}}{#2}{#3}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -536,6 +536,12 @@
 % Inserts a hyperref reference to the the label \#1, preceded by \#2.
 %    \begin{macrocode}
 \newcommand{\fefuniceref}[2]{\hyperref[#1]{#2 \ref{#1}}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\fefuniceref}
+% Inserts a hyperref reference to the the label \#1, preceded by \#2.
+%    \begin{macrocode}
+\newcommand{\fefufoobar}{123}
 %    \end{macrocode}
 % \end{macro}
 %    \begin{macrocode}
