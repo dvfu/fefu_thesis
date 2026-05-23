@@ -234,7 +234,7 @@
     \settowidth{\@FEFUfieldlength}{#3}%
     \setlength{\@FEFUpostfieldlength}{#4-\widthof{#2}}%
     \ifthenelse{\lengthtest{\@FEFUpostfieldlength<\@FEFUfieldlength}}{%
-        \parbox[t]{#4}{\hbox{#2}\@FEFUfield[#1]{#3}{#4}}%
+        \stackunder{\parbox[t]{#4}{\hbox{#2}\uline{#3}}}{{\scriptsize(#1)}}%
     }{%
         #2\@FEFUfield[#1]{#3}{\@FEFUpostfieldlength}%
     }%
